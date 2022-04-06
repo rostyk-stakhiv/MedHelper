@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.csproj": {}
+    "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.Web.csproj": {}
   },
   "projects": {
-    "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.csproj": {
+    "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.csproj",
-        "projectName": "MedHelper",
-        "projectPath": "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.csproj",
+        "projectUniqueName": "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.Web.csproj",
+        "projectName": "MedHelper.Web",
+        "projectPath": "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.Web.csproj",
         "packagesPath": "C:\\Users\\Rostyk\\.nuget\\packages\\",
         "outputPath": "F:\\MedHelper\\MedHelper\\MedHelper\\obj\\",
         "projectStyle": "PackageReference",
@@ -43,6 +43,14 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "SonarAnalyzer.CSharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.37.0.45539, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

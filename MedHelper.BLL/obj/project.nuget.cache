@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nYZ7Tt66c9Vy+gmldthHGU/YGA3dMwLLeaRalkSnowz6Ah1CLP/94dYCL3QH1wpOOTkVJpdB2R7Fe1S3EJjg5w==",
+  "dgSpecHash": "itNpZXVreezoP5vNI08RTMPT6LPnVXBvsGA5SzZcRuoX0VcNzBfrSm7dqyc/ZtBVcUQnewJbW6kMKV97xhTf+w==",
   "success": true,
-  "projectFilePath": "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.Web.csproj",
+  "projectFilePath": "F:\\MedHelper\\MedHelper\\MedHelper.BLL\\MedHelper.BLL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rostyk\\.nuget\\packages\\sonaranalyzer.csharp\\8.37.0.45539\\sonaranalyzer.csharp.8.37.0.45539.nupkg.sha512"
   ],

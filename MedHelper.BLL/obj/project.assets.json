@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {
+    ".NETCoreApp,Version=v3.1": {
       "SonarAnalyzer.CSharp/8.37.0.45539": {
         "type": "package"
       }
@@ -30,7 +30,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net6.0": [
+    ".NETCoreApp,Version=v3.1": [
       "SonarAnalyzer.CSharp >= 8.37.0.45539"
     ]
   },
@@ -41,11 +41,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.Web.csproj",
-      "projectName": "MedHelper.Web",
-      "projectPath": "F:\\MedHelper\\MedHelper\\MedHelper\\MedHelper.Web.csproj",
+      "projectUniqueName": "F:\\MedHelper\\MedHelper\\MedHelper.BLL\\MedHelper.BLL.csproj",
+      "projectName": "MedHelper.BLL",
+      "projectPath": "F:\\MedHelper\\MedHelper\\MedHelper.BLL\\MedHelper.BLL.csproj",
       "packagesPath": "C:\\Users\\Rostyk\\.nuget\\packages\\",
-      "outputPath": "F:\\MedHelper\\MedHelper\\MedHelper\\obj\\",
+      "outputPath": "F:\\MedHelper\\MedHelper\\MedHelper.BLL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -56,15 +56,15 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0"
+        "netcoreapp3.1"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -75,8 +75,8 @@
       }
     },
     "frameworks": {
-      "net6.0": {
-        "targetAlias": "net6.0",
+      "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "SonarAnalyzer.CSharp": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -96,9 +96,6 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
-          "Microsoft.AspNetCore.App": {
-            "privateAssets": "none"
-          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
