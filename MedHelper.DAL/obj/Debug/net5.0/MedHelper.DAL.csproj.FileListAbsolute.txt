@@ -1,0 +1,15 @@
+/Users/user/RiderProjects/2/MedHelper.DAL/bin/Debug/net5.0/MedHelper.DAL.deps.json
+/Users/user/RiderProjects/2/MedHelper.DAL/bin/Debug/net5.0/MedHelper.DAL.runtimeconfig.json
+/Users/user/RiderProjects/2/MedHelper.DAL/bin/Debug/net5.0/MedHelper.DAL.runtimeconfig.dev.json
+/Users/user/RiderProjects/2/MedHelper.DAL/bin/Debug/net5.0/MedHelper.DAL.dll
+/Users/user/RiderProjects/2/MedHelper.DAL/bin/Debug/net5.0/ref/MedHelper.DAL.dll
+/Users/user/RiderProjects/2/MedHelper.DAL/bin/Debug/net5.0/MedHelper.DAL.pdb
+/Users/user/RiderProjects/2/MedHelper.DAL/obj/Debug/net5.0/MedHelper.DAL.csproj.AssemblyReference.cache
+/Users/user/RiderProjects/2/MedHelper.DAL/obj/Debug/net5.0/MedHelper.DAL.GeneratedMSBuildEditorConfig.editorconfig
+/Users/user/RiderProjects/2/MedHelper.DAL/obj/Debug/net5.0/MedHelper.DAL.AssemblyInfoInputs.cache
+/Users/user/RiderProjects/2/MedHelper.DAL/obj/Debug/net5.0/MedHelper.DAL.AssemblyInfo.cs
+/Users/user/RiderProjects/2/MedHelper.DAL/obj/Debug/net5.0/MedHelper.DAL.csproj.CoreCompileInputs.cache
+/Users/user/RiderProjects/2/MedHelper.DAL/obj/Debug/net5.0/MedHelper.DAL.dll
+/Users/user/RiderProjects/2/MedHelper.DAL/obj/Debug/net5.0/ref/MedHelper.DAL.dll
+/Users/user/RiderProjects/2/MedHelper.DAL/obj/Debug/net5.0/MedHelper.DAL.pdb
+/Users/user/RiderProjects/2/MedHelper.DAL/obj/Debug/net5.0/MedHelper.DAL.genruntimeconfig.cache
