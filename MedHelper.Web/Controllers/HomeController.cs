@@ -1,20 +1,38 @@
-﻿using MedHelper.Models;
+﻿using System;
+using MedHelper.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace MedHelper.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        // private readonly ILogger<HomeController> _logger;
+        //
+        // public HomeController(ILogger<HomeController> logger)
+        // {
+        //     _logger = logger;
+        // }
+        //
+        // public IActionResult Index()
+        // {
+        //     return View();
+        // }
+        readonly IDiagnosticContext _diagnosticContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IDiagnosticContext diagnosticContext)
         {
-            _logger = logger;
+            _diagnosticContext = diagnosticContext ??
+                                 throw new ArgumentNullException(nameof(diagnosticContext));
         }
 
         public IActionResult Index()
         {
+            // The request completion event will carry this property
+            _diagnosticContext.Set("CatalogLoadTime", 1423);
+
             return View();
         }
 
