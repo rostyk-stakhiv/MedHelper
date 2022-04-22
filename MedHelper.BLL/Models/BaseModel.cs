@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MedHelper.DAL.Entities
+namespace MedHelper.BLL.Models
 {
-    public class BaseEntity
+    public class BaseModel
     {
         public int Id { get; set; }
     }

@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MedHelper.DAL.Enums;
+using MedHelper.BLL.Enums;
 
-namespace MedHelper.DAL.Entities
+namespace MedHelper.BLL.Models
 {
-    public partial class Patient: BaseEntity
+    public partial class PatientModel: BaseModel
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -19,8 +19,8 @@ namespace MedHelper.DAL.Entities
         public DateTime Birthdate { get; set; }
         public int[] DiseasesId { get; set; }
         public int[] MedicinesId { get; set; }
-        public virtual User User { get; set; }
-        public virtual List<Disease> Diseases { get; set; }
-        public virtual List<Medicine> Medicines { get; set; }
+        public virtual UserModel User { get; set; }
+        public virtual List<DiseaseModel> Diseases { get; set; }
+        public virtual List<MedicineModel> Medicines { get; set; }
     }
 }

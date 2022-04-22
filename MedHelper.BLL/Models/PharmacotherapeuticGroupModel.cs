@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MedHelper.DAL.Entities
+namespace MedHelper.BLL.Models
 {
-    public class PharmacotherapeuticGroup:BaseEntity
+    public class PharmacotherapeuticGroupModel:BaseModel
     {
         public string Title { get; set; }
     }

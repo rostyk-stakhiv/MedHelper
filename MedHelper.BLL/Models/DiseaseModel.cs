@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedHelper.DAL.Entities
+namespace MedHelper.BLL.Models
 {
-    public partial class Disease: BaseEntity
+    public partial class DiseaseModel: BaseModel
     {
         public string Title { get; set; }
 
