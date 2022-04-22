@@ -19,6 +19,7 @@ namespace MedHelper.DAL
         private IRepository<PharmacotherapeuticGroup> pharmacotherapeuticGroupRepository;
 
         public UnitOfWork(MedHelperDBContext context)
+
         {
             _context = context;
         }

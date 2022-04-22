@@ -14,6 +14,7 @@ namespace MedHelper.DAL.Repositories
         protected readonly MedHelperDBContext _context;
         private DbSet<T> _enteties;
         public Repository(MedHelperDBContext context)
+
         {
             _context = context;
             _enteties = context.Set<T>();

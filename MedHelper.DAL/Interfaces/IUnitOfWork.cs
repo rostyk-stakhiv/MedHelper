@@ -14,7 +14,6 @@ namespace MedHelper.DAL.Interfaces
         public IRepository<Role> RoleRepository { get;}
         public IRepository<PharmacotherapeuticGroup> PharmacotherapeuticGroupRepository { get;}
 
-
         Task<int> SaveAsync();
     }
 }
