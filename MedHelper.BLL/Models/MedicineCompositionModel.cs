@@ -8,8 +8,8 @@ namespace MedHelper.BLL.Models
 {
     public partial class MedicineCompositionModel
     {
-        public int MedicineID { get; set; }
-        public int CompositionID { get; set; }
+        public int MedicineId { get; set; }
+        public int CompositionId { get; set; }
 
         public virtual CompositionModel Composition { get; set; }
         public virtual MedicineModel Medicine { get; set; }
