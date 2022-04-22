@@ -11,9 +11,10 @@ namespace MedHelper.DAL.Repositories
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        protected readonly TestsDbContext _context;
+        protected readonly MedHelperDBContext _context;
         private DbSet<T> _enteties;
-        public Repository(MedHelperDB context)
+        public Repository(MedHelperDBContext context)
+
         {
             _context = context;
             _enteties = context.Set<T>();
@@ -21,15 +22,12 @@ namespace MedHelper.DAL.Repositories
         public async Task AddAsync(T entity)
         {
 
-            if (entity == null) throw new ArgumentNullException("Null entity");
-
            await _enteties.AddAsync(entity);
 
         }
 
         public void Delete(T entity)
         {
-            if (entity == null) throw new ArgumentNullException("Not Found");
 
             _enteties.Remove(entity);
         }
@@ -54,9 +52,6 @@ namespace MedHelper.DAL.Repositories
 
         public void Update(T entity)
         {
-            if (entity == null) throw new ArgumentNullException("Null entity");
-            if (!_enteties.Any(x => x.Id == entity.Id)) throw new ArgumentNullException("Not Found");
-
             _context.Update(entity);
         }
     }

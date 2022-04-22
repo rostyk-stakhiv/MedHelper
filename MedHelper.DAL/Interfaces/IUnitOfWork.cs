@@ -5,15 +5,14 @@ namespace MedHelper.DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        IQuestionRepository QuestionRepository { get; }
-        
-        IRepository<User> UserRepository { get; }
-        
-        IRepository<Test> TestRepository { get; }
-        
-        IRepository<Role> RoleRepository { get; }
-        
-        IRepository<Answer> AnswerRepository { get; }
+        public IRepository<Composition> CompositionRepository { get;}
+        public IRepository<Disease> DiseaseRepository { get;}
+        public IRepository<User> UserRepository { get;}
+        public IRepository<Medicine> MedicineRepository { get;}
+        public IRepository<Patient> PatientRepository { get;}
+        public IRepository<MedicineInteraction> MedicineInteractionRepository { get;}
+        public IRepository<Role> RoleRepository { get;}
+        public IRepository<PharmacotherapeuticGroup> PharmacotherapeuticGroupRepository { get;}
 
         Task<int> SaveAsync();
     }

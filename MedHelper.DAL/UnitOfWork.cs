@@ -8,11 +8,18 @@ namespace MedHelper.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly MedHelperDB _context;
+        private readonly MedHelperDBContext _context;
         private IRepository<Patient> patientRepository;
         private IRepository<Medicine> medicineRepository;
         private IRepository<Disease> diseaseRepository;
-        public UnitOfWork(MedHelperDB context)
+        private IRepository<Composition> compositionRepository;
+        private IRepository<User> userRepository;
+        private IRepository<MedicineInteraction> medicineInteractionRepository;
+        private IRepository<Role> roleRepository;
+        private IRepository<PharmacotherapeuticGroup> pharmacotherapeuticGroupRepository;
+
+        public UnitOfWork(MedHelperDBContext context)
+
         {
             _context = context;
         }
@@ -50,6 +57,62 @@ namespace MedHelper.DAL
                     diseaseRepository = new Repository<Disease>(_context);
                 }
                 return diseaseRepository;
+            }
+        }
+
+        public IRepository<Composition> CompositionRepository
+        {
+            get
+            {
+                if (compositionRepository == null)
+                {
+                    compositionRepository = new Repository<Composition>(_context);
+                }
+                return compositionRepository;
+            }
+        }
+        public IRepository<User> UserRepository
+        {
+            get
+            {
+                if (userRepository == null)
+                {
+                    userRepository = new Repository<User>(_context);
+                }
+                return userRepository;
+            }
+        }
+        public IRepository<MedicineInteraction> MedicineInteractionRepository
+        {
+            get
+            {
+                if (medicineInteractionRepository == null)
+                {
+                    medicineInteractionRepository = new Repository<MedicineInteraction>(_context);
+                }
+                return medicineInteractionRepository;
+            }
+        }
+        public IRepository<Role> RoleRepository
+        {
+            get
+            {
+                if (roleRepository == null)
+                {
+                    roleRepository = new Repository<Role>(_context);
+                }
+                return roleRepository;
+            }
+        }
+        public IRepository<PharmacotherapeuticGroup> PharmacotherapeuticGroupRepository
+        {
+            get
+            {
+                if (pharmacotherapeuticGroupRepository == null)
+                {
+                    pharmacotherapeuticGroupRepository = new Repository<PharmacotherapeuticGroup>(_context);
+                }
+                return pharmacotherapeuticGroupRepository;
             }
         }
 

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedHelper.DAL.Entities
+namespace MedHelper.BLL.Models
 {
-    public partial class User: BaseEntity
+    public partial class UserModel: BaseModel
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -14,7 +14,7 @@ namespace MedHelper.DAL.Entities
         public string Pass { get; set; }
         public int RoleId { get; set; }
         public int[] PatientsId { get; set; }
-        public virtual Role Role{ get; set; }
-        public virtual List<Patient> Patients { get; set; }
+        public virtual RoleModel Role{ get; set; }
+        public virtual List<PatientModel> Patients { get; set; }
     }
 }

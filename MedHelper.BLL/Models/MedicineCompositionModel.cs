@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedHelper.DAL.Entities
+namespace MedHelper.BLL.Models
 {
-    public partial class MedicineComposition
+    public partial class MedicineCompositionModel
     {
         public int MedicineID { get; set; }
         public int CompositionID { get; set; }
 
-        public virtual Composition Composition { get; set; }
-        public virtual Medicine Medicine { get; set; }
+        public virtual CompositionModel Composition { get; set; }
+        public virtual MedicineModel Medicine { get; set; }
     }
 }
