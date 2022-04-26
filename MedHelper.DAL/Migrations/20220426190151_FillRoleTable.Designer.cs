@@ -3,15 +3,17 @@ using System;
 using MedHelper.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MedHelper.DAL.Migrations
 {
     [DbContext(typeof(MedHelperDBContext))]
-    partial class MedHelperDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220426190151_FillRoleTable")]
+    partial class FillRoleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

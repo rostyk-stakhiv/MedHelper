@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace MedHelper.DAL.Entities
 {
-    public partial class MedicineComposition
+    public partial class MedicineContraindication
     {
-        public int MedicineCompositionID { get; set; }
+        public int MedicineContraindicationID { get; set; }
         public int MedicineID { get; set; }
-        public int CompositionID { get; set; }
+        public int DiseaseID { get; set; }
 
-        public virtual Composition Composition { get; set; }
+        public virtual Disease Disease { get; set; }
         public virtual Medicine Medicine { get; set; }
     }
 }
