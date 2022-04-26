@@ -11,6 +11,7 @@ namespace MedHelper.DAL.Interfaces
         Task<TEntity> GetByIdAsync(int id);
         
         Task AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
         
         void Update(TEntity entity);
         

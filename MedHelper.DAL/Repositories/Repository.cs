@@ -26,6 +26,12 @@ namespace MedHelper.DAL.Repositories
 
         }
 
+        public async Task UpdateAsync(T entity)
+        {
+            _context.Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
         public void Delete(T entity)
         {
 
