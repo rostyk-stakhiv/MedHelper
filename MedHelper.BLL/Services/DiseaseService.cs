@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Business.Interfaces;
 using MedHelper.DAL;
 using MedHelper.DAL.Entities;
@@ -9,10 +10,12 @@ namespace MedHelper.BLL.Services
     public class DiseaseService: ICrud<Disease>
     {
         private readonly UnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public DiseaseService(UnitOfWork unitOfWork)
+        public DiseaseService(UnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public IEnumerable<Disease> GetAll()
