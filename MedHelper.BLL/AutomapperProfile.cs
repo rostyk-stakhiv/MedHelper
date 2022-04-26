@@ -9,7 +9,7 @@ namespace MedHelper.BLL
     {
         public AutomapperProfile()
         {
-            CreateMap<Patient, PatientModel>()
+            /*CreateMap<PatientModel, PatientModel>()
                 .ForMember(p => p.Id, c => c.MapFrom(patient => patient.Id))
                 .ForMember(p => p.Birthdate, c => c.MapFrom(patient => patient.Birthdate))
                 .ForMember(p => p.FirstName, c => c.MapFrom(patient => patient.FirstName))
@@ -23,12 +23,12 @@ namespace MedHelper.BLL
                 .ForMember(p => p.Diseases, c => c.MapFrom(patient => patient.Diseases))
                 .ReverseMap();
 
-            CreateMap<Composition, CompositionModel>()
+            CreateMap<CompositionModel, CompositionModel>()
                 .ForMember(p => p.Id, c => c.MapFrom(composition => composition.Id))
                 .ForMember(p => p.Description, c => c.MapFrom(composition => composition.Description))
                 .ReverseMap();
 
-            CreateMap<Disease, DiseaseModel>()
+            CreateMap<DiseaseModel, DiseaseModel>()
                 .ForMember(p => p.Id, c => c.MapFrom(disease => disease.Id))
                 .ForMember(p => p.Title, c => c.MapFrom(disease => disease.Title))
                 .ReverseMap();
@@ -45,14 +45,14 @@ namespace MedHelper.BLL
                 .ForMember(p => p.PharmacotherapeuticGroupId, c => c.MapFrom(medicine => medicine.PharmacotherapeuticGroupId))
                 .ReverseMap();
 
-            CreateMap<MedicineComposition, MedicineCompositionModel>()
+            CreateMap<MedicineCompositionModel, MedicineCompositionModel>()
                 .ForMember(p => p.CompositionId, c => c.MapFrom(medicinecomposition => medicinecomposition.CompositionId))
                 .ForMember(p => p.MedicineId, c => c.MapFrom(medicinecomposition => medicinecomposition.MedicineId))
                 .ForMember(p => p.Composition, c => c.MapFrom(medicinecomposition => medicinecomposition.Composition))
                 .ForMember(p => p.Medicine, c => c.MapFrom(medicinecomposition => medicinecomposition.Medicine))
                 .ReverseMap();
 
-            CreateMap<MedicineInteraction, MedicineInteractionModel>()
+            CreateMap<MedicineInteractionModel, MedicineInteractionModel>()
                 .ForMember(p => p.Description, c => c.MapFrom(medicineinteraction => medicineinteraction.Description))
                 .ForMember(p => p.CompositionId, c => c.MapFrom(medicineinteraction => medicineinteraction.CompositionId))
                 .ForMember(p => p.MedicineId, c => c.MapFrom(medicineinteraction => medicineinteraction.MedicineId))
@@ -60,17 +60,17 @@ namespace MedHelper.BLL
                 .ForMember(p => p.Medicine, c => c.MapFrom(medicineinteraction => medicineinteraction.Medicine))
                 .ReverseMap();
 
-            CreateMap<PharmacotherapeuticGroup, PharmacotherapeuticGroupModel>()
+            CreateMap<PharmacotherapeuticGroupModel, PharmacotherapeuticGroupModel>()
                 .ForMember(p => p.Id, c => c.MapFrom(group => group.Id))
                 .ForMember(p => p.Title, c => c.MapFrom(group => group.Title))
                 .ReverseMap();
 
-            CreateMap<Role, RoleModel>()
+            CreateMap<RoleModel, RoleModel>()
                 .ForMember(p => p.Id, c => c.MapFrom(role => role.Id))
                 .ForMember(p => p.UserRole, c => c.MapFrom(role => role.UserRole))
                 .ReverseMap();
 
-            CreateMap<User, UserModel>()
+            CreateMap<UserModel, UserModel>()
                 .ForMember(p => p.Id, c => c.MapFrom(user => user.Id))
                 .ForMember(p => p.Email, c => c.MapFrom(user => user.Email))
                 .ForMember(p => p.FirstName, c => c.MapFrom(user => user.FirstName))
@@ -80,7 +80,7 @@ namespace MedHelper.BLL
                 .ForMember(p => p.PatientsId, c => c.MapFrom(user => user.PatientsId))
                 .ForMember(p => p.Role, c => c.MapFrom(user => user.Role))
                 .ForMember(p => p.RoleId, c => c.MapFrom(user => user.RoleId))
-                .ReverseMap();
+                .ReverseMap();*/
         }
     }
 }
