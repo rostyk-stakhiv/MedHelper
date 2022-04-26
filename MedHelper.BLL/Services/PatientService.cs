@@ -18,6 +18,20 @@ namespace MedHelper.BLL.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        
+        public async Task<IEnumerable<Medicine>> GetPatientMedicines(int patientId)
+        {
+            var patient = await _unitOfWork.PatientRepository.GetByIdAsync(patientId);
+
+            return _unitOfWork.MedicineRepository.FindAll().Where(obj => patient.MedicinesId.Contains(obj.Id));
+        }
+        
+        public async Task<IEnumerable<Disease>> GetPatientDiseases(int patientId)
+        {
+            var patient = await _unitOfWork.PatientRepository.GetByIdAsync(patientId);
+
+            return _unitOfWork.DiseaseRepository.FindAll().Where(obj => patient.DiseasesId.Contains(obj.Id));
+        }
 
         public IEnumerable<Patient> GetAll()
         {
