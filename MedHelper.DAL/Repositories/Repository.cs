@@ -1,4 +1,4 @@
-﻿using MedHelper.DAL.Entities;
+using MedHelper.DAL.Entities;
 using MedHelper.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;

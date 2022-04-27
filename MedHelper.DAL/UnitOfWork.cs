@@ -17,6 +17,7 @@ namespace MedHelper.DAL
         private IRepository<MedicineInteraction> medicineInteractionRepository;
         private IRepository<Role> roleRepository;
         private IRepository<PharmacotherapeuticGroup> pharmacotherapeuticGroupRepository;
+
         public UnitOfWork(MedHelperDBContext context)
 
         {
@@ -111,7 +112,7 @@ namespace MedHelper.DAL
                 return roleRepository;
             }
         }
-        public IRepository<PharmacotherapeuticGroup> PharmacotherapeuticGroupRepository
+        /*public IRepository<PharmacotherapeuticGroup> PharmacotherapeuticGroupRepository
         {
             get
             {
@@ -121,7 +122,7 @@ namespace MedHelper.DAL
                 }
                 return pharmacotherapeuticGroupRepository;
             }
-        }
+        }*/
 
         public async Task<int> SaveAsync()
         {

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MedHelper.DAL.Migrations
 {
-    public partial class CreateTables : Migration
+    public partial class Updating_models : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

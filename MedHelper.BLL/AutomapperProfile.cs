@@ -32,6 +32,7 @@ namespace MedHelper.BLL
     //            .ForMember(p => p.Id, c => c.MapFrom(disease => disease.Id))
     //            .ForMember(p => p.Title, c => c.MapFrom(disease => disease.Title))
     //            .ReverseMap();
+       
 
     //        CreateMap<Medicine, MedicineModel>()
     //            .ForMember(p => p.Id, c => c.MapFrom(medicine => medicine.Id))
@@ -82,5 +83,6 @@ namespace MedHelper.BLL
     //            .ForMember(p => p.RoleId, c => c.MapFrom(user => user.RoleId))
     //            .ReverseMap();
     //    }
+
     }
 }
