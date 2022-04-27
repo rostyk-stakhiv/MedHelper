@@ -1,0 +1,151 @@
+ 
+  hr {
+    border: 1px solid #FF5757;
+    margin-bottom: 25px;
+  }
+
+.top-part{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    flex-direction: row;
+    justify-content:space-between;
+    height: 400px;
+}
+
+.logo-img-wrapper {
+    height: 350px;
+    width: 40%;
+    display: flex;
+    margin-left: 40px;
+    justify-content: start;
+}
+
+.doctor-info-wrapper {
+    float:right;
+    height: 300px;
+    width: 40%;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    background-color: #F4716D;
+    justify-content:space-between;
+    
+}
+
+.logo-img {
+    height: fit-content;
+    max-height: 100%;
+    max-width: 100%;
+    flex-direction: row;
+}
+
+.img-bottom-wrapper{
+    flex-direction: column;
+    max-height: 100%;
+    max-width: 100%;
+    width: 50%;
+    display: flex;
+    justify-content:space-between;
+}
+
+/* .button-add{
+   
+} */
+
+.doctor-img{
+    margin-left: 30px;
+    height: 70%;
+    width: fit-content;
+    display: flex;
+}
+
+.button-add{
+    background-color: #4EC2CD;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.button-edit{
+    width: 50px;
+    height: 50px;
+    align-self: flex-end;
+
+}
+
+.info-wrapper{
+    justify-content:space-between;
+    flex-direction: column;
+    max-height: 100%;
+    max-width: 100%;
+    width: 50%;
+    display: flex;
+    
+}
+
+.info{
+    padding: 40px;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+}
+
+.user-name{
+    background-color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 30px;
+    color:#4EC2CD;
+    margin-bottom: 20px;
+}
+
+.gmail{
+    font-size: 25px;
+    color: white;
+}
+
+.bottom-part{
+    padding: 20px; 
+}
+
+.patient-list{
+    margin: auto;
+    height:400px;
+    width: 50%;
+    background:#F4716D;
+}
+
+.scroll-panel{
+    flex-direction: column;
+    display: flex;
+    overflow-y:auto;
+    height:350px;
+}
+
+.search-part{
+    background-color: #F4716D;
+    height: 50px;
+    flex-direction: row;
+    display: flex;
+}
+
+.search-img{
+    margin: 5;
+}
+
+.search{
+    margin: 10px ; 
+    height: 30px;
+}
+
+.button-patient{
+    height: 50px;
+    background-color: #4EC2CD;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}

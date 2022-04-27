@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var fullname = string.Concat(ViewBag.Doctor.FirstName," ",ViewBag.Doctor.LastName);
+}
+
+<link rel="stylesheet" href=~/css/doctor_style.css type="text/css" />
+
+
+<div class="top-part"> 
+         <div class="logo-img-wrapper">
+            <img class="logo-img" src="~/MedHelperTitle.png" alt=""/>
+         </div>
+         <div class="doctor-info-wrapper">
+            <div class="img-bottom-wrapper">
+                <img class="doctor-img" src="~/DoctorLogo.png" alt=""/>
+                <button class="button-add"type="button">Додати пацієнта</button>
+            </div>
+            <div class="info-wrapper">
+                <div class="info">
+                    <div class="user-name">@fullname</div>
+                    <div class="gmail">@ViewBag.Doctor.Email</div>
+                </div>
+                <img class="button-edit" src="~/EditLogo.png">
+            </div>
+         </div>
+     </div> 
+     <hr>
+     <div class="bottom-part"> 
+        <div class="patient-list"> 
+            <div class="search-part">
+                <img class="search-img"src="~/SearchLogo.png">
+                <input class="search" type="text" placeholder="Пошук..">
+            </div>
+            <div class="scroll-panel"> 
+                @for (var i = 0; i < ViewBag.Doctor.PatientsId.Count; i++)
+                {
+                    <button class="button-patient"type="button" onclick="redirect(@ViewBag.Doctor.Patients[i].Id)">@ViewBag.Doctor.Patients[i].FirstName @ViewBag.Doctor.Patients[i].LastName</button>
+                }           
+            </div> 
+        </div> 
+     </div> 
+     <script>
+     redirect = function(id)
+     {
+         window.location.href = `https://localhost:7241/Patient/${id}`
+         console.log(`https://localhost:7241/Patient/${id}`)
+     }
+     </script>

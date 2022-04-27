@@ -4,16 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MedHelper.BLL.Enums;
 
-namespace MedHelper.BLL.Models
+namespace MedHelper.Web.Models
 {
     public partial class PatientModel: BaseModel
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
 
-        [EnumDataType(typeof(Gender))]
+        //[EnumDataType(typeof(Gender))]
         public string Gender { get; set; }
         public int UserID { get; set; }
         public DateTime Birthdate { get; set; }

@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedHelper.DAL.Entities
+namespace MedHelper.Web.Models
 {
-    public partial class Medicine: BaseEntity
+    public partial class MedicineModel: BaseModel
     {
         public string Name { get; set; }
         public int PharmacotherapeuticGroupId { get; set; }
         public List<int> ContraindicationsId { get; set; }
         public List<int> CompositionsId { get; set; }
-        public virtual PharmacotherapeuticGroup Group { get; set; }
-        public virtual List<Disease> Contraindications { get; set; }
-        public virtual List<Composition> Compositions { get; set; }
-        public virtual ICollection<MedicineInteraction> MedicineInteractions { get; set; }
+        public virtual PharmacotherapeuticGroupModel Group { get; set; }
+        public virtual List<DiseaseModel> Contraindications { get; set; }
+        public virtual List<CompositionModel> Compositions { get; set; }
+        public virtual ICollection<MedicineInteractionModel> MedicineInteractions { get; set; }
 
         public override string ToString()
         {
