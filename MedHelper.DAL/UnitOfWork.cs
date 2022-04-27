@@ -17,11 +17,18 @@ namespace MedHelper.DAL
         private IRepository<MedicineInteraction> medicineInteractionRepository;
         private IRepository<Role> roleRepository;
         private IRepository<PharmacotherapeuticGroup> pharmacotherapeuticGroupRepository;
-
         public UnitOfWork(MedHelperDBContext context)
 
         {
             _context = context;
+        }
+
+        public MedHelperDBContext Context
+        {
+            get
+            {
+                return _context;
+            }
         }
 
         public IRepository<Patient> PatientRepository

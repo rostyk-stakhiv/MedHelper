@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var composition = "";
+    var contraindication = "";
+    var interaction = "";
+    foreach (var item in ViewBag.Composition)
+    {
+        composition += item.Composition.Description + ", ";
+    }
+    foreach (var item in ViewBag.Contraindications)
+    {
+        contraindication += item.Disease.Title;
+    }
+    for(int i=0;i<ViewBag.Interactions.Count;i++)
+    {
+        interaction += $"{i+1}. {ViewBag.Interactions[i].Composition.Description}:    {ViewBag.Interactions[i].Description} \n";
+    }
+}
+
+<link rel="stylesheet" href=~/css/MedicineInfo.css />
+<div class="medicine-content">
+    <div class="medicine-container">
+        <div class="medicine-name-header">
+          <p>@ViewBag.Medicine.Name</p>
+        </div>
+        <div class="medicine-scroll-panel">
+
+          <div class="row">
+            <label>Назва препарату:</label>
+            <input type="text" value=@ViewBag.Medicine.Name disabled>
+          </div>
+
+          <div class="row">
+            <label>Фармакоцептична група:</label>
+            <input type="text" value=@ViewBag.Medicine.Group.Title disabled>
+          </div>
+
+          <div class="row">
+            <label>Склад:</label>
+            <textarea type="number" disabled>@composition</textarea>
+
+          </div>
+
+          <div class="row">
+            <label>Противопоказання:</label>
+            <textarea type="number" disabled>@contraindication</textarea>
+          </div>
+
+          <div class="row">
+            <label>Взаємодія з іншими препаратами:</label>
+            <textarea class="interaction" type="number" disabled>@interaction</textarea>
+          </div>
+
+        </div>
+      </div>
+  </div>

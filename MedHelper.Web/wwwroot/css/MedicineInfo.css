@@ -1,0 +1,90 @@
+body {
+    font-family: Calibri, Helvetica, sans-serif;
+    font-size: large;
+  }
+
+  .medicine-content {
+    margin: 80px;
+    background-color: #00C4CC;
+    height: 500px;
+  }
+  
+  .medicine-container {
+    background-color: white;
+    margin: 0px 50px 0px 50px;
+  }
+
+  .medicine-name-header p{
+      font-size: larger;
+      margin: 0;
+      text-align:center;
+      margin-left: 10px;
+      color: #fff;
+  }
+
+  .medicine-container .row label {
+      font-size: 20px;
+      color: #F4716D;
+      vertical-align: top;
+
+  }
+
+  .medicine-container .row input {
+      border: none;
+      background-color: #fff;
+      font-size: 15px;
+      color: black;
+      margin-left: 10px;
+      width: 75%;
+    }
+
+    .medicine-container .row textarea {
+        border: none;
+        font-size: 15px;
+        color: black;
+        margin-left: 10px;
+        width: 60%;
+        height: 100px;
+        overflow-y: auto;
+        resize: none;
+      }
+
+    .medicine-container .row .interaction
+    {
+        display: block;
+    }
+
+  .medicine-container .row {
+      margin: 5px;
+      margin-left: 40px;
+  }
+
+  .medicine-container .row.list{
+      margin-top: 15px;
+  }
+
+  .medicine-container .row.list p {
+      display: block;
+      margin: 2px;
+  }
+  
+  .medicine-name-header {
+      background-color: #F4716D;
+      width: 100%;
+    height: 50px;
+  }
+
+  .medicine-list{
+    margin: auto;
+    height:400px;
+    width: 100%;
+    background:#F4716D;
+}
+
+.medicine-scroll-panel{
+    flex-direction: column;
+    display: flex;
+    overflow-y:auto;
+    height: 450px;
+}
+

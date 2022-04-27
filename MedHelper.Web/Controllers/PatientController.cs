@@ -1,18 +1,24 @@
-﻿using MedHelper.Web.Models;
+﻿using MedHelper.BLL.Interfaces;
+using MedHelper.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedHelper.Web.Controllers
 {
     public class PatientController : Controller
     {
+        private IPatientService _patientService;
+        public PatientController(IPatientService patientService)
+        { 
+        _patientService = patientService;
+        }
         [HttpGet("/Patient/{id}")]
         public IActionResult ViewPatient(int id)
         {
-            var patient = new PatientModel() { LastName ="Petrov", FirstName="Ivan", Birthdate = DateTime.Now, Gender="Male", Id=3, 
-            DiseasesId=new List<int>() { 1},Diseases = new List<DiseaseModel>() { new DiseaseModel() { Id = 1, Title = "Corona" } },
-                Medicines = new List<MedicineModel>() { new MedicineModel() { Id= 1, Name = "Phizer"} },MedicinesId=new List<int>() {1},
-            UserID = 1};
+            var patient = _patientService.GetById(id);
             ViewBag.Patient = patient;
+            ViewBag.Medicines = patient.PatientMedicines.ToList();
+            ViewBag.Diseases = patient.PatientDiseases.ToList();
+            ViewBag.AllMedicines = _patientService.GetAllMedicines().ToList();
             return View();
         }
 

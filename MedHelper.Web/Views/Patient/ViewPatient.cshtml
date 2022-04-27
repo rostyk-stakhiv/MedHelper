@@ -3,6 +3,9 @@
 *@
 @{
     var fullname = string.Concat(ViewBag.Patient.FirstName," ",ViewBag.Patient.LastName);
+    var Medicines = ViewBag.Medicines;
+    var Diseases = ViewBag.Diseases;
+    var AllMedicines = ViewBag.AllMedicines;
 }
 
 <link rel="stylesheet" href=~/css/PatientProfile.css type="text/css" />
@@ -13,7 +16,7 @@
       <div class="profile-container-left">
         <div class="edit-header">
           <p>Інформація про пацієнта</p>
-          <img class="search-img" src="~/EditLogo.png" onclick="EditRedirect(@ViewBag.Patient.Id)">
+          <img class="search-img" src="~/EditLogo.png" onclick="EditRedirect(@ViewBag.Patient.PatientID)">
         </div>
         <div class="medicine-scroll-panel">
           <div class="row">
@@ -29,17 +32,17 @@
           <div class="row list">
 
             <label> Список препаратів, які вживає пацієнт: </label>
-            @for (var i = 0; i < ViewBag.Patient.MedicinesId.Count; i++)
+            @for (var i = 0; i < Medicines.Count; i++)
             {
-                <p>@(i+1) @ViewBag.Patient.Medicines[i].Name</p>
+                <p>@(i+1) @Medicines[i].Medicine.Name</p>
             }
           </div>
 
           <div class="row list">
             <label> Медична карта: </label>
-            @for (var i = 0; i < ViewBag.Patient.DiseasesId.Count; i++)
+            @for (var i = 0; i < Diseases.Count; i++)
             {
-                <p>@(i+1) @ViewBag.Patient.Diseases[i].Title</p>
+                <p>@(i+1) @Diseases[i].Disease.Title</p>
             }
           </div>
         </div>
@@ -52,19 +55,10 @@
             <input class="search" type="text" placeholder="Search..">
           </div>
           <div class="medicine-scroll-panel">
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
-            <button class="button-medicine" type="button">Medicine1</button>
+          @foreach (var item in AllMedicines)
+          {
+              <button class="button-medicine" type="button" onclick="MedicineRedirect(@item.MedicineID)">@item.Name</button>
+          }
           </div>
         </div>
 
@@ -76,6 +70,10 @@
   EditRedirect = function(id)
   {
       window.location.href = `https://localhost:7241/Patient/${id}/Edit`
+  }
+   MedicineRedirect = function(id)
+  {
+      window.location.href = `https://localhost:7241/Medicine/${id}`
   }
   </script>
 
