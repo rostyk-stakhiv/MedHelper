@@ -1,5 +1,6 @@
 ﻿using MedHelper.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace MedHelper.Web.Controllers
 {
