@@ -8,7 +8,7 @@ namespace MedHelper.DAL.Interfaces
     {
         IQueryable<TEntity> FindAll();
 
-        Task<TEntity> GetByIdAsync(int id);
+        TEntity GetById(int id);
         
         Task AddAsync(TEntity entity);
         
