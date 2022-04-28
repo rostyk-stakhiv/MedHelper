@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace MedHelper.BLL.Models
 {
-    public partial class MedicineCompositionModel
+    public partial class MedicineContraindicationModel
     {
-        public int MedicineCompositionID { get; set; }
+        public int MedicineContraindicationID { get; set; }
         public int MedicineID { get; set; }
-        public int CompositionID { get; set; }
+        public int DiseaseID { get; set; }
 
-        public virtual CompositionModel Composition { get; set; }
+        public virtual DiseaseModel Disease { get; set; }
         public virtual MedicineModel Medicine { get; set; }
     }
 }

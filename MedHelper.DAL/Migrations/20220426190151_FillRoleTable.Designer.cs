@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MedHelper.DAL.Migrations
 {
-    [DbContext(typeof(MedHelperDB))]
-    [Migration("20220416191554_FillRoleTable")]
+    [DbContext(typeof(MedHelperDBContext))]
+    [Migration("20220426190151_FillRoleTable")]
     partial class FillRoleTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
