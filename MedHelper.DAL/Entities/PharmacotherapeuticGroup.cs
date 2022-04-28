@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MedHelper.DAL.Entities
 {
-    public class PharmacotherapeuticGroup
+    public class PharmacotherapeuticGroup:BaseEntity
     {
         public PharmacotherapeuticGroup()
         {

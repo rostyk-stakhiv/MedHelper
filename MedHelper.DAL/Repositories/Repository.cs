@@ -45,7 +45,14 @@ namespace MedHelper.DAL.Repositories
 
         public T GetById(int id)
         {
-            var entity = await _enteties.SingleOrDefaultAsync(s => s.GetId() == id); 
+            foreach (var item in _enteties)
+            {
+                if(item.GetId()==id)
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
         public void Update(T entity)

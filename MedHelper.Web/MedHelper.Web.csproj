@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-	  <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+	  <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -14,11 +14,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MedHelper.BLL\MedHelper.BLL.csproj" />
+    <ProjectReference Include="..\MedHelper.DAL\MedHelper.DAL.csproj" />
   </ItemGroup>
 
 </Project>
