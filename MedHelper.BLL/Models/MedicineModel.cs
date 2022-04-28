@@ -13,8 +13,6 @@ namespace MedHelper.BLL.Models
         public string Name { get; set; }
         public int UserID { get; set; }
         public int PharmacotherapeuticGroupID { get; set; }
-
-
         public virtual UserModel User { get; set; }
         public virtual PharmacotherapeuticGroupModel Group { get; set; }
         public virtual ICollection<MedicineContraindicationModel> MedicineContraindications { get; set; }

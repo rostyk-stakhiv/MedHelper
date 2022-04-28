@@ -1,0 +1,127 @@
+body {
+    font-family: Calibri, Helvetica, sans-serif;
+    font-size: large;
+  }
+
+  .patient-profile-content {
+    margin: 50px;
+  }
+
+  .patient-profile-content h1 {
+      margin-left: 20px;
+      color: #00C4CC;
+  }
+  
+  .profile-container {
+    display : flex;
+    flex-direction : row;
+  }
+
+  .profile-container-left {
+    margin: 5px;
+    text-align:justify;
+    width: 50%;
+    background-color: #00C4CC;
+    height: 500px;
+
+  }
+
+  .edit-header p{
+      font-size: larger;
+      margin: 0;
+      text-align:justify;
+      margin-left: 10px;
+      color: #fff;
+  }
+
+  .profile-container-right {
+    margin: 5px;
+    width: 50%;
+    background-color: #00C4CC;
+    height: 500px;
+
+  }
+
+  .profile-container .row label {
+      font-size: 18px;
+      color: #fff;
+  }
+
+  .profile-container .row input {
+      border: none;
+      background-color: #00C4CC;
+      font-size: 15px;
+      color: black;
+    }
+
+  .profile-container .row {
+      margin: 5px;
+  }
+
+  .profile-container .row.list{
+      margin-top: 15px;
+  }
+
+  .profile-container .row.list p {
+      display: block;
+      margin: 2px;
+  }
+  
+  .edit-header {
+      background-color: #F4716D;
+      width: 100%;
+      display : flex;
+    flex-direction : row;
+    height: 50px;
+    flex-direction: row;
+    display: flex
+  }
+
+  .edit-header img {
+    display: block;
+    margin-left: auto;
+  }
+
+  .medicine-list{
+    margin: auto;
+    height:400px;
+    width: 100%;
+    background:#F4716D;
+}
+
+.medicine-scroll-panel{
+    flex-direction: column;
+    display: flex;
+    overflow-y:auto;
+    height:450px;
+}
+
+.search-part-medicine{
+    background-color: #F4716D;
+    height: 50px;
+    flex-direction: row;
+    display: flex;
+}
+
+.medicine-search-img{
+    margin: 5;
+}
+
+.search{
+    margin: 10px ; 
+    height: 30px;
+}
+
+.button-medicine{
+    height: 50px;
+    background-color: #4EC2CD;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    border: solid 2px #fff;
+    font-style: normal;
+    cursor: pointer;
+
+}

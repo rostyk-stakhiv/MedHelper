@@ -1,0 +1,79 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var fullname = string.Concat(ViewBag.Patient.FirstName," ",ViewBag.Patient.LastName);
+    var Medicines = ViewBag.Medicines;
+    var Diseases = ViewBag.Diseases;
+    var AllMedicines = ViewBag.AllMedicines;
+}
+
+<link rel="stylesheet" href=~/css/PatientProfile.css type="text/css" />
+
+  <div class="patient-profile-content">
+    <h1> @fullname </h1>
+    <div class="profile-container">
+      <div class="profile-container-left">
+        <div class="edit-header">
+          <p>Інформація про пацієнта</p>
+          <img class="search-img" src="~/EditLogo.png" onclick="EditRedirect(@ViewBag.Patient.PatientID)">
+        </div>
+        <div class="medicine-scroll-panel">
+          <div class="row">
+            <label>Стать:</label>
+            <input type="text" value=@ViewBag.Patient.Gender disabled>
+          </div>
+
+          <div class="row">
+            <label>Вік:</label>
+            <input type="number" value=@((DateTime.Now.Year - ViewBag.Patient.Birthdate.Year)) disabled>
+          </div>
+
+          <div class="row list">
+
+            <label> Список препаратів, які вживає пацієнт: </label>
+            @for (var i = 0; i < Medicines.Count; i++)
+            {
+                <p>@(i+1) @Medicines[i].Medicine.Name</p>
+            }
+          </div>
+
+          <div class="row list">
+            <label> Медична карта: </label>
+            @for (var i = 0; i < Diseases.Count; i++)
+            {
+                <p>@(i+1) @Diseases[i].Disease.Title</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-container-right">
+        <div class="medicine-list">
+          <div class="search-part-medicine">
+            <img class="medicine-search-img" src=~/SearchLogo.png>
+            <input class="search" type="text" placeholder="Search..">
+          </div>
+          <div class="medicine-scroll-panel">
+          @foreach (var item in AllMedicines)
+          {
+              <button class="button-medicine" type="button" onclick="MedicineRedirect(@item.MedicineID)">@item.Name</button>
+          }
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <script>
+  EditRedirect = function(id)
+  {
+      window.location.href = `https://localhost:7241/Patient/${id}/Edit`
+  }
+   MedicineRedirect = function(id)
+  {
+      window.location.href = `https://localhost:7241/Medicine/${id}`
+  }
+  </script>
+
