@@ -30,11 +30,11 @@ namespace MedHelper.BLL.Services
         {
             var diseases = _unitOfWork.DiseaseRepository.FindAll();
             var medicines = _unitOfWork.MedicineRepository.FindAll();
-            var result = _unitOfWork.Context.Patients
-                .Include(obj => obj.PatientDiseases)
-                .Include(obj => obj.PatientMedicines);
+            var result = _unitOfWork.Context.Patients;
+                //.Include(obj => obj.PatientDiseases)
+                //.Include(obj => obj.PatientMedicines);
             
-            foreach (var patient in result)
+            /*foreach (var patient in result)
             {
                 foreach (var data in patient.PatientDiseases)
                 {
@@ -44,7 +44,7 @@ namespace MedHelper.BLL.Services
                 {
                     data.Medicine = medicines.FirstOrDefault(obj => obj.MedicineID == data.MedicineID);
                 }
-            }
+            }*/
             
             return result;
         }
@@ -54,18 +54,18 @@ namespace MedHelper.BLL.Services
             var diseases = _unitOfWork.DiseaseRepository.FindAll();
             var medicines = _unitOfWork.MedicineRepository.FindAll();
             var result = _unitOfWork.Context.Patients
-                .Include(obj => obj.PatientDiseases)
-                .Include(obj => obj.PatientMedicines)
-                .FirstOrDefault(obj => obj.PatientID == id);
+                //.Include(obj => obj.PatientDiseases)
+                //.Include(obj => obj.PatientMedicines)
+                .FirstOrDefault(obj => obj.Id == id);
             
-            foreach (var data in result.PatientDiseases)
+            /*foreach (var data in result.PatientDiseases)
             {
                 data.Disease = diseases.FirstOrDefault(obj => obj.DiseaseID == data.DiseaseID);
             }
             foreach (var data in result.PatientMedicines)
             {
                 data.Medicine = medicines.FirstOrDefault(obj => obj.MedicineID == data.MedicineID);
-            }
+            }*/
             
             return result;
         }

@@ -7,12 +7,6 @@ namespace MedHelper.DAL.Entities
 {
     public class BaseEntity
     {
-        public int GetId()
-        {
-            var type = GetType();
-            var propertyName = type.Name + "ID";
-
-            return (int)type.GetProperty(propertyName).GetValue(this, null);
-        }
+        public int Id { get; set; }
     }
 }

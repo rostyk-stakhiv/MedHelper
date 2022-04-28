@@ -16,8 +16,8 @@ namespace MedHelper.Web.Controllers
         {
             var medicine = _medicineService.GetById(id);
             ViewBag.Medicine = medicine;
-            ViewBag.Composition = medicine.MedicineCompositions.ToList();
-            ViewBag.Contraindications = medicine.MedicineContraindications.ToList();
+            //ViewBag.Composition = medicine.MedicineCompositions.ToList();
+            //ViewBag.Contraindications = medicine.MedicineContraindications.ToList();
             ViewBag.Interactions = medicine.MedicineInteractions.ToList();
             return View();
         }
