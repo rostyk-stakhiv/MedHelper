@@ -26,20 +26,20 @@ namespace MedHelper.BLL.Services
             var contraindications = _unitOfWork.DiseaseRepository.FindAll();
             var interations = _unitOfWork.MedicineInteractionRepository.FindAll();
             var result =  _unitOfWork.Context.Medicines
-                .Include(obj => obj.MedicineCompositions)
-                .Include(obj => obj.MedicineContraindications)
+                //.Include(obj => obj.MedicineCompositions)
+                //.Include(obj => obj.MedicineContraindications)
                 .Include(obj => obj.MedicineInteractions);
             
             foreach (var medicine in result)
             {
-                foreach (var data in medicine.MedicineCompositions)
+                /*foreach (var data in medicine.MedicineCompositions)
                 {
                     data.Composition = compositions.FirstOrDefault(obj => obj.CompositionID == data.CompositionID);
                 }
                 foreach (var data in medicine.MedicineContraindications)
                 {
                     data.Disease = contraindications.FirstOrDefault(obj => obj.DiseaseID == data.DiseaseID);
-                }
+                }*/
                 // foreach (var data in medicine.MedicineInteractions)
                 // {
                 //     data. = contraindications.FirstOrDefault(obj => obj.DiseaseID == data.DiseaseID);
@@ -56,12 +56,12 @@ namespace MedHelper.BLL.Services
             var interations = _unitOfWork.MedicineInteractionRepository.FindAll();
             var groups = _unitOfWork.PharmacotherapeuticGroupRepository.FindAll();
             var result = _unitOfWork.Context.Medicines
-                .Include(obj => obj.MedicineCompositions)
-                .Include(obj => obj.MedicineContraindications)
+                //.Include(obj => obj.MedicineCompositions)
+                //.Include(obj => obj.MedicineContraindications)
                 .Include(obj => obj.MedicineInteractions)
-                .FirstOrDefault(obj => obj.MedicineID == id);
+                .FirstOrDefault(obj => obj.Id == id);
             
-            foreach (var data in result.MedicineCompositions)
+            /*foreach (var data in result.MedicineCompositions)
             {
                 data.Composition = compositions.FirstOrDefault(obj => obj.CompositionID == data.CompositionID);
             }
@@ -73,7 +73,7 @@ namespace MedHelper.BLL.Services
             {
                 data.Composition = compositions.FirstOrDefault(obj => obj.CompositionID == data.CompositionID);
             }
-            result.Group = groups.FirstOrDefault(x => x.PharmacotherapeuticGroupID == result.PharmacotherapeuticGroupID);
+            result.Group = groups.FirstOrDefault(x => x.PharmacotherapeuticGroupID == result.PharmacotherapeuticGroupID);*/
             return result;
         }
 

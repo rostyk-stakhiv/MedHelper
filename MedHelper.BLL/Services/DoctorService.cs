@@ -28,7 +28,7 @@ namespace MedHelper.BLL.Services
         public User GetById(int id)
         {
             var doctor =  _unitOfWork.UserRepository.GetById(id);
-            doctor.Patients = _unitOfWork.Context.Patients.Where(obj => obj.UserID == id).ToList();
+            //doctor.Patients = _unitOfWork.Context.Patients.Where(obj => obj.UserID == id).ToList();
 
             return doctor;
         }

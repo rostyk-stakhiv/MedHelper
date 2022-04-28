@@ -19,8 +19,8 @@ namespace MedHelper.Web.Controllers
         {
             var patient = _patientService.GetById(id);
             ViewBag.Patient = patient;
-            ViewBag.Medicines = patient.PatientMedicines.ToList();
-            ViewBag.Diseases = patient.PatientDiseases.ToList();
+            //ViewBag.Medicines = patient.PatientMedicines.ToList();
+            //ViewBag.Diseases = patient.PatientDiseases.ToList();
             ViewBag.AllMedicines = _patientService.GetAllMedicines().ToList();
             return View();
         }
