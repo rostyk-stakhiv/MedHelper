@@ -34,7 +34,7 @@ namespace MedHelper.DAL.Repositories
 
         public async Task DeleteByIdAsync(int id)
         {
-            var entity = await _enteties.SingleOrDefaultAsync(s => s.GetId() == id);
+            var entity = await _enteties.SingleOrDefaultAsync(s => s.Id == id);
             Delete(entity);
         }
 
@@ -43,11 +43,16 @@ namespace MedHelper.DAL.Repositories
             return _enteties;
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public T GetById(int id)
         {
-            var entity = await _enteties.SingleOrDefaultAsync(s => s.GetId() == id); 
-
-            return entity;
+            foreach (var item in _enteties)
+            {
+                if(item.Id==id)
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
         public void Update(T entity)

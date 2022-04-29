@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedHelper.DAL.Entities
+namespace MedHelper.Web.Models
 {
-    public partial class MedicineContraindication
+    public partial class MedicineContraindicationModel
     {
         public int MedicineContraindicationID { get; set; }
         public int MedicineID { get; set; }
         public int DiseaseID { get; set; }
 
-        public virtual Disease Disease { get; set; }
-        public virtual Medicine Medicine { get; set; }
+        public virtual DiseaseModel Disease { get; set; }
+        public virtual MedicineModel Medicine { get; set; }
     }
 }

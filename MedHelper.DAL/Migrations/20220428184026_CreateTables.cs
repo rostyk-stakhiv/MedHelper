@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MedHelper.DAL.Migrations
 {
-    public partial class Updating_models : Migration
+    public partial class CreateTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,101 +12,94 @@ namespace MedHelper.DAL.Migrations
                 name: "Compositions",
                 columns: table => new
                 {
-                    CompositionID = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Compositions", x => x.CompositionID);
+                    table.PrimaryKey("PK_Compositions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Diseases",
                 columns: table => new
                 {
-                    DiseaseID = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Diseases", x => x.DiseaseID);
+                    table.PrimaryKey("PK_Diseases", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PharmacotherapeuticGroups",
                 columns: table => new
                 {
-                    PharmacotherapeuticGroupID = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PharmacotherapeuticGroups", x => x.PharmacotherapeuticGroupID);
+                    table.PrimaryKey("PK_PharmacotherapeuticGroups", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
-                    RoleID = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserRole = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.RoleID);
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    UserID = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
-                    Pass = table.Column<string>(type: "text", nullable: true),
-                    RoleID = table.Column<int>(type: "integer", nullable: false)
+                    Password = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserID);
-                    table.ForeignKey(
-                        name: "FK_Users_Roles_RoleID",
-                        column: x => x.RoleID,
-                        principalTable: "Roles",
-                        principalColumn: "RoleID",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Medicines",
                 columns: table => new
                 {
-                    MedicineID = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    UserID = table.Column<int>(type: "integer", nullable: false),
-                    PharmacotherapeuticGroupID = table.Column<int>(type: "integer", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    PharmacotherapeuticGroupId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Medicines", x => x.MedicineID);
+                    table.PrimaryKey("PK_Medicines", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Medicines_PharmacotherapeuticGroups_PharmacotherapeuticGrou~",
-                        column: x => x.PharmacotherapeuticGroupID,
+                        column: x => x.PharmacotherapeuticGroupId,
                         principalTable: "PharmacotherapeuticGroups",
-                        principalColumn: "PharmacotherapeuticGroupID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Medicines_Users_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Medicines_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -114,22 +107,46 @@ namespace MedHelper.DAL.Migrations
                 name: "Patients",
                 columns: table => new
                 {
-                    PatientID = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     Gender = table.Column<string>(type: "text", nullable: true),
-                    UserID = table.Column<int>(type: "integer", nullable: false),
-                    Birthdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    Birthdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patients", x => x.PatientID);
+                    table.PrimaryKey("PK_Patients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Patients_Users_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Patients_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserID",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRole",
+                columns: table => new
+                {
+                    RolesId = table.Column<int>(type: "integer", nullable: false),
+                    UsersId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRole", x => new { x.RolesId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_UserRole_Roles_RolesId",
+                        column: x => x.RolesId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRole_Users_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -137,25 +154,23 @@ namespace MedHelper.DAL.Migrations
                 name: "MedicineComposition",
                 columns: table => new
                 {
-                    MedicineCompositionID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    MedicineID = table.Column<int>(type: "integer", nullable: false),
-                    CompositionID = table.Column<int>(type: "integer", nullable: false)
+                    CompositionsId = table.Column<int>(type: "integer", nullable: false),
+                    MedicinesId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicineComposition", x => x.MedicineCompositionID);
+                    table.PrimaryKey("PK_MedicineComposition", x => new { x.CompositionsId, x.MedicinesId });
                     table.ForeignKey(
-                        name: "FK_MedicineComposition_Compositions_CompositionID",
-                        column: x => x.CompositionID,
+                        name: "FK_MedicineComposition_Compositions_CompositionsId",
+                        column: x => x.CompositionsId,
                         principalTable: "Compositions",
-                        principalColumn: "CompositionID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicineComposition_Medicines_MedicineID",
-                        column: x => x.MedicineID,
+                        name: "FK_MedicineComposition_Medicines_MedicinesId",
+                        column: x => x.MedicinesId,
                         principalTable: "Medicines",
-                        principalColumn: "MedicineID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -163,25 +178,23 @@ namespace MedHelper.DAL.Migrations
                 name: "MedicineContraindication",
                 columns: table => new
                 {
-                    MedicineContraindicationID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    MedicineID = table.Column<int>(type: "integer", nullable: false),
-                    DiseaseID = table.Column<int>(type: "integer", nullable: false)
+                    ContraindicationsId = table.Column<int>(type: "integer", nullable: false),
+                    MedicineContraindicationsId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicineContraindication", x => x.MedicineContraindicationID);
+                    table.PrimaryKey("PK_MedicineContraindication", x => new { x.ContraindicationsId, x.MedicineContraindicationsId });
                     table.ForeignKey(
-                        name: "FK_MedicineContraindication_Diseases_DiseaseID",
-                        column: x => x.DiseaseID,
+                        name: "FK_MedicineContraindication_Diseases_ContraindicationsId",
+                        column: x => x.ContraindicationsId,
                         principalTable: "Diseases",
-                        principalColumn: "DiseaseID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicineContraindication_Medicines_MedicineID",
-                        column: x => x.MedicineID,
+                        name: "FK_MedicineContraindication_Medicines_MedicineContraindication~",
+                        column: x => x.MedicineContraindicationsId,
                         principalTable: "Medicines",
-                        principalColumn: "MedicineID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -189,26 +202,26 @@ namespace MedHelper.DAL.Migrations
                 name: "MedicineInteraction",
                 columns: table => new
                 {
-                    MedicineInteractionID = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    MedicineID = table.Column<int>(type: "integer", nullable: false),
-                    CompositionID = table.Column<int>(type: "integer", nullable: false)
+                    MedicineId = table.Column<int>(type: "integer", nullable: false),
+                    CompositionId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicineInteraction", x => x.MedicineInteractionID);
+                    table.PrimaryKey("PK_MedicineInteraction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MedicineInteraction_Compositions_CompositionID",
-                        column: x => x.CompositionID,
+                        name: "FK_MedicineInteraction_Compositions_CompositionId",
+                        column: x => x.CompositionId,
                         principalTable: "Compositions",
-                        principalColumn: "CompositionID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicineInteraction_Medicines_MedicineID",
-                        column: x => x.MedicineID,
+                        name: "FK_MedicineInteraction_Medicines_MedicineId",
+                        column: x => x.MedicineId,
                         principalTable: "Medicines",
-                        principalColumn: "MedicineID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -216,25 +229,23 @@ namespace MedHelper.DAL.Migrations
                 name: "PatientDisease",
                 columns: table => new
                 {
-                    PatientDiseaseID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PatientID = table.Column<int>(type: "integer", nullable: false),
-                    DiseaseID = table.Column<int>(type: "integer", nullable: false)
+                    DiseasesId = table.Column<int>(type: "integer", nullable: false),
+                    PatientsId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PatientDisease", x => x.PatientDiseaseID);
+                    table.PrimaryKey("PK_PatientDisease", x => new { x.DiseasesId, x.PatientsId });
                     table.ForeignKey(
-                        name: "FK_PatientDisease_Diseases_DiseaseID",
-                        column: x => x.DiseaseID,
+                        name: "FK_PatientDisease_Diseases_DiseasesId",
+                        column: x => x.DiseasesId,
                         principalTable: "Diseases",
-                        principalColumn: "DiseaseID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PatientDisease_Patients_PatientID",
-                        column: x => x.PatientID,
+                        name: "FK_PatientDisease_Patients_PatientsId",
+                        column: x => x.PatientsId,
                         principalTable: "Patients",
-                        principalColumn: "PatientID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -242,97 +253,75 @@ namespace MedHelper.DAL.Migrations
                 name: "PatientMedicine",
                 columns: table => new
                 {
-                    PatientMedicineID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    MedicineID = table.Column<int>(type: "integer", nullable: false),
-                    PatientID = table.Column<int>(type: "integer", nullable: false)
+                    MedicinesId = table.Column<int>(type: "integer", nullable: false),
+                    PatientsId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PatientMedicine", x => x.PatientMedicineID);
+                    table.PrimaryKey("PK_PatientMedicine", x => new { x.MedicinesId, x.PatientsId });
                     table.ForeignKey(
-                        name: "FK_PatientMedicine_Medicines_MedicineID",
-                        column: x => x.MedicineID,
+                        name: "FK_PatientMedicine_Medicines_MedicinesId",
+                        column: x => x.MedicinesId,
                         principalTable: "Medicines",
-                        principalColumn: "MedicineID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PatientMedicine_Patients_PatientID",
-                        column: x => x.PatientID,
+                        name: "FK_PatientMedicine_Patients_PatientsId",
+                        column: x => x.PatientsId,
                         principalTable: "Patients",
-                        principalColumn: "PatientID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicineComposition_CompositionID",
+                name: "IX_MedicineComposition_MedicinesId",
                 table: "MedicineComposition",
-                column: "CompositionID");
+                column: "MedicinesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicineComposition_MedicineID",
-                table: "MedicineComposition",
-                column: "MedicineID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MedicineContraindication_DiseaseID",
+                name: "IX_MedicineContraindication_MedicineContraindicationsId",
                 table: "MedicineContraindication",
-                column: "DiseaseID");
+                column: "MedicineContraindicationsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicineContraindication_MedicineID",
-                table: "MedicineContraindication",
-                column: "MedicineID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MedicineInteraction_CompositionID",
+                name: "IX_MedicineInteraction_CompositionId",
                 table: "MedicineInteraction",
-                column: "CompositionID");
+                column: "CompositionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicineInteraction_MedicineID",
+                name: "IX_MedicineInteraction_MedicineId",
                 table: "MedicineInteraction",
-                column: "MedicineID");
+                column: "MedicineId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Medicines_PharmacotherapeuticGroupID",
+                name: "IX_Medicines_PharmacotherapeuticGroupId",
                 table: "Medicines",
-                column: "PharmacotherapeuticGroupID");
+                column: "PharmacotherapeuticGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Medicines_UserID",
+                name: "IX_Medicines_UserId",
                 table: "Medicines",
-                column: "UserID");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PatientDisease_DiseaseID",
+                name: "IX_PatientDisease_PatientsId",
                 table: "PatientDisease",
-                column: "DiseaseID");
+                column: "PatientsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PatientDisease_PatientID",
-                table: "PatientDisease",
-                column: "PatientID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PatientMedicine_MedicineID",
+                name: "IX_PatientMedicine_PatientsId",
                 table: "PatientMedicine",
-                column: "MedicineID");
+                column: "PatientsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PatientMedicine_PatientID",
-                table: "PatientMedicine",
-                column: "PatientID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Patients_UserID",
+                name: "IX_Patients_UserId",
                 table: "Patients",
-                column: "UserID");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleID",
-                table: "Users",
-                column: "RoleID");
+                name: "IX_UserRole_UsersId",
+                table: "UserRole",
+                column: "UsersId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -353,6 +342,9 @@ namespace MedHelper.DAL.Migrations
                 name: "PatientMedicine");
 
             migrationBuilder.DropTable(
+                name: "UserRole");
+
+            migrationBuilder.DropTable(
                 name: "Compositions");
 
             migrationBuilder.DropTable(
@@ -365,13 +357,13 @@ namespace MedHelper.DAL.Migrations
                 name: "Patients");
 
             migrationBuilder.DropTable(
+                name: "Roles");
+
+            migrationBuilder.DropTable(
                 name: "PharmacotherapeuticGroups");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
         }
     }
 }

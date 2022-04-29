@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedHelper.DAL.Entities
+namespace MedHelper.Web.Models
 {
-    public partial class Disease : BaseEntity
+    public partial class DiseaseModel: BaseModel
     {
         public string Title { get; set; }
 
-        public List<Patient> Patients { get; set; }
-        public List<Medicine> MedicineContraindications { get; set; }
 
         public override string ToString()
         {

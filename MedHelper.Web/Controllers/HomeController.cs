@@ -1,9 +1,9 @@
 ﻿using System;
-using MedHelper.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using MedHelper.Models;
 
 namespace MedHelper.Controllers
 {

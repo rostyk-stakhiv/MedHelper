@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MedHelper.BLL.Interfaces;
+using MedHelper.BLL.Models;
+using MedHelper.BLL.Services;
+using MedHelper.DAL;
+using MedHelper.DAL.Entities;
+using MedHelper.DAL.Interfaces;
+using MedHelper.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +32,12 @@ namespace MedHelper.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<MedHelperDBContext>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IMedicineService, MedicineService>();
+            services.AddScoped<IDoctorService, DoctorService>();
             services.AddControllersWithViews();
         }
 

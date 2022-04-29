@@ -25,7 +25,6 @@ namespace MedHelper.BLL.Models
 
         public int UserID { get; set; }
         public DateTime Birthdate { get; set; }
-
         public virtual UserModel User { get; set; }
         public virtual ICollection<PatientDiseaseModel> PatientDiseases { get; set; }
         public virtual ICollection<PatientMedicineModel> PatientMedicines { get; set; }
