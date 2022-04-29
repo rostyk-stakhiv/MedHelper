@@ -11,6 +11,6 @@ namespace MedHelper.DAL.Entities
         [EnumDataType(typeof(Role))]
         public string UserRole { get; set; }
 
-        public List<User> Users { get; set; }
+        public List<UserRole> UserRoles { get; set; }
     }
 }

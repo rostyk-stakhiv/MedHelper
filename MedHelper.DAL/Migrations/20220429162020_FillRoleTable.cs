@@ -2,7 +2,7 @@
 
 namespace MedHelper.DAL.Migrations
 {
-    public partial class FillRole : Migration
+    public partial class FillRoleTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

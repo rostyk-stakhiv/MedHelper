@@ -13,7 +13,8 @@ namespace MedHelper.DAL.Entities
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public List<Role> Roles { get; set; }
+        public List<UserRole> UserRoles { get; set; }
+
         public List<Patient> Patients { get; set; }
         public List<Medicine> Medicines { get; set; }
     }

@@ -21,7 +21,7 @@ namespace MedHelper.DAL.Entities
         public int UserId { get; set; }
         public virtual User User { get; set; }
 
-        public List<Disease> Diseases { get; set; }
-        public List<Medicine> Medicines { get; set; }
+        public List<PatientDisease> PatientDiseases { get; set; }
+        public List<PatientMedicine> PatientMedicines { get; set; }
     }
 }
