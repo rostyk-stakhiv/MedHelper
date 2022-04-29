@@ -10,7 +10,7 @@ namespace MedHelper.DAL.Entities
     {
         public string Description { get; set; }
 
-        public List<Medicine> Medicines { get; set; }
+        public List<MedicineComposition> MedicineCompositions { get; set; }
         public List<MedicineInteraction> MedicineInteractions { get; set; }
     }
 }

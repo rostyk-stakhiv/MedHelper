@@ -16,10 +16,10 @@ namespace MedHelper.DAL.Entities
         public int PharmacotherapeuticGroupId { get; set; }
         public PharmacotherapeuticGroup Group { get; set; }
 
-        public List<Patient> Patients { get; set; }
-        public List<Disease> Contraindications { get; set; }
+        public List<PatientMedicine> PatientMedicines { get; set; }
+        public List<MedicineContraindication> MedicineContraindications { get; set; }
 
-        public List<Composition> Compositions { get; set; }
+        public List<MedicineComposition> MedicineCompositions { get; set; }
         public List<MedicineInteraction> MedicineInteractions { get; set; }
 
         public override string ToString()

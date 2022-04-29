@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedHelper.DAL.Migrations
 {
     [DbContext(typeof(MedHelperDBContext))]
-    [Migration("20220428184115_FillRole")]
-    partial class FillRole
+    [Migration("20220429161949_CreateTables")]
+    partial class CreateTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,51 +20,6 @@ namespace MedHelper.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("CompositionMedicine", b =>
-                {
-                    b.Property<int>("CompositionsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MedicinesId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CompositionsId", "MedicinesId");
-
-                    b.HasIndex("MedicinesId");
-
-                    b.ToTable("MedicineComposition");
-                });
-
-            modelBuilder.Entity("DiseaseMedicine", b =>
-                {
-                    b.Property<int>("ContraindicationsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MedicineContraindicationsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ContraindicationsId", "MedicineContraindicationsId");
-
-                    b.HasIndex("MedicineContraindicationsId");
-
-                    b.ToTable("MedicineContraindication");
-                });
-
-            modelBuilder.Entity("DiseasePatient", b =>
-                {
-                    b.Property<int>("DiseasesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PatientsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("DiseasesId", "PatientsId");
-
-                    b.HasIndex("PatientsId");
-
-                    b.ToTable("PatientDisease");
-                });
 
             modelBuilder.Entity("MedHelper.DAL.Entities.Composition", b =>
                 {
@@ -121,6 +76,50 @@ namespace MedHelper.DAL.Migrations
                     b.ToTable("Medicines");
                 });
 
+            modelBuilder.Entity("MedHelper.DAL.Entities.MedicineComposition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("CompositionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MedicineId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompositionId");
+
+                    b.HasIndex("MedicineId");
+
+                    b.ToTable("MedicineComposition");
+                });
+
+            modelBuilder.Entity("MedHelper.DAL.Entities.MedicineContraindication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("ContraindicationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MedicineId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContraindicationId");
+
+                    b.HasIndex("MedicineId");
+
+                    b.ToTable("MedicineContraindication");
+                });
+
             modelBuilder.Entity("MedHelper.DAL.Entities.MedicineInteraction", b =>
                 {
                     b.Property<int>("Id")
@@ -173,6 +172,50 @@ namespace MedHelper.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("MedHelper.DAL.Entities.PatientDisease", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("DiseaseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiseaseId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("PatientDisease");
+                });
+
+            modelBuilder.Entity("MedHelper.DAL.Entities.PatientMedicine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("MedicineId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicineId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("PatientMedicine");
                 });
 
             modelBuilder.Entity("MedHelper.DAL.Entities.PharmacotherapeuticGroup", b =>
@@ -229,79 +272,26 @@ namespace MedHelper.DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MedicinePatient", b =>
+            modelBuilder.Entity("MedHelper.DAL.Entities.UserRole", b =>
                 {
-                    b.Property<int>("MedicinesId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PatientsId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.HasKey("MedicinesId", "PatientsId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("PatientsId");
+                    b.HasIndex("RoleId");
 
-                    b.ToTable("PatientMedicine");
-                });
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserRole");
-                });
-
-            modelBuilder.Entity("CompositionMedicine", b =>
-                {
-                    b.HasOne("MedHelper.DAL.Entities.Composition", null)
-                        .WithMany()
-                        .HasForeignKey("CompositionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MedHelper.DAL.Entities.Medicine", null)
-                        .WithMany()
-                        .HasForeignKey("MedicinesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DiseaseMedicine", b =>
-                {
-                    b.HasOne("MedHelper.DAL.Entities.Disease", null)
-                        .WithMany()
-                        .HasForeignKey("ContraindicationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MedHelper.DAL.Entities.Medicine", null)
-                        .WithMany()
-                        .HasForeignKey("MedicineContraindicationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DiseasePatient", b =>
-                {
-                    b.HasOne("MedHelper.DAL.Entities.Disease", null)
-                        .WithMany()
-                        .HasForeignKey("DiseasesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MedHelper.DAL.Entities.Patient", null)
-                        .WithMany()
-                        .HasForeignKey("PatientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("MedHelper.DAL.Entities.Medicine", b =>
@@ -321,6 +311,44 @@ namespace MedHelper.DAL.Migrations
                     b.Navigation("Group");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MedHelper.DAL.Entities.MedicineComposition", b =>
+                {
+                    b.HasOne("MedHelper.DAL.Entities.Composition", "Composition")
+                        .WithMany("MedicineCompositions")
+                        .HasForeignKey("CompositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MedHelper.DAL.Entities.Medicine", "Medicine")
+                        .WithMany("MedicineCompositions")
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Composition");
+
+                    b.Navigation("Medicine");
+                });
+
+            modelBuilder.Entity("MedHelper.DAL.Entities.MedicineContraindication", b =>
+                {
+                    b.HasOne("MedHelper.DAL.Entities.Disease", "Contraindication")
+                        .WithMany("MedicineContraindications")
+                        .HasForeignKey("ContraindicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MedHelper.DAL.Entities.Medicine", "Medicine")
+                        .WithMany("MedicineContraindications")
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contraindication");
+
+                    b.Navigation("Medicine");
                 });
 
             modelBuilder.Entity("MedHelper.DAL.Entities.MedicineInteraction", b =>
@@ -353,44 +381,93 @@ namespace MedHelper.DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MedicinePatient", b =>
+            modelBuilder.Entity("MedHelper.DAL.Entities.PatientDisease", b =>
                 {
-                    b.HasOne("MedHelper.DAL.Entities.Medicine", null)
-                        .WithMany()
-                        .HasForeignKey("MedicinesId")
+                    b.HasOne("MedHelper.DAL.Entities.Disease", "Disease")
+                        .WithMany("PatientDiseases")
+                        .HasForeignKey("DiseaseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MedHelper.DAL.Entities.Patient", null)
-                        .WithMany()
-                        .HasForeignKey("PatientsId")
+                    b.HasOne("MedHelper.DAL.Entities.Patient", "Patient")
+                        .WithMany("PatientDiseases")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Disease");
+
+                    b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("MedHelper.DAL.Entities.PatientMedicine", b =>
                 {
-                    b.HasOne("MedHelper.DAL.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
+                    b.HasOne("MedHelper.DAL.Entities.Medicine", "Medicine")
+                        .WithMany("PatientMedicines")
+                        .HasForeignKey("MedicineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MedHelper.DAL.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
+                    b.HasOne("MedHelper.DAL.Entities.Patient", "Patient")
+                        .WithMany("PatientMedicines")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Medicine");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("MedHelper.DAL.Entities.UserRole", b =>
+                {
+                    b.HasOne("MedHelper.DAL.Entities.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MedHelper.DAL.Entities.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MedHelper.DAL.Entities.Composition", b =>
                 {
+                    b.Navigation("MedicineCompositions");
+
                     b.Navigation("MedicineInteractions");
+                });
+
+            modelBuilder.Entity("MedHelper.DAL.Entities.Disease", b =>
+                {
+                    b.Navigation("MedicineContraindications");
+
+                    b.Navigation("PatientDiseases");
                 });
 
             modelBuilder.Entity("MedHelper.DAL.Entities.Medicine", b =>
                 {
+                    b.Navigation("MedicineCompositions");
+
+                    b.Navigation("MedicineContraindications");
+
                     b.Navigation("MedicineInteractions");
+
+                    b.Navigation("PatientMedicines");
+                });
+
+            modelBuilder.Entity("MedHelper.DAL.Entities.Patient", b =>
+                {
+                    b.Navigation("PatientDiseases");
+
+                    b.Navigation("PatientMedicines");
                 });
 
             modelBuilder.Entity("MedHelper.DAL.Entities.PharmacotherapeuticGroup", b =>
@@ -398,11 +475,18 @@ namespace MedHelper.DAL.Migrations
                     b.Navigation("Medicines");
                 });
 
+            modelBuilder.Entity("MedHelper.DAL.Entities.Role", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
             modelBuilder.Entity("MedHelper.DAL.Entities.User", b =>
                 {
                     b.Navigation("Medicines");
 
                     b.Navigation("Patients");
+
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

@@ -39,15 +39,15 @@ namespace MedHelper.BLL
             .ForMember(p => p.FirstName, c => c.MapFrom(patient => patient.FirstName))
             .ForMember(p => p.Gender, c => c.MapFrom(patient => patient.Gender))
             .ForMember(p => p.Birthdate, c => c.MapFrom(patient => patient.Birthdate))
-            .ForMember(p => p.Diseases, c => c.MapFrom(patient => patient.Diseases))
-            .ForMember(p => p.Medicines, c => c.MapFrom(patient => patient.Medicines));
+            .ForMember(p => p.Diseases, c => c.MapFrom(patient => patient.PatientDiseases))
+            .ForMember(p => p.Medicines, c => c.MapFrom(patient => patient.PatientMedicines));
         
         CreateMap<Medicine, MedicineResponse>()
             .ForMember(d => d.Id, c => c.MapFrom(medicine => medicine.Id))
             .ForMember(d => d.Name, c => c.MapFrom(medicine => medicine.Name))
             .ForMember(d => d.Group, c => c.MapFrom(medicine => medicine.Group))
-            .ForMember(d => d.Contraindications, c => c.MapFrom(medicine => medicine.Contraindications))
-            .ForMember(d => d.Compositions, c => c.MapFrom(medicine => medicine.Compositions))
+            .ForMember(d => d.Contraindications, c => c.MapFrom(medicine => medicine.MedicineContraindications))
+            .ForMember(d => d.Compositions, c => c.MapFrom(medicine => medicine.MedicineCompositions))
             .ForMember(d => d.MedicineInteractions, c => c.MapFrom(medicine => medicine.MedicineInteractions));
 
         CreateMap<UpdateDoctorDto, User>()
@@ -61,16 +61,16 @@ namespace MedHelper.BLL
             .ForMember(p => p.FirstName, c => c.MapFrom(patient => patient.FirstName))
             .ForMember(p => p.Gender, c => c.MapFrom(patient => patient.Gender))
             .ForMember(p => p.Birthdate, c => c.MapFrom(patient => patient.Birthdate))
-            .ForMember(p => p.Diseases, c => c.MapFrom(patient => patient.DiseasesIds))
-            .ForMember(p => p.Medicines, c => c.MapFrom(patient => patient.MedicineIds));
+            .ForMember(p => p.PatientDiseases, c => c.MapFrom(patient => patient.DiseasesIds))
+            .ForMember(p => p.PatientMedicines, c => c.MapFrom(patient => patient.MedicineIds));
         
         CreateMap<UpdatePatientDto, Patient>()
             .ForMember(p => p.LastName, c => c.MapFrom(patient => patient.LastName))
             .ForMember(p => p.FirstName, c => c.MapFrom(patient => patient.FirstName))
             .ForMember(p => p.Gender, c => c.MapFrom(patient => patient.Gender))
             .ForMember(p => p.Birthdate, c => c.MapFrom(patient => patient.Birthdate))
-            .ForMember(p => p.Diseases, c => c.MapFrom(patient => patient.DiseasesIds))
-            .ForMember(p => p.Medicines, c => c.MapFrom(patient => patient.MedicineIds));
+            .ForMember(p => p.PatientDiseases, c => c.MapFrom(patient => patient.DiseasesIds))
+            .ForMember(p => p.PatientMedicines, c => c.MapFrom(patient => patient.MedicineIds));
 
         //        CreateMap<Patient, PatientModel>()
         //            .ForMember(p => p.Id, c => c.MapFrom(patient => patient.Id))
