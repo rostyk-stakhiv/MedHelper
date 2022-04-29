@@ -18,6 +18,6 @@ namespace MedHelper_API.Dto.Doctor
         
         [Required]
         [StringLength(40, ErrorMessage = "Password is too short (minimum is 8 characters).", MinimumLength =8)]
-        public string Pass { get; set; }
+        public string Password { get; set; }
     }
 }
