@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace MedHelper_API.Responses
+namespace MedHelper.BLL.Dto.Responses
 {
     public class MedicineResponse
     {

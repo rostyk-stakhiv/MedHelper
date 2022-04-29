@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace MedHelper_API.Dto.Doctor
+namespace MedHelper.BLL.Dto.Doctor
 {
     public class UpdateDoctorDto
     {

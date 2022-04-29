@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using MedHelper.DAL.Entities;
 
-namespace MedHelper_API.Responses
+namespace MedHelper.BLL.Dto.Responses
 {
     public class PatientResponse
     {

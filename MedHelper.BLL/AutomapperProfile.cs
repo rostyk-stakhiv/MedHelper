@@ -2,9 +2,9 @@ using AutoMapper;
 using MedHelper.BLL.Models;
 using MedHelper.DAL.Entities;
 using System.Linq;
-using MedHelper_API.Dto.Doctor;
-using MedHelper_API.Dto.Patient;
-using MedHelper_API.Responses;
+using MedHelper.BLL.Dto.Doctor;
+using MedHelper.BLL.Dto.Patient;
+using MedHelper.BLL.Dto.Responses;
 
 namespace MedHelper.BLL
 {

@@ -1,4 +1,4 @@
-namespace MedHelper_API.Dto.Patient
+namespace MedHelper.BLL.Dto.Patient
 {
     public class UpdatePatientDto : CreatePatientDto
     {

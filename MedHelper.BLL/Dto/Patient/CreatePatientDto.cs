@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace MedHelper_API.Dto.Patient
+namespace MedHelper.BLL.Dto.Patient
 {
     public class CreatePatientDto
     {
