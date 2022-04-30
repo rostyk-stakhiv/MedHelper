@@ -15,7 +15,7 @@ namespace MedHelper.DAL.Repositories
         }
         public IEnumerable<Medicine> GetAllWithDetails()
         {
-            var medicines = FindAll();
+            var medicines = FindAll().ToList();
             foreach (var medicine in medicines)
             {
                 getDetails(medicine);
@@ -34,7 +34,8 @@ namespace MedHelper.DAL.Repositories
         private void getDetails(Medicine medicine)
         {
             //pharmatheuticGroup
-            medicine.Group = _context.PharmacotherapeuticGroups.FirstOrDefault(x => x.Id == medicine.PharmacotherapeuticGroupId);
+            var group = _context.PharmacotherapeuticGroups.FirstOrDefault(x => x.Id == medicine.PharmacotherapeuticGroupId);
+            medicine.Group = group;
 
             //contraindications
             var contraindications = _context.MedicineContraindication.Where(x => x.MedicineId == medicine.Id).ToList();

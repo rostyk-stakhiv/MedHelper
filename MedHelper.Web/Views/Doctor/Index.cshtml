@@ -36,7 +36,7 @@
             <div class="scroll-panel"> 
                 @for (var i = 0; i < ViewBag.Doctor.Patients.Count; i++)
                 {
-                    <button class="button-patient"type="button" onclick="redirect(@ViewBag.Doctor.Patients[i].PatientID)">@ViewBag.Doctor.Patients[i].FirstName @ViewBag.Doctor.Patients[i].LastName</button>
+                    <button class="button-patient"type="button" onclick="redirect(@ViewBag.Doctor.Patients[i].Id)">@ViewBag.Doctor.Patients[i].FirstName @ViewBag.Doctor.Patients[i].LastName</button>
                 }           
             </div> 
         </div> 

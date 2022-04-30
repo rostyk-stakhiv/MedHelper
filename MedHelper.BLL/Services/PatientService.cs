@@ -32,7 +32,7 @@ namespace MedHelper.BLL.Services
             foreach(var contraindication in contraindications)
             {
                 medicines = medicines.Where(x =>
-                x.MedicineContraindications.FirstOrDefault(y => y.ContraindicationId == contraindication)==null);
+                x.MedicineContraindications.FirstOrDefault(y => y.ContraindicationId == contraindication)!=null);
             }
 
             return _mapper.Map<List<MedicineResponse>>(medicines);

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 namespace MedHelper.BLL.Dto.Responses
 {
     public class DoctorResponse
@@ -6,6 +7,6 @@ namespace MedHelper.BLL.Dto.Responses
         public string LastName { get; set; }
         public string Email { get; set; }
         
-        // public List<PatientResponse>? Patients { get; set; }
+         public List<MedHelper.DAL.Entities.Patient> Patients { get; set; }
     }
 }

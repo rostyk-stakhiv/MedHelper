@@ -19,8 +19,8 @@ namespace MedHelper.Web.Controllers
         {
             var patient = await _patientService.GetByIdAsync(id);
             ViewBag.Patient = patient;
-            //ViewBag.Medicines = patient.PatientMedicines.ToList();
-            //ViewBag.Diseases = patient.PatientDiseases.ToList();
+            ViewBag.Medicines = patient.Medicines.ToList();
+            ViewBag.Diseases = patient.Diseases.ToList();
             ViewBag.AllMedicines = await _patientService.GetAllMedicinesForPatientAsync(id);
             return View();
         }
