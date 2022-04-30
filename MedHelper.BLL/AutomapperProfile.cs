@@ -2,6 +2,7 @@ using AutoMapper;
 using MedHelper.DAL.Entities;
 using System.Linq;
 using MedHelper.BLL.Dto.Doctor;
+using MedHelper.BLL.Dto.Medicine;
 using MedHelper.BLL.Dto.Patient;
 using MedHelper.BLL.Dto.Responses;
 
@@ -19,6 +20,12 @@ namespace MedHelper.BLL
         CreateMap<Composition, CompositionResponse>()
             .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Id))
             .ForMember(d => d.Description, c => c.MapFrom(disease => disease.Description));
+
+        CreateMap<CreateMedicineDto, Medicine>()
+            .ForMember(d => d.Name, c => c.MapFrom(disease => disease.Name));
+
+        CreateMap<UpdateMedicineDto, Medicine>()
+            .ForMember(d => d.Name, c => c.MapFrom(disease => disease.Name));
 
         CreateMap<Disease, DiseaseResponse>()
             .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Id))
