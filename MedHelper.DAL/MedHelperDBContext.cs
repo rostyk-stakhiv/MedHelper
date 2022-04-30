@@ -23,10 +23,15 @@ namespace MedHelper.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .HasMany(c => c.Roles)
-                .WithMany(s => s.Users)
-                .UsingEntity(j => j.ToTable("UserRole"));
+            modelBuilder.Entity<UserRole>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.UserRoles)
+                .HasForeignKey(bc => bc.UserId);
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(bc => bc.Role)
+                .WithMany(c => c.UserRoles)
+                .HasForeignKey(bc => bc.RoleId);
 
             modelBuilder.Entity<Patient>()
                 .HasOne(s => s.User)
@@ -43,25 +48,46 @@ namespace MedHelper.DAL
                 .WithMany(g => g.Medicines)
                 .HasForeignKey(s => s.PharmacotherapeuticGroupId);
 
-            modelBuilder.Entity<Patient>()
-                .HasMany(c => c.Medicines)
-                .WithMany(s => s.Patients)
-                .UsingEntity(j => j.ToTable("PatientMedicine"));
+            modelBuilder.Entity<PatientMedicine>()
+                .HasOne(bc => bc.Patient)
+                .WithMany(b => b.PatientMedicines)
+                .HasForeignKey(bc => bc.PatientId);
 
-            modelBuilder.Entity<Patient>()
-                .HasMany(c => c.Diseases)
-                .WithMany(s => s.Patients)
-                .UsingEntity(j => j.ToTable("PatientDisease"));
+            modelBuilder.Entity<PatientMedicine>()
+                .HasOne(bc => bc.Medicine)
+                .WithMany(c => c.PatientMedicines)
+                .HasForeignKey(bc => bc.MedicineId);
 
-            modelBuilder.Entity<Medicine>()
-               .HasMany(c => c.Contraindications)
-               .WithMany(s => s.MedicineContraindications)
-               .UsingEntity(j => j.ToTable("MedicineContraindication"));
 
-            modelBuilder.Entity<Medicine>()
-                .HasMany(c => c.Compositions)
-                .WithMany(s => s.Medicines)
-                .UsingEntity(j => j.ToTable("MedicineComposition"));
+            modelBuilder.Entity<PatientDisease>()
+                            .HasOne(bc => bc.Patient)
+                            .WithMany(b => b.PatientDiseases)
+                            .HasForeignKey(bc => bc.PatientId);
+
+            modelBuilder.Entity<PatientDisease>()
+                .HasOne(bc => bc.Disease)
+                .WithMany(c => c.PatientDiseases)
+                .HasForeignKey(bc => bc.DiseaseId);
+
+            modelBuilder.Entity<MedicineContraindication>()
+                           .HasOne(bc => bc.Medicine)
+                           .WithMany(b => b.MedicineContraindications)
+                           .HasForeignKey(bc => bc.MedicineId);
+
+            modelBuilder.Entity<MedicineContraindication>()
+                .HasOne(bc => bc.Contraindication)
+                .WithMany(c => c.MedicineContraindications)
+                .HasForeignKey(bc => bc.ContraindicationId);
+
+            modelBuilder.Entity<MedicineComposition>()
+                .HasOne(bc => bc.Composition)
+                .WithMany(b => b.MedicineCompositions)
+                .HasForeignKey(bc => bc.CompositionId);
+
+            modelBuilder.Entity<MedicineComposition>()
+                .HasOne(bc => bc.Medicine)
+                .WithMany(c => c.MedicineCompositions)
+                .HasForeignKey(bc => bc.MedicineId);
 
             modelBuilder.Entity<MedicineInteraction>()
                 .HasOne(bc => bc.Composition)
@@ -72,8 +98,6 @@ namespace MedHelper.DAL
                 .HasOne(bc => bc.Medicine)
                 .WithMany(c => c.MedicineInteractions)
                 .HasForeignKey(bc => bc.MedicineId);
-
-
         }
     }
 }
