@@ -289,7 +289,7 @@ namespace MedHelper.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRole");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("MedHelper.DAL.Entities.Medicine", b =>

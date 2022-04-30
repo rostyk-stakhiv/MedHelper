@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedHelper.DAL.Migrations
 {
     [DbContext(typeof(MedHelperDBContext))]
-    [Migration("20220429161949_CreateTables")]
-    partial class CreateTables
+    [Migration("20220430132558_FillRoleTable")]
+    partial class FillRoleTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -291,7 +291,7 @@ namespace MedHelper.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRole");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("MedHelper.DAL.Entities.Medicine", b =>
