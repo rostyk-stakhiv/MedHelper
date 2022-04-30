@@ -12,13 +12,13 @@ namespace MedHelper.Web.Controllers
             _medicineService = medicineService;
         }
         [HttpGet("/Medicine/{id}")]
-        public IActionResult ViewMedicine(int id)
+        public async Task<IActionResult> ViewMedicine(int id)
         {
-            var medicine = _medicineService.GetByIdAsync(id);
+            var medicine = await _medicineService.GetByIdAsync(id);
             ViewBag.Medicine = medicine;
-            //ViewBag.Composition = medicine.MedicineCompositions.ToList();
-            //ViewBag.Contraindications = medicine.MedicineContraindications.ToList();
-            //ViewBag.Interactions = medicine.MedicineInteractions.ToList();
+            ViewBag.Composition = medicine.Compositions.ToList();
+            ViewBag.Contraindications = medicine.Contraindications.ToList();
+            ViewBag.Interactions = medicine.MedicineInteractions.ToList();
             return View();
         }
     }
