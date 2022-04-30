@@ -7,11 +7,11 @@
     var interaction = "";
     foreach (var item in ViewBag.Composition)
     {
-        composition += item.Composition.Description + ", ";
+        composition += item.Description + ", ";
     }
     foreach (var item in ViewBag.Contraindications)
     {
-        contraindication += item.Disease.Title;
+        contraindication += item.Title +"; ";
     }
     for(int i=0;i<ViewBag.Interactions.Count;i++)
     {

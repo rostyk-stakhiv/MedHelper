@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using MedHelper.BLL;
 using MedHelper.BLL.Interfaces;
-using MedHelper.BLL.Models;
 using MedHelper.BLL.Services;
 using MedHelper.DAL;
 using MedHelper.DAL.Entities;
@@ -12,6 +13,7 @@ using MedHelper.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,8 +34,17 @@ namespace MedHelper.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MedHelperDBContext>();
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutomapperProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton<IMapper>(mapper);
+            services.AddDbContext<MedHelperDBContext>(ServiceLifetime.Transient);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IPatientRepository,PatientRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IMedicineService, MedicineService>();
@@ -71,7 +82,6 @@ namespace MedHelper.Web
                     diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
                 };
             });
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -7,7 +7,7 @@ namespace MedHelper.BLL.Interfaces
     {
         IEnumerable<TModel> GetAll();
 
-        TModel GetById(int id);
+        Task<TModel> GetByIdAsync(int id);
 
         Task AddAsync(TModel model);
 

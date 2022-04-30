@@ -21,10 +21,5 @@ namespace MedHelper.DAL.Entities
 
         public List<MedicineComposition> MedicineCompositions { get; set; }
         public List<MedicineInteraction> MedicineInteractions { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
     }
 }

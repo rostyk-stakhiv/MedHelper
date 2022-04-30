@@ -1,8 +1,8 @@
 using AutoMapper;
-using MedHelper.BLL.Models;
 using MedHelper.DAL.Entities;
 using System.Linq;
 using MedHelper.BLL.Dto.Doctor;
+using MedHelper.BLL.Dto.Medicine;
 using MedHelper.BLL.Dto.Patient;
 using MedHelper.BLL.Dto.Responses;
 
@@ -12,18 +12,35 @@ namespace MedHelper.BLL
     {
     public AutomapperProfile()
     {
-        CreateMap<User, DoctorResponse>()
-            .ForMember(d => d.FirstName, c => c.MapFrom(disease => disease.FirstName))
-            .ForMember(d => d.LastName, c => c.MapFrom(disease => disease.LastName))
-            .ForMember(d => d.Email, c => c.MapFrom(disease => disease.Email));
-        
-        CreateMap<Composition, CompositionResponse>()
-            .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Id))
-            .ForMember(d => d.Description, c => c.MapFrom(disease => disease.Description));
+            CreateMap<MedicineContraindication, DiseaseResponse>()
+            .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Contraindication.Id))
+            .ForMember(d => d.Title, c => c.MapFrom(disease => disease.Contraindication.Title));
 
-        CreateMap<Disease, DiseaseResponse>()
-            .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Id))
-            .ForMember(d => d.Title, c => c.MapFrom(disease => disease.Title));
+            CreateMap<MedicineComposition, CompositionResponse>()
+            .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Composition.Id))
+            .ForMember(d => d.Description, c => c.MapFrom(disease => disease.Composition.Description));
+
+            CreateMap<PatientDisease, DiseaseResponse>()
+            .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Disease.Id))
+            .ForMember(d => d.Title, c => c.MapFrom(disease => disease.Disease.Title));
+            CreateMap<PatientMedicine, MedicineResponse>()
+            .ForMember(d => d.Id, c => c.MapFrom(medicine => medicine.Medicine.Id))
+            .ForMember(d => d.Name, c => c.MapFrom(medicine => medicine.Medicine.Name))
+            .ForMember(d => d.Group, c => c.MapFrom(medicine => medicine.Medicine.Group))
+            .ForMember(d => d.Contraindications, c => c.MapFrom(medicine => medicine.Medicine.MedicineContraindications))
+            .ForMember(d => d.Compositions, c => c.MapFrom(medicine => medicine.Medicine.MedicineCompositions))
+            .ForMember(d => d.MedicineInteractions, c => c.MapFrom(medicine => medicine.Medicine.MedicineInteractions));
+
+            CreateMap<User, DoctorResponse>()
+                .ForMember(d => d.FirstName, c => c.MapFrom(disease => disease.FirstName))
+                .ForMember(d => d.LastName, c => c.MapFrom(disease => disease.LastName))
+                .ForMember(d => d.Email, c => c.MapFrom(disease => disease.Email))
+                .ForMember(d => d.Patients, c => c.MapFrom(disease => disease.Patients));
+
+
+        
+
+        
         
         CreateMap<PharmacotherapeuticGroup, PharmacotherapeuticGroupResponse>()
             .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Id))

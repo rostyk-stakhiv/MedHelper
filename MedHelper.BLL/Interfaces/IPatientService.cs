@@ -1,13 +1,24 @@
-﻿using MedHelper.BLL.Models;
+﻿using MedHelper.BLL.Dto.Patient;
+using MedHelper.BLL.Dto.Responses;
 using MedHelper.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MedHelper.BLL.Interfaces
 {
-    public interface IPatientService:ICrud<Patient>
+    public interface IPatientService
     {
-        public IEnumerable<Medicine> GetAllMedicines();
+        public Task<IEnumerable<MedicineResponse>> GetAllMedicinesForPatientAsync(int userId);
+        IEnumerable<PatientResponse> GetAll();
+
+        Task<PatientResponse> GetByIdAsync(int id);
+
+        Task AddAsync(CreatePatientDto model);
+
+        Task UpdateAsync(UpdatePatientDto model);
+
+        Task DeleteByIdAsync(int modelId);
     }
 }
