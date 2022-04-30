@@ -4,49 +4,81 @@
     Layout = null;
 }
 
-<head>
-    <link rel="stylesheet" href="~/css/Account/login-layout.css" />
-    <link rel="stylesheet" href="~/css/Account/password-reset.css" />
-    <link rel="stylesheet" href="~/css/HomeStyle.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <title>Title</title>
-</head>
-<body>
-    <header class="login_layout">
-        <button type="button" class="btn home" onclick="location.href='@Url.Action("Index", "Home")'">
-            MedHelper
-        </button>
-    </header>
-    <main role="main" class="login_layout">
-        <div class="container" style=" align-self: center;">
-            <div class="user_login_form">
-                <h2 class="form_title">Register</h2>
-                <form method="post">
-                    <div asp-validation-summary="ModelOnly"></div>
-                    <div class="row_with_two_columns">
-                        <div class="one_column">
-                            <label asp-for="FirstName" class="cred_label">FirstName</label>
-                            <input asp-for="FirstName" class="cred_small_input" placeholder="John" />
+
+<link rel="stylesheet" href="~/css/authorization.css" type="text/css" />
+<div class="row justify-content-md-center">
+    <div class="col-md-5">
+        @using (Html.BeginForm("Register", "Authorization", FormMethod.Post))
+        {
+            //@Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Register</div>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <div class="left-container">
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.FirstName)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(m => m.FirstName, "", new { @class = "form-control", @placeholder = "First Name" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "badge badge-danger" })
+                            </div>
                         </div>
-                        <div class="one_column">
-                            <label asp-for="LastName" class="cred_label">LastName</label>
-                            <input asp-for="LastName" class="cred_small_input" placeholder="Doe" />
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.LastName)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(m => m.LastName, "", new { @class = "form-control", @placeholder = "Last Name" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "badge badge-danger" })
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <label asp-for="Email" class="cred_label">EmailAddress</label>
-                        <input asp-for="Email" class="cred_input" placeholder="jonhdoe@gmail.com" />
+                    <div class="right-container">
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.Email)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "badge badge-danger" })
+                            </div>
+
+                            @if (ViewBag.error != null)
+                            {
+                                <span class="badge badge-danger">@ViewBag.error</span>
+                            }
+
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.Password)
+                            </div>
+                            <div>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "badge badge-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-danger" value="Register" />
+                        </div>
                     </div>
-                    <div>
-                        <label asp-for="Password" class="cred_label">Password</label>
-                        <input asp-for="Password" class="cred_input" placeholder="8+ characters (letters and numbers)" />
-                    </div>
-                    <div>
-                        <button type="submit" class="submit_button">SignUpButton</button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
-    </main>
-</body>
+
+        }
+    </div>
+</div>

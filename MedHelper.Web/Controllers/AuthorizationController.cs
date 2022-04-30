@@ -13,96 +13,88 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using MedHelper.DAL.Entities;
+using MedHelper.DAL.Enums;
 using MedHelper.DAL;
 using MedHelper.Web.Models;
 
-namespace ArtHouse.Controllers
+namespace MedHelper.Web.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly MedHelperDBContext _context;
 
-        public AuthorizationController(UserManager<User> userManager, SignInManager<User> signInManager, MedHelperDBContext context)
+        public AuthorizationController(MedHelperDBContext context)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult Login()
+        public ActionResult Register()
         {
-            LoginViewModel model = new LoginViewModel();
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                User user = await _userManager.FindByEmailAsync(model.Email);
-
-                if (user != null)
-                {
-                    bool correct_password = await _userManager.CheckPasswordAsync(user, model.Password);
-                    if (correct_password)
-                    {
-                        await _signInManager.SignInAsync(user, false);
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                ModelState.AddModelError("", "Error");
-            }
-
             return View();
         }
 
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> RegisterAsync()
-        {
-            RegisterViewModel model = new RegisterViewModel();
-            return View(model);
-        }
-
+        //POST: Register
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(User _user)
         {
             if (ModelState.IsValid)
             {
-                User user = new()
+                Role r = new Role { UserRole = "Doctor", Users = new List<User>() { _user } };
+                _user.Roles = new List<Role>() { r };
+                var check = _context.Users.FirstOrDefault(s => s.Email == _user.Email);
+                if (check == null)
                 {
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                };
-
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, "user");
+                    _context.Users.Add(_user);
+                    _context.SaveChanges();
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                    ViewBag.error = "Email already exists";
+                    return View();
+                }
+
+
+            }
+            return View();
+
+
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(string email, string password)
+        {
+            if (ModelState.IsValid)
+            {
+                var data = _context.Users.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
+                if (data.Count() > 0)
+                {
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.error = "Login failed";
+                    return RedirectToAction("Login");
                 }
             }
+            return View();
+        }
 
-            return View(model);
 
+        //Logout
+        public ActionResult Logout()
+        {
+            return RedirectToAction("Login");
         }
     }
 }

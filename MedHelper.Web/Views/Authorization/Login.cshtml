@@ -4,28 +4,48 @@
     Layout = null;
 }
 
+<link rel="stylesheet" href="~/css/authorization.css" type="text/css" />
+
 <head>
     <title>@ViewData["Title"]</title>
 </head>
+<div class="row justify-content-md-center">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Login
+            </div>
+            <hr>
+            <div class="card-body">
+                <div class="left-container">
+                    @using (Html.BeginForm("Login", "Authorization", FormMethod.Post))
+                    {
 
-
-<div class="user_login_form">
-
-    <h2 class="form_title">Login</h2>
-
-    <form method="post">
-
-        <div asp-validation-summary="All" class="input_error"></div>
-        <div>
-            <label asp-for="Email" class="cred_label">email</label>
-            <input asp-for="Email" class="cred_input" placeholder="Email@gmail.com" />
-        </div>
-        <div>
-            <label asp-for="Password" class="cred_label">password</label>
-            <input asp-for="Password" class="cred_input" placeholder="6+ characters" />
-        </div>
-        <div>
-            <button type="submit" class="submit_button">log in</button>
-        </div>
-    </form>
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.Email)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.Password)
+                            </div>
+                            <div>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-primary" value="Login" />
+                        </div>
+                    }
+                </div>
+                    <div class="right-container">
+                    </div>
+                </div>
+            </div>
+    </div>
 </div>
