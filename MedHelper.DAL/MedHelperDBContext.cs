@@ -13,6 +13,7 @@ namespace MedHelper.DAL
         public DbSet<Patient> Patients { get; set; }
         public DbSet<MedicineInteraction> MedicineInteraction { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<PharmacotherapeuticGroup> PharmacotherapeuticGroups { get; set; }
 
 

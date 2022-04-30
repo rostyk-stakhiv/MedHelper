@@ -40,12 +40,13 @@ namespace MedHelper.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                Role r = new Role { UserRole = "Doctor", Users = new List<User>() { _user } };
-                _user.Roles = new List<Role>() { r };
+                Role r = _context.Roles.FirstOrDefault(x => x.UserRole == "Doctor");
+                UserRole ur = new UserRole { Role = r, User = _user };
                 var check = _context.Users.FirstOrDefault(s => s.Email == _user.Email);
                 if (check == null)
                 {
                     _context.Users.Add(_user);
+                    _context.UserRoles.Add(ur);
                     _context.SaveChanges();
                     return RedirectToAction("Index", "Home");
                 }
@@ -54,8 +55,6 @@ namespace MedHelper.Web.Controllers
                     ViewBag.error = "Email already exists";
                     return View();
                 }
-
-
             }
             return View();
 
@@ -78,13 +77,12 @@ namespace MedHelper.Web.Controllers
                 var data = _context.Users.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
                 if (data.Count() > 0)
                 {
-
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     ViewBag.error = "Login failed";
-                    return RedirectToAction("Login");
+                    return View("Login");
                 }
             }
             return View();
