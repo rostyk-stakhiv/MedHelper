@@ -1,0 +1,31 @@
+﻿@model MedHelper.Web.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<head>
+    <title>@ViewData["Title"]</title>
+</head>
+
+
+<div class="user_login_form">
+
+    <h2 class="form_title">Login</h2>
+
+    <form method="post">
+
+        <div asp-validation-summary="All" class="input_error"></div>
+        <div>
+            <label asp-for="Email" class="cred_label">email</label>
+            <input asp-for="Email" class="cred_input" placeholder="Email@gmail.com" />
+        </div>
+        <div>
+            <label asp-for="Password" class="cred_label">password</label>
+            <input asp-for="Password" class="cred_input" placeholder="6+ characters" />
+        </div>
+        <div>
+            <button type="submit" class="submit_button">log in</button>
+        </div>
+    </form>
+</div>
