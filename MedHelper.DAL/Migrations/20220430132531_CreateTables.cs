@@ -127,7 +127,7 @@ namespace MedHelper.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRole",
+                name: "UserRoles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -137,15 +137,15 @@ namespace MedHelper.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRole", x => x.Id);
+                    table.PrimaryKey("PK_UserRoles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserRole_Roles_RoleId",
+                        name: "FK_UserRoles_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserRole_Users_UserId",
+                        name: "FK_UserRoles_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -349,13 +349,13 @@ namespace MedHelper.DAL.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRole_RoleId",
-                table: "UserRole",
+                name: "IX_UserRoles_RoleId",
+                table: "UserRoles",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRole_UserId",
-                table: "UserRole",
+                name: "IX_UserRoles_UserId",
+                table: "UserRoles",
                 column: "UserId");
         }
 
@@ -377,7 +377,7 @@ namespace MedHelper.DAL.Migrations
                 name: "PatientMedicine");
 
             migrationBuilder.DropTable(
-                name: "UserRole");
+                name: "UserRoles");
 
             migrationBuilder.DropTable(
                 name: "Compositions");

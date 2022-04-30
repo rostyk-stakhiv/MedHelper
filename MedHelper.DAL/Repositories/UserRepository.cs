@@ -74,7 +74,7 @@ namespace MedHelper.DAL.Repositories
             user.Medicines = medicines;
 
             //roles
-            var userRoles = _context.UserRole.Where(x => x.UserId == user.Id);
+            var userRoles = _context.UserRoles.Where(x => x.UserId == user.Id);
             foreach (var userRole in userRoles)
             {
                 userRole.Role = _context.Roles.FirstOrDefault(x => x.Id == userRole.RoleId);
