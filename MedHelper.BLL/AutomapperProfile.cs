@@ -2,6 +2,7 @@ using AutoMapper;
 using MedHelper.DAL.Entities;
 using System.Linq;
 using MedHelper.BLL.Dto.Doctor;
+using MedHelper.BLL.Dto.Medicine;
 using MedHelper.BLL.Dto.Patient;
 using MedHelper.BLL.Dto.Responses;
 
