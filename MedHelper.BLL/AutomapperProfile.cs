@@ -1,5 +1,4 @@
 using AutoMapper;
-using MedHelper.BLL.Models;
 using MedHelper.DAL.Entities;
 using System.Linq;
 using MedHelper.BLL.Dto.Doctor;

@@ -12,9 +12,9 @@ namespace MedHelper.Web.Controllers
         {
             _doctorService = doctorService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var doctor = _doctorService.GetById(2);
+            var doctor = await _doctorService.GetByIdAsync(1);
             ViewBag.Doctor = doctor;
             return View();
         }

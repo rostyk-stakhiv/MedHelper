@@ -9,11 +9,11 @@ namespace MedHelper.DAL
     public class UnitOfWork : IUnitOfWork
     {
         private readonly MedHelperDBContext _context;
-        private IRepository<Patient> patientRepository;
-        private IRepository<Medicine> medicineRepository;
+        private IPatientRepository patientRepository;
+        private IMedicineRepository medicineRepository;
         private IRepository<Disease> diseaseRepository;
         private IRepository<Composition> compositionRepository;
-        private IRepository<User> userRepository;
+        private IUserRepository userRepository;
         private IRepository<MedicineInteraction> medicineInteractionRepository;
         private IRepository<Role> roleRepository;
         private IRepository<PharmacotherapeuticGroup> pharmacotherapeuticGroupRepository;
@@ -23,33 +23,26 @@ namespace MedHelper.DAL
             _context = context;
         }
 
-        public MedHelperDBContext Context
-        {
-            get
-            {
-                return _context;
-            }
-        }
 
-        public IRepository<Patient> PatientRepository
+        public IPatientRepository PatientRepository
         {
             get
             {
                 if (patientRepository == null)
                 {
-                    patientRepository = new Repository<Patient>(_context);
+                    patientRepository = new PatientRepository(_context);
                 }
                 return patientRepository;
             }
         }
 
-        public IRepository<Medicine> MedicineRepository
+        public IMedicineRepository MedicineRepository
         {
             get
             {
                 if (medicineRepository == null)
                 {
-                    medicineRepository = new Repository<Medicine>(_context);
+                    medicineRepository = new MedicineRepository(_context);
                 }
                 return medicineRepository;
             }
@@ -78,13 +71,13 @@ namespace MedHelper.DAL
                 return compositionRepository;
             }
         }
-        public IRepository<User> UserRepository
+        public IUserRepository UserRepository
         {
             get
             {
                 if (userRepository == null)
                 {
-                    userRepository = new Repository<User>(_context);
+                    userRepository = new UserRepository(_context);
                 }
                 return userRepository;
             }

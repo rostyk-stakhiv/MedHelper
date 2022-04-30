@@ -14,11 +14,11 @@ namespace MedHelper.Web.Controllers
         [HttpGet("/Medicine/{id}")]
         public IActionResult ViewMedicine(int id)
         {
-            var medicine = _medicineService.GetById(id);
+            var medicine = _medicineService.GetByIdAsync(id);
             ViewBag.Medicine = medicine;
             //ViewBag.Composition = medicine.MedicineCompositions.ToList();
             //ViewBag.Contraindications = medicine.MedicineContraindications.ToList();
-            ViewBag.Interactions = medicine.MedicineInteractions.ToList();
+            //ViewBag.Interactions = medicine.MedicineInteractions.ToList();
             return View();
         }
     }

@@ -12,10 +12,5 @@ namespace MedHelper.DAL.Entities
 
         public List<PatientDisease> PatientDiseases { get; set; }
         public List<MedicineContraindication> MedicineContraindications { get; set; }
-
-        public override string ToString()
-        {
-            return Title;
-        }
     }
 }
