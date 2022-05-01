@@ -24,9 +24,7 @@ namespace MedHelper.BLL.Services
         }
 
         public IEnumerable<MedicineResponse> GetAll()
-        {
-            
-            
+        {            
             return _mapper.Map<List<MedicineResponse>>(_unitOfWork.MedicineRepository.GetAllWithDetails());
         }
 
