@@ -22,10 +22,12 @@ namespace MedHelper.Web.Controllers
     public class AuthorizationController : Controller
     {
         private readonly MedHelperDBContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public AuthorizationController(MedHelperDBContext context)
+        public AuthorizationController(MedHelperDBContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public ActionResult Register()
@@ -36,27 +38,43 @@ namespace MedHelper.Web.Controllers
         //POST: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(User _user)
+        public async Task<ActionResult> Register(User user)
         {
-            if (ModelState.IsValid)
+            if (await _userManager.FindByEmailAsync(user.Email) != null)
             {
-                Role r = _context.Roles.FirstOrDefault(x => x.UserRole == "Doctor");
-                UserRole ur = new UserRole { Role = r, User = _user };
-                var check = _context.Users.FirstOrDefault(s => s.Email == _user.Email);
-                if (check == null)
-                {
-                    _context.Users.Add(_user);
-                    _context.UserRoles.Add(ur);
-                    _context.SaveChanges();
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ViewBag.error = "Email already exists";
-                    return View();
-                }
+
+                ViewBag.error = "Email already exists";
+                return View();
             }
-            return View();
+            // var newUser = user
+            user.UserName = user.FirstName + user.LastName;
+            var createdUser = await _userManager.CreateAsync(user, user.Password);
+            if (!createdUser.Succeeded)
+            {
+
+                ViewBag.error = "error";
+                return View();
+            }
+            //Use roleManager
+            //if (ModelState.IsValid)
+            //{
+            //    Role r = _context.Roles.FirstOrDefault(x => x.UserRole == "Doctor");
+            //    UserRole ur = new UserRole { Role = r, User = _user };
+            //    var check = _context.Users.FirstOrDefault(s => s.Email == _user.Email);
+            //    if (check == null)
+            //    {
+            //        _context.Users.Add(_user);
+            //        _context.UserRoles.Add(ur);
+            //        _context.SaveChanges();
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    else
+            //    {
+            //        ViewBag.error = "Email already exists";
+            //        return View();
+            //    }
+            //}
+            return View("Login");
 
 
         }
@@ -70,20 +88,34 @@ namespace MedHelper.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(string email, string password)
+        public async Task<ActionResult> Login(string email, string password)
         {
+
             if (ModelState.IsValid)
             {
-                var data = _context.Users.Where(s => s.Email.Equals(email) && s.Password.Equals(password)).ToList();
-                if (data.Count() > 0)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
+                var user = await _userManager.FindByEmailAsync(email);
+                bool isPasswordValid = await _userManager.CheckPasswordAsync(user, password);
+                if (!isPasswordValid)
                 {
                     ViewBag.error = "Login failed";
                     return View("Login");
                 }
+                var claims = new List<Claim>() {
+                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Id)),
+                        new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim(ClaimTypes.Role, "use role managet to get roles:)"),
+                };
+                //Initialize a new instance of the ClaimsIdentity with the claims and authentication scheme    
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                //Initialize a new instance of the ClaimsPrincipal with ClaimsIdentity    
+                var principal = new ClaimsPrincipal(identity);
+                //SignInAsync is a Extension method for Sign in a principal for the specified scheme.    
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties()
+                {
+                    IsPersistent = false
+                });
+
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }

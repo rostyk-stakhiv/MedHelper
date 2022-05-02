@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using MedHelper.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MedHelper.Controllers
 {
@@ -27,7 +28,7 @@ namespace MedHelper.Controllers
             _diagnosticContext = diagnosticContext ??
                                  throw new ArgumentNullException(nameof(diagnosticContext));
         }
-
+       // [Authorize]
         public IActionResult Index()
         {
             // The request completion event will carry this property
