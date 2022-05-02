@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MedHelper.BLL.Dto.Responses;
 using MedHelper.BLL.Interfaces;
 using MedHelper.DAL;
 using MedHelper.DAL.Entities;
@@ -14,82 +15,42 @@ namespace MedHelper.BLL.Services
     public class MedicineService: IMedicineService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public MedicineService(IUnitOfWork unitOfWork)
+        public MedicineService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;  
         }
 
-        public IEnumerable<Medicine> GetAll()
-        {
-            var compositions = _unitOfWork.CompositionRepository.FindAll();
-            var contraindications = _unitOfWork.DiseaseRepository.FindAll();
-            var interations = _unitOfWork.MedicineInteractionRepository.FindAll();
-            var result =  _unitOfWork.Context.Medicines
-                //.Include(obj => obj.MedicineCompositions)
-                //.Include(obj => obj.MedicineContraindications)
-                .Include(obj => obj.MedicineInteractions);
-            
-            foreach (var medicine in result)
-            {
-                /*foreach (var data in medicine.MedicineCompositions)
-                {
-                    data.Composition = compositions.FirstOrDefault(obj => obj.CompositionID == data.CompositionID);
-                }
-                foreach (var data in medicine.MedicineContraindications)
-                {
-                    data.Disease = contraindications.FirstOrDefault(obj => obj.DiseaseID == data.DiseaseID);
-                }*/
-                // foreach (var data in medicine.MedicineInteractions)
-                // {
-                //     data. = contraindications.FirstOrDefault(obj => obj.DiseaseID == data.DiseaseID);
-                // }
-            }
-            
-            return result;
+        public IEnumerable<MedicineResponse> GetAll()
+        {            
+            return _mapper.Map<List<MedicineResponse>>(_unitOfWork.MedicineRepository.GetAllWithDetails());
         }
 
-        public Medicine GetById(int id)
+        public async Task<MedicineResponse> GetByIdAsync(int id)
         {
-            var compositions = _unitOfWork.CompositionRepository.FindAll();
-            var contraindications = _unitOfWork.DiseaseRepository.FindAll();
-            var interations = _unitOfWork.MedicineInteractionRepository.FindAll();
-            var groups = _unitOfWork.PharmacotherapeuticGroupRepository.FindAll();
-            var result = _unitOfWork.Context.Medicines
-                //.Include(obj => obj.MedicineCompositions)
-                //.Include(obj => obj.MedicineContraindications)
-                .Include(obj => obj.MedicineInteractions)
-                .FirstOrDefault(obj => obj.Id == id);
-            
-            /*foreach (var data in result.MedicineCompositions)
-            {
-                data.Composition = compositions.FirstOrDefault(obj => obj.CompositionID == data.CompositionID);
-            }
-            foreach (var data in result.MedicineContraindications)
-            {
-                data.Disease = contraindications.FirstOrDefault(obj => obj.DiseaseID == data.DiseaseID);
-            }
-            foreach (var data in result.MedicineInteractions)
-            {
-                data.Composition = compositions.FirstOrDefault(obj => obj.CompositionID == data.CompositionID);
-            }
-            result.Group = groups.FirstOrDefault(x => x.PharmacotherapeuticGroupID == result.PharmacotherapeuticGroupID);*/
-            return result;
+            var result = await _unitOfWork.MedicineRepository.GetByIdWithDetailsAsync(id);
+            return _mapper.Map<MedicineResponse>(result);
         }
 
-        public Task AddAsync(Medicine model)
-        {
-            throw new System.NotImplementedException();
-        }
+        //public async Task AddAsync(CreateMedicineDto model)
+        //{
+        //    var medicine = _mapper.Map<Medicine>(model);
+        //    await _unitOfWork.MedicineRepository.AddAsync(medicine);
+        //    await _unitOfWork.SaveAsync();
+        //}
 
-        public Task UpdateAsync(Medicine model)
+        //public async Task UpdateAsync(UpdateMedicineDto model)
+        //{
+        //    var patient = _mapper.Map<Patient>(model);
+        //    _unitOfWork.PatientRepository.Update(patient);
+        //    await _unitOfWork.SaveAsync();
+        //}
+        public async Task DeleteByIdAsync(int modelId)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task DeleteByIdAsync(int modelId)
-        {
-            throw new System.NotImplementedException();
+            await _unitOfWork.MedicineRepository.DeleteByIdAsync(modelId);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

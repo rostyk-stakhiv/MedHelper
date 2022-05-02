@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MedHelper.BLL.Dto.Doctor;
+using MedHelper.BLL.Dto.Responses;
 using MedHelper.BLL.Interfaces;
 using MedHelper.DAL;
 using MedHelper.DAL.Entities;
@@ -14,38 +16,28 @@ namespace MedHelper.BLL.Services
     public class DoctorService :IDoctorService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public DoctorService(IUnitOfWork unitOfWork)
+        public DoctorService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public IEnumerable<User> GetAll()
+
+        public async Task<DoctorResponse> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var doctor = await _unitOfWork.UserRepository.GetByIdWithDetailsAsync(id);
+
+            return _mapper.Map<DoctorResponse>(doctor);
         }
 
-        public User GetById(int id)
-        {
-            var doctor =  _unitOfWork.UserRepository.GetById(id);
-            //doctor.Patients = _unitOfWork.Context.Patients.Where(obj => obj.UserID == id).ToList();
 
-            return doctor;
-        }
-
-        public Task AddAsync(User model)
+        public async Task UpdateAsync(UpdateDoctorDto model)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task UpdateAsync(User model)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task DeleteByIdAsync(int modelId)
-        {
-            throw new System.NotImplementedException();
+            var doctor = _mapper.Map<User>(model);
+            _unitOfWork.UserRepository.Update(doctor);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

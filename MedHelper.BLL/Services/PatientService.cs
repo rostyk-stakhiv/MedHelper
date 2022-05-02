@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-
+using MedHelper.BLL.Dto.Patient;
+using MedHelper.BLL.Dto.Responses;
 using MedHelper.BLL.Interfaces;
 using MedHelper.DAL;
 using MedHelper.DAL.Entities;
@@ -15,74 +16,58 @@ namespace MedHelper.BLL.Services
     public class PatientService: IPatientService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public PatientService(IUnitOfWork unitOfWork)
+        public PatientService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public IEnumerable<Medicine> GetAllMedicines()
+        public async Task<IEnumerable<MedicineResponse>> GetAllMedicinesForPatientAsync(int userId)
         {
-            return _unitOfWork.MedicineRepository.FindAll();
-        }
-
-        public IEnumerable<Patient> GetAll()
-        {
-            var diseases = _unitOfWork.DiseaseRepository.FindAll();
-            var medicines = _unitOfWork.MedicineRepository.FindAll();
-            var result = _unitOfWork.Context.Patients;
-                //.Include(obj => obj.PatientDiseases)
-                //.Include(obj => obj.PatientMedicines);
-            
-            /*foreach (var patient in result)
+            var patient = await _unitOfWork.PatientRepository.GetByIdWithDetailsAsync(userId);
+            var contraindications = patient.PatientDiseases.Select(x => x.DiseaseId).ToList();
+            var medicines = _unitOfWork.MedicineRepository.GetAllWithDetails();
+            foreach(var contraindication in contraindications)
             {
-                foreach (var data in patient.PatientDiseases)
-                {
-                    data.Disease = diseases.FirstOrDefault(obj => obj.DiseaseID == data.DiseaseID);
-                }
-                foreach (var data in patient.PatientMedicines)
-                {
-                    data.Medicine = medicines.FirstOrDefault(obj => obj.MedicineID == data.MedicineID);
-                }
-            }*/
-            
-            return result;
-        }
-
-        public Patient GetById(int id)
-        {
-            var diseases = _unitOfWork.DiseaseRepository.FindAll();
-            var medicines = _unitOfWork.MedicineRepository.FindAll();
-            var result = _unitOfWork.Context.Patients
-                //.Include(obj => obj.PatientDiseases)
-                //.Include(obj => obj.PatientMedicines)
-                .FirstOrDefault(obj => obj.Id == id);
-            
-            /*foreach (var data in result.PatientDiseases)
-            {
-                data.Disease = diseases.FirstOrDefault(obj => obj.DiseaseID == data.DiseaseID);
+                medicines = medicines.Where(x =>
+                x.MedicineContraindications.FirstOrDefault(y => y.ContraindicationId == contraindication)!=null);
             }
-            foreach (var data in result.PatientMedicines)
-            {
-                data.Medicine = medicines.FirstOrDefault(obj => obj.MedicineID == data.MedicineID);
-            }*/
+
+            return _mapper.Map<List<MedicineResponse>>(medicines);
+        }
+
+        public IEnumerable<PatientResponse> GetAll()
+        {           
+            return _mapper.Map<List<PatientResponse>>(_unitOfWork.PatientRepository.GetAllWithDetails());
+        }
+
+        public async Task<PatientResponse> GetByIdAsync(int id)
+        {
+            var result = await _unitOfWork.PatientRepository.GetByIdWithDetailsAsync(id);
             
-            return result;
+            return _mapper.Map<PatientResponse>(result);
         }
 
-        public async Task AddAsync(Patient model)
+        public async Task AddAsync(CreatePatientDto model)
         {
-            throw new NotImplementedException();
+            var patient = _mapper.Map<Patient>(model);
+            await _unitOfWork.PatientRepository.AddAsync(patient);
+            await _unitOfWork.SaveAsync();
         }
 
-        public async Task UpdateAsync(Patient model)
+        public async Task UpdateAsync(UpdatePatientDto model)
         {
-            throw new NotImplementedException();
+            var patient = _mapper.Map<Patient>(model);
+            _unitOfWork.PatientRepository.Update(patient);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task DeleteByIdAsync(int modelId)
         {
             await _unitOfWork.PatientRepository.DeleteByIdAsync(modelId);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MedHelper.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MedHelper.Web.Controllers
 {
@@ -12,12 +13,12 @@ namespace MedHelper.Web.Controllers
             _medicineService = medicineService;
         }
         [HttpGet("/Medicine/{id}")]
-        public IActionResult ViewMedicine(int id)
+        public async Task<IActionResult> ViewMedicine(int id)
         {
-            var medicine = _medicineService.GetById(id);
+            var medicine = await _medicineService.GetByIdAsync(id);
             ViewBag.Medicine = medicine;
-            //ViewBag.Composition = medicine.MedicineCompositions.ToList();
-            //ViewBag.Contraindications = medicine.MedicineContraindications.ToList();
+            ViewBag.Composition = medicine.Compositions.ToList();
+            ViewBag.Contraindications = medicine.Contraindications.ToList();
             ViewBag.Interactions = medicine.MedicineInteractions.ToList();
             return View();
         }

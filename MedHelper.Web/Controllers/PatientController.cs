@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MedHelper.Web.Controllers
 {
@@ -15,13 +16,13 @@ namespace MedHelper.Web.Controllers
         _patientService = patientService;
         }
         [HttpGet("/Patient/{id}")]
-        public IActionResult ViewPatient(int id)
+        public async Task<IActionResult> ViewPatientAsync(int id)
         {
-            var patient = _patientService.GetById(id);
+            var patient = await _patientService.GetByIdAsync(id);
             ViewBag.Patient = patient;
-            //ViewBag.Medicines = patient.PatientMedicines.ToList();
-            //ViewBag.Diseases = patient.PatientDiseases.ToList();
-            ViewBag.AllMedicines = _patientService.GetAllMedicines().ToList();
+            ViewBag.Medicines = patient.Medicines.ToList();
+            ViewBag.Diseases = patient.Diseases.ToList();
+            ViewBag.AllMedicines = await _patientService.GetAllMedicinesForPatientAsync(id);
             return View();
         }
 
