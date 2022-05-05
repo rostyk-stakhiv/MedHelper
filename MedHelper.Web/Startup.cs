@@ -57,7 +57,8 @@ namespace MedHelper.Web
               .AddRoles<Role>()
               .AddEntityFrameworkStores<MedHelperDBContext>()
               .AddSignInManager<SignInManager<User>>()
-              .AddRoleManager<RoleManager<Role>>();
+              .AddRoleManager<RoleManager<Role>>()
+              .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

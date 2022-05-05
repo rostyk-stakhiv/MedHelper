@@ -15,15 +15,17 @@ using System.Threading.Tasks;
 using MedHelper.DAL.Entities;
 using MedHelper.Web.Models;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net.Mail;
+using System.Net;
 
 namespace MedHelper.Web.Controllers
 {
-    public class AuthorizationController : Controller
+    public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
 
-        public AuthorizationController(UserManager<User> userManager, RoleManager<Role> roleManager)
+        public AccountController(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -75,6 +77,41 @@ namespace MedHelper.Web.Controllers
             //        return View();
             //    }
             //}
+
+            string confirmationToken = _userManager.
+                 GenerateEmailConfirmationTokenAsync(user).Result;
+
+            string confirmationLink = Url.Action("ConfirmEmail",
+              "Account", new
+              {
+                  userid = user.Id,
+                  token = confirmationToken
+              },
+               protocol: HttpContext.Request.Scheme);
+
+            SmtpClient MyServer = new SmtpClient();
+            MyServer.Host = "smtp.gmail.com";
+            MyServer.Port = 587;
+            MyServer.EnableSsl = true;
+            //Server Credentials
+            NetworkCredential NC = new NetworkCredential();
+            NC.UserName = "medhelperteam@gmail.com";
+            NC.Password = "345Edc345%%%";
+            //assigned credetial details to server
+            MyServer.Credentials = NC;
+
+            //create sender address
+            MailAddress from = new MailAddress("MedHelperTeam@gmail.com", "MedhelperTeam");
+
+            //create receiver address
+            MailAddress receiver = new MailAddress(user.Email, user.UserName);
+
+            MailMessage Mymessage = new MailMessage(from, receiver);
+            Mymessage.Subject = "Confirm email";
+            Mymessage.Body = confirmationLink;
+            //sends the email
+            MyServer.Send(Mymessage);
+
             return View("Login");
 
 
@@ -128,6 +165,24 @@ namespace MedHelper.Web.Controllers
         {
             await HttpContext.SignOutAsync();
             return RedirectToAction("Login");
+        }
+
+
+        public IActionResult ConfirmEmail(string userid, string token)
+        {
+            var user = _userManager.FindByIdAsync(userid).Result;
+            var result = _userManager.
+                        ConfirmEmailAsync(user, token).Result;
+            if (result.Succeeded)
+            {
+                ViewBag.Message = "Email confirmed successfully!";
+                return View("Success");
+            }
+            else
+            {
+                ViewBag.Message = "Error while confirming your email!";
+                return View("Error");
+            }
         }
     }
 }
