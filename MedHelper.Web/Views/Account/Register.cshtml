@@ -1,13 +1,12 @@
 ﻿@model MedHelper.Web.Models.RegisterViewModel
 @{
     ViewData["Title"] = "Register";
-    Layout = null;
 }
 
 
-<link rel="stylesheet" href="~/css/authorization.css" type="text/css" />
-<div class="row justify-content-md-center">
-    <div class="col-md-5">
+<link rel="stylesheet" href=~/css/authorization_style.css type="text/css" />
+<div >
+    <div >
         @using (Html.BeginForm("Register", "Account", FormMethod.Post))
         {
             //@Html.ValidationSummary()
