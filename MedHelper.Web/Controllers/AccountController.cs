@@ -176,7 +176,7 @@ namespace MedHelper.Web.Controllers
             if (result.Succeeded)
             {
                 ViewBag.Message = "Email confirmed successfully!";
-                return View("Success");
+                return View("ConfirmEmail");
             }
             else
             {
