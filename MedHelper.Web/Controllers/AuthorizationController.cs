@@ -13,21 +13,20 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using MedHelper.DAL.Entities;
-using MedHelper.DAL.Enums;
-using MedHelper.DAL;
 using MedHelper.Web.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MedHelper.Web.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private readonly MedHelperDBContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public AuthorizationController(MedHelperDBContext context, UserManager<User> userManager)
+        public AuthorizationController(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
-            _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public ActionResult Register()
@@ -47,8 +46,10 @@ namespace MedHelper.Web.Controllers
                 return View();
             }
             // var newUser = user
+            await _roleManager.CreateAsync(new Role() { Name = "Doctor" });
             user.UserName = user.FirstName + user.LastName;
             var createdUser = await _userManager.CreateAsync(user, user.Password);
+            await _userManager.AddToRoleAsync(user, "Doctor");
             if (!createdUser.Succeeded)
             {
 
@@ -100,10 +101,11 @@ namespace MedHelper.Web.Controllers
                     ViewBag.error = "Login failed";
                     return View("Login");
                 }
+                var userRole = await _userManager.GetRolesAsync(user);
                 var claims = new List<Claim>() {
                     new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Id)),
                         new Claim(ClaimTypes.Name, user.UserName),
-                        new Claim(ClaimTypes.Role, "use role managet to get roles:)"),
+                        new Claim(ClaimTypes.Role, userRole.First()),
                 };
                 //Initialize a new instance of the ClaimsIdentity with the claims and authentication scheme    
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -112,8 +114,8 @@ namespace MedHelper.Web.Controllers
                 //SignInAsync is a Extension method for Sign in a principal for the specified scheme.    
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties()
                 {
-                    IsPersistent = false
-                });
+                    IsPersistent = true
+                }) ;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -122,8 +124,9 @@ namespace MedHelper.Web.Controllers
 
 
         //Logout
-        public ActionResult Logout()
+        public async Task<ActionResult> Logout()
         {
+            await HttpContext.SignOutAsync();
             return RedirectToAction("Login");
         }
     }

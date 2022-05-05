@@ -56,7 +56,8 @@ namespace MedHelper.Web
             services.AddIdentityCore<User>()
               .AddRoles<Role>()
               .AddEntityFrameworkStores<MedHelperDBContext>()
-              .AddSignInManager<SignInManager<User>>();
+              .AddSignInManager<SignInManager<User>>()
+              .AddRoleManager<RoleManager<Role>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,7 +94,7 @@ namespace MedHelper.Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
