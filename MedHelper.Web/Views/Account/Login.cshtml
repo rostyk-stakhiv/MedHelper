@@ -6,7 +6,7 @@
 <head>
     <title>@ViewData["Title"]</title>
 </head>
-<link rel="stylesheet" href=~/css/authorization_style.css type="text/css" />
+<link rel="stylesheet" href=~/css/authorizationStyle.css type="text/css" />
 
 
 <div>
@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <input type="submit" name="submit" class="btn btn-primary" value="Login" />
                             <div class="link">
-                                <p><a href="" >Forget password?</a></p>
+                                <p><a href="/Account/ForgotPassword" >Forget password?</a></p>
                             </div>
                         </div>
 
@@ -53,7 +53,7 @@
                             </div>
                             <div class="gr">
                                 <img class="doctor-img" src="~/plus.png" alt="" />
-                                <input type="submit" name="submit" class="btn btn-primary" value="Sign up" />
+                                <input type="submit" name="submit" class="btn btn-primary"  onclick="RedirectToRegister()" value="Sign up" />
                             </div>
                         </div>
 
@@ -66,3 +66,10 @@
             </div>
     </div>
 </div>
+
+<script>
+    RedirectToRegister = function () {
+        window.location.href = "/Account/Register";
+    }
+
+</script>

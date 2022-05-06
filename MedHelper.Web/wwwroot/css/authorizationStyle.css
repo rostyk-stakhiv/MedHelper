@@ -56,14 +56,13 @@ input[type=submit] {
     color: white;
     border: none;
     cursor: pointer;
-    width: 300px;
+    width: 200px;
     opacity: 0.9;
     align-items: center;
     border: solid #f1f1f1;
     font-size: large;
-    position: absolute;
     border-radius: 40px;
-    font-size: 30px;
+    font-size: 25px;
     float: left;
 }
 

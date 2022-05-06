@@ -51,6 +51,11 @@ namespace MedHelper.Web.Controllers
             return View();
         }
 
+        public ActionResult EmailChanged()
+        {
+            return View();
+        }
+
         //POST: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
