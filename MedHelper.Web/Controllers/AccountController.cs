@@ -82,7 +82,7 @@ namespace MedHelper.Web.Controllers
         {
             var user = await _userManager.FindByIdAsync(model.UserId);
             await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
-            return RedirectToAction("Login");
+            return View("EmailChanged");
         }
 
         public ActionResult Error()
