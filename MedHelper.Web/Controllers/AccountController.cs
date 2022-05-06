@@ -41,9 +41,48 @@ namespace MedHelper.Web.Controllers
             return View();
         }
 
-        public ActionResult ResetPassword()
+        [HttpPost]
+        public async Task<ActionResult> ForgotPassword(ForgetPasswordViewModel model)
         {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if(user == null)
+            {
+                user= await _userManager.FindByNameAsync(model.Email);
+            }
+            if(user != null)
+            {
+                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                string resetLink = Url.Action("ResetPassword",
+              "Account", new
+              {
+                  userid = user.Id,
+                  token = resetToken
+              },
+               protocol: HttpContext.Request.Scheme);
+
+                SendEmail(resetLink, "Reset Password", user.Email);
+                return RedirectToAction("Login");
+            }
             return View();
+        }
+
+
+        public ActionResult ResetPassword(string userid, string token)
+        {
+            var model = new ResetPasswordViewModel
+            {
+                UserId = userid,
+                Token = token
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            return RedirectToAction("Login");
         }
 
         public ActionResult Error()
@@ -62,7 +101,7 @@ namespace MedHelper.Web.Controllers
                 ViewBag.error = "Email already exists";
                 return View();
             }
-            // var newUser = user
+
             await _roleManager.CreateAsync(new Role() { Name = "Doctor" });
             user.UserName = user.FirstName + user.LastName;
             var createdUser = await _userManager.CreateAsync(user, user.Password);
@@ -73,25 +112,6 @@ namespace MedHelper.Web.Controllers
                 ViewBag.error = "error";
                 return View();
             }
-            //Use roleManager
-            //if (ModelState.IsValid)
-            //{
-            //    Role r = _context.Roles.FirstOrDefault(x => x.UserRole == "Doctor");
-            //    UserRole ur = new UserRole { Role = r, User = _user };
-            //    var check = _context.Users.FirstOrDefault(s => s.Email == _user.Email);
-            //    if (check == null)
-            //    {
-            //        _context.Users.Add(_user);
-            //        _context.UserRoles.Add(ur);
-            //        _context.SaveChanges();
-            //        return RedirectToAction("Index", "Home");
-            //    }
-            //    else
-            //    {
-            //        ViewBag.error = "Email already exists";
-            //        return View();
-            //    }
-            //}
 
             string confirmationToken = _userManager.
                  GenerateEmailConfirmationTokenAsync(user).Result;
@@ -104,28 +124,7 @@ namespace MedHelper.Web.Controllers
               },
                protocol: HttpContext.Request.Scheme);
 
-            SmtpClient MyServer = new SmtpClient();
-            MyServer.Host = "smtp.gmail.com";
-            MyServer.Port = 587;
-            MyServer.EnableSsl = true;
-            //Server Credentials
-            NetworkCredential NC = new NetworkCredential();
-            NC.UserName = "medhelperteam@gmail.com";
-            NC.Password = "345Edc345%%%";
-            //assigned credetial details to server
-            MyServer.Credentials = NC;
-
-            //create sender address
-            MailAddress from = new MailAddress("MedHelperTeam@gmail.com", "MedhelperTeam");
-
-            //create receiver address
-            MailAddress receiver = new MailAddress(user.Email, user.UserName);
-
-            MailMessage Mymessage = new MailMessage(from, receiver);
-            Mymessage.Subject = "Confirm email";
-            Mymessage.Body = confirmationLink;
-            //sends the email
-            MyServer.Send(Mymessage);
+            SendEmail(confirmationLink, "Confirm Email", user.Email);
 
             return View("Login");
 
@@ -153,17 +152,22 @@ namespace MedHelper.Web.Controllers
                     ViewBag.error = "Login failed";
                     return View("Login");
                 }
+                if(!user.EmailConfirmed)
+                {
+                    ViewBag.error = "Email is not confirmed";
+                    return View("Login");
+                }
                 var userRole = await _userManager.GetRolesAsync(user);
                 var claims = new List<Claim>() {
                     new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Id)),
                         new Claim(ClaimTypes.Name, user.UserName),
                         new Claim(ClaimTypes.Role, userRole.First()),
                 };
-                //Initialize a new instance of the ClaimsIdentity with the claims and authentication scheme    
+
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                //Initialize a new instance of the ClaimsPrincipal with ClaimsIdentity    
+ 
                 var principal = new ClaimsPrincipal(identity);
-                //SignInAsync is a Extension method for Sign in a principal for the specified scheme.    
+  
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties()
                 {
                     IsPersistent = true
@@ -175,7 +179,6 @@ namespace MedHelper.Web.Controllers
         }
 
 
-        //Logout
         public async Task<ActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
@@ -190,14 +193,38 @@ namespace MedHelper.Web.Controllers
                         ConfirmEmailAsync(user, token).Result;
             if (result.Succeeded)
             {
-                ViewBag.Message = "Email confirmed successfully!";
                 return View("ConfirmEmail");
             }
             else
             {
-                ViewBag.Message = "Error while confirming your email!";
                 return View("Error");
             }
+        }
+
+        private void SendEmail(string text, string theme, string receiverEmail)
+        {
+            SmtpClient MyServer = new SmtpClient();
+            MyServer.Host = "smtp.gmail.com";
+            MyServer.Port = 587;
+            MyServer.EnableSsl = true;
+
+            NetworkCredential NC = new NetworkCredential();
+            NC.UserName = "medhelperteam@gmail.com";
+            NC.Password = "345Edc345%%%";
+
+            MyServer.Credentials = NC;
+
+
+            MailAddress from = new MailAddress("MedHelperTeam@gmail.com", "MedhelperTeam");
+
+
+            MailAddress receiver = new MailAddress(receiverEmail, receiverEmail);
+
+            MailMessage Mymessage = new MailMessage(from, receiver);
+            Mymessage.Subject = theme;
+            Mymessage.Body = text;
+
+            MyServer.Send(Mymessage);
         }
 
     }
