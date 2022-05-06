@@ -36,6 +36,21 @@ namespace MedHelper.Web.Controllers
             return View();
         }
 
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
+
         //POST: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -184,5 +199,6 @@ namespace MedHelper.Web.Controllers
                 return View("Error");
             }
         }
+
     }
 }
