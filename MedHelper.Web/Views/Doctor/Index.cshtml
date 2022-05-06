@@ -5,7 +5,7 @@
     var fullname = string.Concat(ViewBag.Doctor.FirstName," ",ViewBag.Doctor.LastName);
 }
 
-<link rel="stylesheet" href=~/css/doctor_style.css type="text/css" />
+<link rel="stylesheet" href=~/css/doctorStyle.css type="text/css" />
 
 
 <div class="top-part"> 
@@ -19,7 +19,7 @@
             </div>
             <div class="info-wrapper">
                 <div class="info">
-                    <div class="user-name">@fullname</div>
+                    <div class="user-name"> @fullname </div>
                     <div class="gmail">@ViewBag.Doctor.Email</div>
                 </div>
                 <img class="button-edit" src="~/EditLogo.png">
