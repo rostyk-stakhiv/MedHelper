@@ -24,12 +24,18 @@ namespace MedHelper.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<MedicineResponse>> GetAllMedicinesForPatientAsync(int userId)
+        public async Task<IEnumerable<MedicineResponse>> GetAllMedicinesForPatientAsync(int userId, string search)
         {
             var patient = await _unitOfWork.PatientRepository.GetByIdWithDetailsAsync(userId);
             var contraindications = patient.PatientDiseases.Select(x => x.DiseaseId).ToList();
             var medicines = _unitOfWork.MedicineRepository.GetAllWithDetails();
-            foreach(var contraindication in contraindications)
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                medicines = medicines.Where(s => s.Name.ToLower().Contains(search.ToLower()));
+            }
+
+            foreach (var contraindication in contraindications)
             {
                 medicines = medicines.Where(x =>
                 x.MedicineContraindications.FirstOrDefault(y => y.ContraindicationId == contraindication)!=null);

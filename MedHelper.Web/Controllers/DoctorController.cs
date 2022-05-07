@@ -39,8 +39,6 @@ namespace MedHelper.Web.Controllers
                 response.Patients = p;
             }
 
-            ViewBag.Message = TempData["searchString"] != null ? TempData["searchString"] : "";
-
             return View(response);
         }
 

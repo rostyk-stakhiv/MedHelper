@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using MedHelper.BLL.Dto.Responses;
 
 namespace MedHelper.Web.Controllers
 {
@@ -22,14 +23,23 @@ namespace MedHelper.Web.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAsync(int id)
+        public async Task<IActionResult> GetAsync(int id, string search)
         {
             var patient = await _patientService.GetByIdAsync(id);
-            ViewBag.Patient = patient;
-            ViewBag.Medicines = patient.Medicines.ToList();
-            ViewBag.Diseases = patient.Diseases.ToList();
-            ViewBag.AllMedicines = await _patientService.GetAllMedicinesForPatientAsync(id);
-            return View();
+            var allMedicines = await _patientService.GetAllMedicinesForPatientAsync(id, search);
+
+            PatientResponse response = new PatientResponse() {
+                Id = patient.Id,
+                FirstName = patient.FirstName,
+                LastName = patient.LastName,
+                Birthdate = patient.Birthdate,
+                Gender = patient.Gender,
+                Medicines = patient.Medicines.ToList(),
+                Diseases = patient.Diseases.ToList(),
+                AllMedicines = allMedicines.ToList()
+            };
+            
+            return View(response);
         }
         
         [HttpGet]

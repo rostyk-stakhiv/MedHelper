@@ -13,5 +13,9 @@ namespace MedHelper.BLL.Dto.Responses
 
         public List<DiseaseResponse> Diseases { get; set; }
         public List<MedicineResponse> Medicines { get; set; }
+
+
+        public List<MedicineResponse>? AllMedicines { get; set; }
+        public string? search { get; set; }
     }
 }

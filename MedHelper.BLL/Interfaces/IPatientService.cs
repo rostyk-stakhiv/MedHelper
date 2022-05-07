@@ -10,7 +10,7 @@ namespace MedHelper.BLL.Interfaces
 {
     public interface IPatientService
     {
-        public Task<IEnumerable<MedicineResponse>> GetAllMedicinesForPatientAsync(int userId);
+        public Task<IEnumerable<MedicineResponse>> GetAllMedicinesForPatientAsync(int userId, string search);
         IEnumerable<PatientResponse> GetAll();
 
         Task<PatientResponse> GetByIdAsync(int id);
