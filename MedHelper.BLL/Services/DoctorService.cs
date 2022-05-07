@@ -24,7 +24,6 @@ namespace MedHelper.BLL.Services
             _mapper = mapper;
         }
 
-
         public async Task<DoctorResponse> GetByIdAsync(int id)
         {
             var doctor = await _unitOfWork.UserRepository.GetByIdWithDetailsAsync(id);
@@ -38,6 +37,12 @@ namespace MedHelper.BLL.Services
             var doctor = _mapper.Map<User>(model);
             _unitOfWork.UserRepository.Update(doctor);
             await _unitOfWork.SaveAsync();
+        }
+
+        public List<Patient> GetPatients(int id, string search)
+        {
+            var patients = _unitOfWork.PatientRepository.GetPatients(id, search);
+            return patients.ToList();
         }
     }
 }
