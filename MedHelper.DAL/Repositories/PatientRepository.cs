@@ -15,6 +15,13 @@ namespace MedHelper.DAL.Repositories
 
         }
 
+        public IEnumerable<Patient> GetPatients(int id, string search)
+        {
+            var patients = _context.Patients.Where(i => i.UserId == id).Where(
+                s => s.LastName.ToLower().Contains(search.ToLower()) || s.FirstName.ToLower().Contains(search.ToLower())).ToList();
+            return patients;
+        }
+
         public IEnumerable<Patient> GetAllWithDetails()
         {
             var patients = FindAll();

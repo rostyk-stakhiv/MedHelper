@@ -12,8 +12,7 @@ namespace MedHelper.BLL.Interfaces
     {
 
         Task<DoctorResponse> GetByIdAsync(int id);
-
-
         Task UpdateAsync(UpdateDoctorDto model);
+        List<Patient> GetPatients(int id, string search);
     }
 }
