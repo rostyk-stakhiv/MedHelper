@@ -3,6 +3,10 @@ using MedHelper.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using MedHelper.BLL.Dto.Patient;
 using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
+using System;
 
 namespace MedHelper.Web.Controllers
 {
