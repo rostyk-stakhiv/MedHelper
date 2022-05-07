@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using MedHelper.DAL.Enums;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace MedHelper.DAL.Entities
 {
     public partial class User : IdentityUser<int>
     {
+        [Required(ErrorMessage = "Please enter LastName.")]
         public string LastName { get; set; }
+        [Required(ErrorMessage = "Please enter FirstFame.")]
         public string FirstName { get; set; }
         public string Password { get; set; }
 

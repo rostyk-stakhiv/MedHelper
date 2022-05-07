@@ -21,4 +21,8 @@
     <ProjectReference Include="..\MedHelper.DAL\MedHelper.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Admin\" />
+  </ItemGroup>
+
 </Project>
