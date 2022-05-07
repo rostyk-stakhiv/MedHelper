@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+    
+
+<link rel="stylesheet" href=~/css/MedicineInfo.css />
+<link rel="stylesheet" href=~/css/Admin.css />
+<div class="medicine-content">
+    <div class="medicine-container">
+        <div class="medicine-name-header">
+            <p>Medicine.Name</p>
+        </div>
+        <div class="medicine-scroll-panel">
+
+            <div class="row">
+                <label>Назва препарату:</label>
+                <input type="text" value=Medicine.Name disabled>
+            </div>
+
+            <div class="row">
+                <label>Фармакоцептична група:</label>
+                <input type="text" value=Medicine.Group.Title disabled>
+            </div>
+
+            <div class="row">
+                <label>Склад:</label>
+                <textarea type="number" disabled>"composition"</textarea>
+
+            </div>
+
+            <div class="row">
+                <label>Противопоказання:</label>
+                <textarea type="number" disabled>"contraindication"</textarea>
+            </div>
+
+            <div class="row">
+                <label>Взаємодія з іншими препаратами:</label>
+                <textarea class="interaction" type="number" disabled>"interaction"</textarea>
+            </div>
+
+        </div>
+    </div>
+    <div class="button-wrapper">
+        <input type="submit" name="submit" class="btn btn-danger" value="Delete Medicine" />
+    </div>
+</div>

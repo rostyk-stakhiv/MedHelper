@@ -24,18 +24,36 @@
                         @Html.AntiForgeryToken()
                         <div class="form-group">
                             <div>
-                                @Html.LabelFor(m => m.Email)
-                            </div>
-                            <div>
-                                @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+                                @if (ViewBag.error == null)
+                                {
+                                    @Html.LabelFor(m => m.Email)
+                                    @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+                                }
+                                else
+                                {
+                                    @Html.LabelFor(m => m.Email)
+                                    @Html.TextBoxFor(m => m.Email, "", new { @class = "error form-control", @placeholder = "Email" })
+                                    @Html.ValidationMessageFor(m => m.Password, "Wrong Email", new { @class = "e badge badge-danger" })
+                                }
+
                             </div>
                         </div>
                         <div class="form-group">
                             <div>
-                                @Html.LabelFor(m => m.Password)
-                            </div>
-                            <div>
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                                @if (ViewBag.error == null)
+                                {
+                                    @Html.LabelFor(m => m.Password)
+
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+
+                                }
+                                else
+                                {
+                                    @Html.LabelFor(m => m.Password)
+
+                                    @Html.PasswordFor(m => m.Password, new { @class = "error form-control", @placeholder = "Password" })
+                                    @Html.ValidationMessageFor(m => m.Password, "Wrong Password", new { @class = "e badge badge-danger" })
+                                }
                             </div>
                         </div>
                         <div class="form-group">
@@ -57,11 +75,7 @@
                             </div>
                         </div>
 
-                        @{if (ViewBag.error == "Login failed")
-                            {
-                                <span style="color: red; margin-top: 20px;"> Login failed! </span>
-                            }
-                        }
+                    
                     </div>
             </div>
     </div>

@@ -97,4 +97,10 @@ input {
     margin-top: 80px;
     font-size: 30px;
 }
-   
+
+.error {
+    border: 4px solid #FF5757;
+}
+.e {
+    color: #FF5757;
+}
