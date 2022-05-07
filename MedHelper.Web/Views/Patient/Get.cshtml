@@ -57,7 +57,7 @@
           <div class="medicine-scroll-panel">
           @foreach (var item in AllMedicines)
           {
-              <button class="button-medicine" type="button" onclick="MedicineRedirect(@item.Id)">@item.Name</button>
+              <button class="button-medicine" type="button" onclick="location.href='@Url.Action("ViewMedicine", "Medicine", new { id = item.Id })'">@item.Name</button>
           }
           </div>
         </div>

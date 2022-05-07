@@ -44,7 +44,8 @@ namespace MedHelper.BLL
         
         CreateMap<MedicineInteraction, MedicineInteractionResponse>()
             .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Id))
-            .ForMember(d => d.Description, c => c.MapFrom(disease => disease.Description));
+            .ForMember(d => d.Description, c => c.MapFrom(disease => disease.Description))
+            .ForMember(d => d.Composition, c => c.MapFrom(d => d.Composition.Description));
         
         CreateMap<Patient, PatientResponse>()
             .ForMember(p => p.Id, c => c.MapFrom(patient => patient.Id))
