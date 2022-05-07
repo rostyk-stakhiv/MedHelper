@@ -38,11 +38,7 @@ namespace MedHelper.BLL
                 .ForMember(d => d.Patients, c => c.MapFrom(disease => disease.Patients));
 
 
-        
-
-        
-        
-        CreateMap<PharmacotherapeuticGroup, PharmacotherapeuticGroupResponse>()
+            CreateMap<PharmacotherapeuticGroup, PharmacotherapeuticGroupResponse>()
             .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Id))
             .ForMember(d => d.Title, c => c.MapFrom(disease => disease.Title));
         
@@ -78,16 +74,16 @@ namespace MedHelper.BLL
             .ForMember(p => p.FirstName, c => c.MapFrom(patient => patient.FirstName))
             .ForMember(p => p.Gender, c => c.MapFrom(patient => patient.Gender))
             .ForMember(p => p.Birthdate, c => c.MapFrom(patient => patient.Birthdate))
-            .ForMember(p => p.PatientDiseases, c => c.MapFrom(patient => patient.DiseasesIds))
-            .ForMember(p => p.PatientMedicines, c => c.MapFrom(patient => patient.MedicineIds));
+            .ForMember(p => p.PatientDiseases, c => c.MapFrom(patient => patient.Diseases))
+            .ForMember(p => p.PatientMedicines, c => c.MapFrom(patient => patient.Medicines));
         
         CreateMap<UpdatePatientDto, Patient>()
             .ForMember(p => p.LastName, c => c.MapFrom(patient => patient.LastName))
             .ForMember(p => p.FirstName, c => c.MapFrom(patient => patient.FirstName))
             .ForMember(p => p.Gender, c => c.MapFrom(patient => patient.Gender))
             .ForMember(p => p.Birthdate, c => c.MapFrom(patient => patient.Birthdate))
-            .ForMember(p => p.PatientDiseases, c => c.MapFrom(patient => patient.DiseasesIds))
-            .ForMember(p => p.PatientMedicines, c => c.MapFrom(patient => patient.MedicineIds));
+            .ForMember(p => p.PatientDiseases, c => c.MapFrom(patient => patient.Diseases))
+            .ForMember(p => p.PatientMedicines, c => c.MapFrom(patient => patient.Medicines));
 
         //        CreateMap<Patient, PatientModel>()
         //            .ForMember(p => p.Id, c => c.MapFrom(patient => patient.Id))
