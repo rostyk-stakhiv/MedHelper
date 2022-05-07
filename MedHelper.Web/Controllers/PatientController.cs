@@ -9,10 +9,12 @@ namespace MedHelper.Web.Controllers
     public class PatientController : Controller
     {
         private IPatientService _patientService;
+        IMedicineService _medicineService;
 
-        public PatientController(IPatientService patientService)
+        public PatientController(IPatientService patientService, IMedicineService medicineService)
         { 
             _patientService = patientService;
+            _medicineService = medicineService;
         }
         
         [HttpGet]
@@ -58,18 +60,18 @@ namespace MedHelper.Web.Controllers
         }
 
         [HttpGet]
+        // [Authorize(Roles ="Doctor")]
         public IActionResult Add()
         {
-            var Medicines = new List<MedicineModel>() { new MedicineModel() { Id=3, Name="first"},
-                new MedicineModel() { Id = 4, Name = "second" },new MedicineModel() { Id=5, Name="third"} };
             var Diseases = new List<DiseaseModel>() { new DiseaseModel() { Id = 1, Title = "one" }, new DiseaseModel() { Id = 2, Title = "two" } };
-            ViewBag.Medicines = Medicines;
+            ViewBag.Medicines = _medicineService.GetAll();
             ViewBag.Diseases = Diseases;
             return View();
         }
         
         [HttpPost]
         [AllowAnonymous]
+        // [Authorize(Roles ="Admin")]
         public async Task<IActionResult> AddAsync(CreatePatientDto patient)
         {
             if (!ModelState.IsValid)

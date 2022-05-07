@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using MedHelper.BLL.Dto.Medicine;
 
 namespace MedHelper.BLL.Interfaces
 {
@@ -13,7 +14,7 @@ namespace MedHelper.BLL.Interfaces
 
         Task<MedicineResponse> GetByIdAsync(int id);
 
-        //Task AddAsync(CreateMedicineDto model);
+        Task AddAsync(CreateMedicineDto model);
 
         //Task UpdateAsync(UpdateMedicineDto model);
 

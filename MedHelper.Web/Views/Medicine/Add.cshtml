@@ -1,0 +1,122 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MedHelper.BLL.Dto.Medicine.CreateMedicineDto
+@{
+ViewData["Title"] = "Add patient";
+}
+
+<head xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href=~/css/Patient/Add.css />
+    @* <title>@ViewData["Title"]</title> *@
+</head>
+
+<body>
+  <div class="add-edit-patient-content">
+    <h1> Додати препарат </h1>
+    <hr>
+      <div class="container">
+          <form asp-controller="Patient" asp-action="Add" method="post" class="add-patient-form">
+              <div class="container-left">
+                  <label> Назва препарату: </label>
+                  <input type="text" name="medicine" placeholder="лікарство" size="15" required />
+                  <div>
+                      <label>
+                          Фармакоцептична група:
+                      </label>
+                      <div>
+                          <datalist id="suggestions">
+                              <option>First option</option>
+                              <option>Second Option</option>
+                              <option>Ершкв Option</option>
+                          </datalist>
+                          <input  autoComplete="on" class="drop-down list"  placeholder="Фармакоцептична група" list="suggestions"/>
+                      </div>
+                  </div>
+                  <div>
+                      <label>
+                          Склад:
+                      </label>
+    
+                      <div>
+                          <datalist id="CompositionSuggestions">
+                              <option>First option</option>
+                              <option>Second Option</option>
+                              <option>Ершкв Option</option>
+                          </datalist>
+                          <input id="composition_suggestions_input" autoComplete="on" class="drop-down list"  placeholder="склад" list="CompositionSuggestions"/>
+                      </div>
+                      <textarea cols="80" rows="5" id="selectedStorageOptionsTextArea"></textarea>
+                      <button class="delete-drop-down" onclick="clearSelectedStorageOptionsTextArea()">-</button>
+                  </div>
+              </div>
+              <div class="container-right">
+                  <label>
+                      Противопоказання:
+                  </label>
+                  <div>
+                      <datalist id="ContraindicationSuggestions">
+                          <option>First option</option>
+                          <option>Second Option</option>
+                          <option>Ершкв Option</option>
+                      </datalist>
+                      <input id="contraindication_suggestions_input" autoComplete="on" class="drop-down list"  placeholder="противопоказання" list="ContraindicationSuggestions"/>
+                  </div>
+                  <textarea cols="80" rows="5" id="selectedContraindicationOptionsTextArea"></textarea>
+                  <button class="delete-drop-down" onclick="clearSelectedContraindicationOptionsTextArea()">-</button>
+    
+                  <button type="submit" class="registerbtn" >Додати препарат</button>
+    
+              </div>
+          </form>
+      </div>
+  </div>
+      <script>
+        //const storageSuggestions = document.getElementById('storageSuggestions').childNodes;
+        const CompositionSuggestionsInput = document.getElementById("composition_suggestions_input");
+        let eventSource = null;
+
+        CompositionSuggestionsInput.addEventListener('keydown', (event) => {
+            if(event.key === 'Enter') {
+                event.preventDefault(); // не перекине на інший інпут
+                document.getElementById("selectedStorageOptionsTextArea").innerHTML += document.getElementById("composition_suggestions_input").value +'\n'
+            }
+            eventSource = event.key ? 'input' : 'list';
+        });
+        CompositionSuggestionsInput.addEventListener('input', (event) => {
+          if (eventSource === 'list') {
+            document.getElementById("selectedStorageOptionsTextArea").innerHTML += event.target.value +'\n';
+          }
+        });
+        function clearSelectedStorageOptionsTextArea() {
+          // console.log(document.getElementById("selectedStorageOptionsTextArea").innerHTML)
+          let splittedText = document.getElementById("selectedStorageOptionsTextArea").innerHTML.split(/\r?\n/)
+          splittedText.splice(-2) 
+          document.getElementById("selectedStorageOptionsTextArea").innerHTML = splittedText.join('\n');
+          document.getElementById("selectedStorageOptionsTextArea").innerHTML+="\n";
+        }
+        
+
+        const ContraindicationSuggestionsInput = document.getElementById("contraindication_suggestions_input");
+        let eventSource2 = null;
+
+        ContraindicationSuggestionsInput.addEventListener('keydown', (event) => {
+            if(event.key === 'Enter') {
+                event.preventDefault(); // не перекине на інший інпут
+                document.getElementById("selectedContraindicationOptionsTextArea").innerHTML += document.getElementById("contraindication_suggestions_input").value +'\n'
+            }
+            eventSource2 = event.key ? 'input' : 'list';
+        });
+        ContraindicationSuggestionsInput.addEventListener('input', (event) => {
+          if (eventSource2 === 'list') {
+            document.getElementById("selectedContraindicationOptionsTextArea").innerHTML += event.target.value +'\n';
+          }
+        });
+        function clearSelectedContraindicationOptionsTextArea() {
+          // console.log(document.getElementById("selectedContraindicationOptionsTextArea").innerHTML)
+          let splittedText = document.getElementById("selectedContraindicationOptionsTextArea").innerHTML.split(/\r?\n/)
+          splittedText.splice(-2) 
+          document.getElementById("selectedContraindicationOptionsTextArea").innerHTML = splittedText.join('\n');
+          document.getElementById("selectedContraindicationOptionsTextArea").innerHTML+="\n";
+        }
+
+    </script>
+</body>

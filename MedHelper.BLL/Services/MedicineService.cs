@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MedHelper.BLL.Dto.Medicine;
 using MedHelper.BLL.Dto.Responses;
 using MedHelper.BLL.Interfaces;
 using MedHelper.DAL;
@@ -34,12 +35,12 @@ namespace MedHelper.BLL.Services
             return _mapper.Map<MedicineResponse>(result);
         }
 
-        //public async Task AddAsync(CreateMedicineDto model)
-        //{
-        //    var medicine = _mapper.Map<Medicine>(model);
-        //    await _unitOfWork.MedicineRepository.AddAsync(medicine);
-        //    await _unitOfWork.SaveAsync();
-        //}
+        public async Task AddAsync(CreateMedicineDto model)
+        {
+            var medicine = _mapper.Map<Medicine>(model);
+            await _unitOfWork.MedicineRepository.AddAsync(medicine);
+            await _unitOfWork.SaveAsync();
+        }
 
         //public async Task UpdateAsync(UpdateMedicineDto model)
         //{

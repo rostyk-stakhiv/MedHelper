@@ -45,9 +45,6 @@
             @*     } *@
             @* *@
             @* </div> *@
-            
-            <input id="1" type="text" name="tempMedicines" asp-for="Gender" placeholder="gender" size="15"/>
-            <input id="2" type="text" name="tempDiseases" asp-for="Gender" placeholder="gender" size="15"/>
 
             <div>
                 <label>
@@ -91,11 +88,7 @@
         </form>
     </div>
 
-    <script>
-        const medicines = document.getElementById("1");
-        const diseases = document.getElementById("2");
-       
-        
+    <script>        
             //const storageSuggestions = document.getElementById('storageSuggestions').childNodes;
             const MedicineSuggestionsInput = document.getElementById("medicine_suggestions_input");
             let eventSource = null;
@@ -109,8 +102,7 @@
             MedicineSuggestionsInput.addEventListener('input', (event) => {
               if (eventSource === 'list') {
                 document.getElementById("selectedMedicineOptionsTextArea").innerHTML += event.target.value +'\n';
-                medicines.value.push(event.target.value);
-                console.log("push", medicines.value);
+                console.log(event.target.value);
               }
             });
             function clearSelectedMedicineOptionsTextArea() {
@@ -118,8 +110,6 @@
               splittedText.splice(-2)
               document.getElementById("selectedMedicineOptionsTextArea").innerHTML = splittedText.join('\n');
               document.getElementById("selectedMedicineOptionsTextArea").innerHTML+="\n";
-              medicines.value.pop();
-              console.log("pop - ", medicines.value)
             }
 
 
@@ -135,8 +125,7 @@
             ContraindicationSuggestionsInput.addEventListener('input', (event) => {
               if (eventSource2 === 'list') {
                 document.getElementById("selectedContraindicationOptionsTextArea").innerHTML += event.target.value +'\n';
-                diseases.value += event.target.value + ' ';
-                console.log("- ", diseases.value)
+                console.log(event.target.value);
               }
             });
             function clearSelectedContraindicationOptionsTextArea() {
@@ -145,7 +134,6 @@
               splittedText.splice(-2)
               document.getElementById("selectedContraindicationOptionsTextArea").innerHTML = splittedText.join('\n');
               document.getElementById("selectedContraindicationOptionsTextArea").innerHTML+="\n";
-              // diseases.value.pop();
             }
     </script>
     </div>

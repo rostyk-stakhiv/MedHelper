@@ -20,7 +20,7 @@ namespace MedHelper.Web.Controllers
         [Authorize(Roles ="Doctor")]
         public async Task<IActionResult> Index()
         {
-            int id = int.Parse(this.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value);
+            int id = int.Parse(User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value);
             var doctor = await _doctorService.GetByIdAsync(id);
             ViewBag.Doctor = doctor;
             return View();
