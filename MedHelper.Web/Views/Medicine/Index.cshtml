@@ -1,4 +1,10 @@
 ﻿@model MedHelper.BLL.Dto.Responses.MedicineResponse
+@using Microsoft.AspNetCore.Identity
+@using MedHelper.DAL.Entities
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
 
 @{
     var composition = "";
@@ -19,6 +25,8 @@
 }
 
 <link rel="stylesheet" href=~/css/MedicineInfo.css />
+<link rel="stylesheet" href=~/css/AdminStyle.css />
+
 <div class="medicine-content">
     <div class="medicine-container">
         <div class="medicine-name-header">
@@ -54,4 +62,10 @@
 
         </div>
     </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="button-wrapper">
+            <input type="button" name="submit" class="btn btn-danger" value="Delete Medicine" />
+        </div>
+    }
 </div>

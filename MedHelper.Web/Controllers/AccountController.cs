@@ -107,10 +107,10 @@ namespace MedHelper.Web.Controllers
                 return View();
             }
 
-            await _roleManager.CreateAsync(new Role() { Name = "Doctor" });
+            await _roleManager.CreateAsync(new Role() { Name = "Admin" });
             user.UserName = user.FirstName + user.LastName;
             var createdUser = await _userManager.CreateAsync(user, user.Password);
-            await _userManager.AddToRoleAsync(user, "Doctor");
+            await _userManager.AddToRoleAsync(user, "Admin");
             if (!createdUser.Succeeded)
             {
 
