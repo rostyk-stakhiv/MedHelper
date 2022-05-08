@@ -16,14 +16,8 @@
         <h1> Пароль успішно змінено! </h1>
         <hr>
         <h3>Пароль був успішно змінений. Тепер Ви можете увійти у свій особистий кабінет використовуючи новий пароль. </h3>
-        <button type="submit" class="registerbtn" onclick="RedirectToLogin()">Увійти</button>
+        <button type="submit" class="registerbtn" onclick="location.href='@Url.Action("Login", "Account")'">Увійти</button>
     </div>
 
 
 </body>
-<script>
-    RedirectToLogin = function () {
-        window.location.href = "/Account/Login";
-    }
-
-</script>

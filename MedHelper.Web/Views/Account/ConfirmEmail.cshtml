@@ -18,15 +18,10 @@
         <h1> Ви успішно зареєстровані! </h1>
         <hr>
         <h3>Реєстрація пройла успішно. Тепер Ви можете увійти у свій особистий кабінет. </h3>
-        <button type="submit" class="registerbtn" onclick="RedirectToLogin()">Увійти</button>
+        <button type="submit" class="registerbtn" onclick="location.href='@Url.Action("Login", "Account")'">Увійти</button>
     </div>
 
 
 </body>
-<script>
-    RedirectToLogin = function () {
-        window.location.href = "/Account/Login";
-    }
 
-</script>
 

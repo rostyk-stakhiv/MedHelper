@@ -27,13 +27,8 @@
                 </div>
             </div>
             <div class="button-wrapper">
-                <input type="button" name="submit" class="btn btn-danger" onclick="RedirectToAddMedicine()" value="Add Medicine" />
+                <input type="button" name="submit" class="btn btn-danger" onclick="location.href='@Url.Action("Add", "Medicine")'" value="Add Medicine" />
             </div>
         </div>
-        <script>
-            RedirectToAddMedicine = function () {
-                window.location.href = "/Account/AddMedicine";
-            }
-        </script>
     </body>
 </form>

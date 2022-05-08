@@ -17,7 +17,7 @@
             <div class="profile-container-left">
                 <div class="edit-header">
                     <p>Інформація про пацієнта</p>
-                    <img class="search-img" src="~/EditLogo.png" onclick="EditRedirect(@Model.Id)">
+                    <img class="search-img" src="~/EditLogo.png" onclick="location.href='@Url.Action("Edit", "Patient", new { id = Model.Id })'">
                 </div>
                 <div class="medicine-scroll-panel">
                     <div class="row">
@@ -70,12 +70,3 @@
 
     </div>
 </form>
-<script>
-    EditRedirect = function (id) {
-        window.location.href = `https://localhost:7241/Patient/${id}/Edit`
-    }
-    MedicineRedirect = function (id) {
-        window.location.href = `https://localhost:7241/Medicine/${id}`
-    }
-</script>
-
