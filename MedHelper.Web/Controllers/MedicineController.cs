@@ -6,6 +6,7 @@ using MedHelper.BLL.Dto.Medicine;
 using MedHelper.BLL.Dto.Patient;
 using Microsoft.AspNetCore.Authorization;
 using MedHelper.BLL.Dto.Responses;
+using System.Collections.Generic;
 
 namespace MedHelper.Web.Controllers
 {
@@ -16,10 +17,12 @@ namespace MedHelper.Web.Controllers
         {
             _medicineService = medicineService;
         }
+
         [HttpGet]
-        public async Task<IActionResult> ViewMedicine(int id)
+        [Route("Medicine/{id}")]
+        public async Task<IActionResult> Index(int Id)
         {
-            var medicine = await _medicineService.GetByIdAsync(id);
+            var medicine = await _medicineService.GetByIdAsync(Id);
             MedicineResponse response = new MedicineResponse() { 
                 Id = medicine.Id,
                 Name = medicine.Name,
@@ -53,6 +56,22 @@ namespace MedHelper.Web.Controllers
             return Ok(); // редірект на сторінку доктора треба тут
 
             // return RedirectToAction("Get", new { id = createdPatient.Id });
+        }
+
+        [HttpGet]
+        [Route("Medicines")]
+        public ActionResult ViewAllMedicines(string search)
+        {
+            List<MedicineResponse> medicines =  _medicineService.GetAll(search).ToList();
+
+            ViewMedicinesResponse response = new ViewMedicinesResponse() { Medicines = medicines};
+
+            return View(response);
+        }
+
+        public ActionResult ViewMedicine()
+        {
+            return View();
         }
     }
 }

@@ -37,7 +37,7 @@
             <div class="scroll-panel">
                 @for (var i = 0; i < Model.Patients.Count; i++)
                 {
-                    <button class="button-patient" type="button" onclick="location.href='@Url.Action("Get", "Patient", new { id = Model.Patients[i].Id })'">
+                    <button class="button-patient" type="button" onclick="location.href='@Url.Action("Index", "Patient", new { id = Model.Patients[i].Id })'">
                         @Model.Patients[i].FirstName @Model.Patients[i].LastName
                     </button>
                 }

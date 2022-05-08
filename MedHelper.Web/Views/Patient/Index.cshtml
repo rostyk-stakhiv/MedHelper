@@ -9,7 +9,7 @@
 
 <link rel="stylesheet" href=~/css/PatientProfile.css type="text/css" />
 
-<form asp-controller="Patient" asp-action="Get" method="get">
+<form asp-controller="Patient" asp-action="Index" method="get">
 
     <div class="patient-profile-content">
         <h1> @fullname </h1>
@@ -52,6 +52,7 @@
             <div class="profile-container-right">
                 <div class="medicine-list">
                     <div class="search-part-medicine">
+                        
                         <img class="medicine-search-img" src=~/SearchLogo.png>
                         <input class="search" type="text" placeholder="Search.." asp-for="search">
                         <input type="submit" value="Знайти" style="float:right" />
@@ -59,7 +60,7 @@
                     <div class="medicine-scroll-panel">
                         @foreach (var item in AllMedicines)
                         {
-                            <button class="button-medicine" type="button" onclick="location.href='@Url.Action("ViewMedicine", "Medicine", new { id = item.Id })'">@item.Name</button>
+                            <button class="button-medicine" type="button" onclick="location.href='@Url.Action("Index", "Medicine", new { id = item.Id })'">@item.Name</button>
                         }
                     </div>
                 </div>

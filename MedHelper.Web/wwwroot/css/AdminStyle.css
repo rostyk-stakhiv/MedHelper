@@ -51,6 +51,7 @@ hr {
 .search {
     margin: 10px;
     height: 30px;
+    width: 100%;
 }
 
 .button-medicine {
@@ -66,7 +67,7 @@ hr {
     cursor: pointer;
 }
 
-input[type=submit] {
+input[type=button] {
     margin: 0 auto;
     margin-top: 25px;
     font-family: Calibri;

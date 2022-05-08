@@ -23,7 +23,8 @@ namespace MedHelper.Web.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAsync(int id, string search)
+        [Route("Patient/{id}")]
+        public async Task<IActionResult> Index(int id, string search)
         {
             var patient = await _patientService.GetByIdAsync(id);
             var allMedicines = await _patientService.GetAllMedicinesForPatientAsync(id, search);

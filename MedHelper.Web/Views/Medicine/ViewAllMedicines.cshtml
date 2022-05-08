@@ -1,0 +1,44 @@
+﻿@model MedHelper.BLL.Dto.Responses.ViewMedicinesResponse
+@{
+    var AllMedicines = Model.Medicines;
+}
+
+<form asp-controller="Medicine" asp-action="ViewAllMedicines" method="get">
+
+    <link rel="stylesheet" href=~/css/AdminStyle.css type="text/css" />
+    <body>
+        <div class="add-edit-patient-content">
+            <h1> ALL MEDICINES </h1>
+            <hr>
+            <div class="profile-container">
+                <div class="medicine-list">
+                    <div class="search-part-medicine">
+                        <img class="medicine-search-img" src=~/SearchLogo.png>
+                        <input class="search" asp-for="search" type="text" placeholder="Search..">
+                        <input type="submit" value="Знайти" style="float:right" />
+
+                    </div>
+                    <div class="medicine-scroll-panel">
+                        @foreach (var item in AllMedicines)
+                        {
+                            <button class="button-medicine" type="button" onclick="location.href='@Url.Action("ViewMedicine", "Medicine", new { id = item.Id })'">@item.Name</button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="button-wrapper">
+                <input type="button" name="submit" class="btn btn-danger" onclick="RedirectToAddMedicine()" value="Add Medicine" />
+            </div>
+        </div>
+        <script>
+            RedirectToAddMedicine = function () {
+                window.location.href = "/Account/AddMedicine";
+            }
+        </script>
+        <script>
+            RedirectToViewMedicine = function () {
+                window.location.href = "/Account/ViewMedicine";
+            }
+        </script>
+    </body>
+</form>

@@ -231,20 +231,5 @@ namespace MedHelper.Web.Controllers
 
             MyServer.Send(Mymessage);
         }
-
-        public ActionResult ViewAllMedicines()
-        {
-            return View();
-        }
-
-        public ActionResult AddMedicine()
-        {
-            return View();
-        }
-        public ActionResult ViewMedicine()
-        {
-            return View();
-        }
-
     }
 }

@@ -8,7 +8,7 @@ namespace MedHelper.DAL.Interfaces
 {
     public interface IMedicineRepository:IRepository<Medicine>
     {
-        IEnumerable<Medicine> GetAllWithDetails();
+        IEnumerable<Medicine> GetAllWithDetails(string search = null);
         Task<Medicine> GetByIdWithDetailsAsync(int id);
     }
 }
