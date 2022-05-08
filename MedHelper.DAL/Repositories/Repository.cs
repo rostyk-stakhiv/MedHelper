@@ -29,14 +29,15 @@ namespace MedHelper.DAL.Repositories
 
         public void Delete(T entity)
         {
-
             _enteties.Remove(entity);
+            _context.SaveChanges();
         }
 
         public async Task DeleteByIdAsync(int id)
         {
             var entity = await _enteties.SingleOrDefaultAsync(s => s.Id == id);
             Delete(entity);
+            _context.SaveChanges();
         }
 
         public IQueryable<T> FindAll()

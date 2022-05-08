@@ -7,6 +7,8 @@ using MedHelper.BLL.Dto.Patient;
 using Microsoft.AspNetCore.Authorization;
 using MedHelper.BLL.Dto.Responses;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace MedHelper.Web.Controllers
 {
@@ -69,9 +71,33 @@ namespace MedHelper.Web.Controllers
             return View(response);
         }
 
-        public ActionResult ViewMedicine()
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
         {
-            return View();
+            var res = _medicineService.DeleteByIdAsync(id);
+            if (res == null)
+                return NotFound();
+            return RedirectToAction(nameof(ViewAllMedicines));
         }
+
+        /*[HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            var res = _medicineService.DeleteByIdAsync(id);
+            if (res == null)
+                return NotFound();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var res = _medicineService.DeleteByIdAsync(id);
+            if (res == null)
+                return NotFound();
+            return RedirectToAction(nameof(Index));
+        }*/
+
     }
 }

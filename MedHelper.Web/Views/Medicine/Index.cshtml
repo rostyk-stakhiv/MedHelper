@@ -64,8 +64,13 @@
     </div>
     @if (User.IsInRole("Admin"))
     {
-        <div class="button-wrapper">
-            <input type="button" name="submit" class="btn btn-danger" value="Delete Medicine" />
-        </div>
+        <form asp-action="Delete" asp-route-id="@Model.Id">
+            <div class="btn-group btn-group-sm">
+                <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('Ви впевнені, що хочете видалити даний препарат?')">
+                    Delete Medicine
+                </button>
+            </div>
+        </form>
     }
 </div>
