@@ -7,7 +7,7 @@ namespace MedHelper.BLL.Dto.Responses
         public string LastName { get; set; }
         public string Email { get; set; }
 
-        public string? searchString { get; set; }
+        public string? search { get; set; }
 
 
         public List<MedHelper.DAL.Entities.Patient> Patients { get; set; }

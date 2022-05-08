@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MedHelper.BLL.Dto.Medicine;
 using MedHelper.BLL.Dto.Patient;
 using Microsoft.AspNetCore.Authorization;
+using MedHelper.BLL.Dto.Responses;
 
 namespace MedHelper.Web.Controllers
 {
@@ -19,11 +20,16 @@ namespace MedHelper.Web.Controllers
         public async Task<IActionResult> ViewMedicine(int id)
         {
             var medicine = await _medicineService.GetByIdAsync(id);
-            ViewBag.Medicine = medicine;
-            ViewBag.Composition = medicine.Compositions.ToList();
-            ViewBag.Contraindications = medicine.Contraindications.ToList();
-            ViewBag.Interactions = medicine.MedicineInteractions.ToList();
-            return View();
+            MedicineResponse response = new MedicineResponse() { 
+                Id = medicine.Id,
+                Name = medicine.Name,
+                Group = medicine.Group,
+                Compositions = medicine.Compositions.ToList(),
+                Contraindications = medicine.Contraindications.ToList(),
+                MedicineInteractions = medicine.MedicineInteractions.ToList()
+            };
+           
+            return View(response);
         }
         
         [HttpGet]

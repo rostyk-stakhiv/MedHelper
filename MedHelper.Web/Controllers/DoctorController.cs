@@ -20,7 +20,7 @@ namespace MedHelper.Web.Controllers
         }
 
         [Authorize(Roles ="Doctor")]
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string search)
         {
             int id = int.Parse(User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value);
             var doctor = await _doctorService.GetByIdAsync(id);
@@ -33,21 +33,13 @@ namespace MedHelper.Web.Controllers
             };
 
 
-            if (!String.IsNullOrEmpty(searchString)) 
+            if (!String.IsNullOrEmpty(search)) 
             {
-                var p = _doctorService.GetPatients(id, searchString);
+                var p = _doctorService.GetPatients(id, search);
                 response.Patients = p;
             }
 
             return View(response);
         }
-
-        /*public ActionResult PatientList(string searchKey)
-        {
-            int id = int.Parse(User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value);
-            var p = _doctorService.GetPatients(id, searchKey);
-            ViewBag.Doctor.Patients = p;
-            return View();
-        }*/
     }
 }
