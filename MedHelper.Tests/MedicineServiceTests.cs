@@ -83,7 +83,7 @@ namespace MedHelper.Tests
         public void GetAllNull()
         {
             // arrange
-            _unitOfWork.Setup(s => s.MedicineRepository.GetAllWithDetails()).Returns((IEnumerable<Medicine>)null);
+            _unitOfWork.Setup(s => s.MedicineRepository.GetAllWithDetails(null)).Returns((IEnumerable<Medicine>)null);
             _medicineService = new MedicineService(_unitOfWork.Object, _mapper.Object);
 
             // act
@@ -108,7 +108,7 @@ namespace MedHelper.Tests
                     Name = i.Name
                 });
             }
-            _unitOfWork.Setup(s => s.MedicineRepository.GetAllWithDetails()).Returns((IEnumerable<Medicine>)medicines);
+            _unitOfWork.Setup(s => s.MedicineRepository.GetAllWithDetails(null)).Returns((IEnumerable<Medicine>)medicines);
             _mapper.Setup(m => m.Map<List<MedicineResponse>>(It.IsAny<object>())).Returns(medicineResponses);
 
             _medicineService = new MedicineService(_unitOfWork.Object, _mapper.Object);

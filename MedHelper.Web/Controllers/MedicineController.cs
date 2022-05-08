@@ -73,11 +73,9 @@ namespace MedHelper.Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var res = _medicineService.DeleteByIdAsync(id);
-            if (res == null)
-                return NotFound();
+            await _medicineService.DeleteByIdAsync(id);
             return RedirectToAction(nameof(ViewAllMedicines));
         }
 

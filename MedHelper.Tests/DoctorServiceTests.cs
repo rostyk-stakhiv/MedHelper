@@ -45,7 +45,7 @@ namespace MedHelper.Tests
             var result = await _doctorService.GetByIdAsync(1);
 
             // assert
-            Assert.Null(null);
+            Assert.Null(result);
         }
 
         [Fact]
