@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using System.Security.Claims;
 using MedHelper.BLL.Dto.Responses;
+using MedHelper.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace MedHelper.Web.Controllers
 {
@@ -15,15 +18,17 @@ namespace MedHelper.Web.Controllers
     {
         private IPatientService _patientService;
         IMedicineService _medicineService;
+        private readonly UserManager<User> _userManager;
 
-        public PatientController(IPatientService patientService, IMedicineService medicineService)
+        public PatientController(IPatientService patientService, IMedicineService medicineService, UserManager<User> userManager)
         { 
             _patientService = patientService;
             _medicineService = medicineService;
+            _userManager = userManager;
         }
         
         [HttpGet]
-        [Route("Patient/{id}")]
+        // [Route("Patient/{id}")]
         public async Task<IActionResult> Index(int id, string search)
         {
             var patient = await _patientService.GetByIdAsync(id);
@@ -75,29 +80,33 @@ namespace MedHelper.Web.Controllers
         }
 
         [HttpGet]
-        // [Authorize(Roles ="Doctor")]
+        [Authorize]
         public IActionResult Add()
         {
-            var Diseases = new List<DiseaseModel>() { new DiseaseModel() { Id = 1, Title = "one" }, new DiseaseModel() { Id = 2, Title = "two" } };
-            ViewBag.Medicines = _medicineService.GetAll();
-            ViewBag.Diseases = Diseases;
             return View();
         }
         
         [HttpPost]
-        [AllowAnonymous]
-        // [Authorize(Roles ="Admin")]
+        [Authorize]
         public async Task<IActionResult> AddAsync(CreatePatientDto patient)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+
+            patient.UserId = user.Id;
+            patient.User = user;
+            preparePatient(patient);
             
             await _patientService.AddAsync(patient);
-            return Ok(); // редірект на сторінку доктора треба тут
+            return Redirect("https://localhost:7241/Doctor");
+        }
 
-            // return RedirectToAction("Get", new { id = createdPatient.Id });
+        private void preparePatient(CreatePatientDto patient)
+        { 
+            var medArr = patient.TempMedicines.Split(", ");
+            // var disArr = patient.TempDiseases.Split(", ");
+            patient.Medicines = _medicineService.GetAll().Where(obj => medArr.Contains(obj.Name)).ToList();
+            // patient.Diseases = _medicineService.GetAllDiseases().Where(obj => disArr.Contains(obj.Title)).ToList();
         }
         
     }

@@ -23,13 +23,21 @@ namespace MedHelper.BLL
             CreateMap<PatientDisease, DiseaseResponse>()
             .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Disease.Id))
             .ForMember(d => d.Title, c => c.MapFrom(disease => disease.Disease.Title));
+            
             CreateMap<PatientMedicine, MedicineResponse>()
-            .ForMember(d => d.Id, c => c.MapFrom(medicine => medicine.Medicine.Id))
-            .ForMember(d => d.Name, c => c.MapFrom(medicine => medicine.Medicine.Name))
-            .ForMember(d => d.Group, c => c.MapFrom(medicine => medicine.Medicine.Group))
-            .ForMember(d => d.Contraindications, c => c.MapFrom(medicine => medicine.Medicine.MedicineContraindications))
-            .ForMember(d => d.Compositions, c => c.MapFrom(medicine => medicine.Medicine.MedicineCompositions))
-            .ForMember(d => d.MedicineInteractions, c => c.MapFrom(medicine => medicine.Medicine.MedicineInteractions));
+                .ForMember(d => d.Id, c => c.MapFrom(medicine => medicine.Medicine.Id))
+                .ForMember(d => d.Name, c => c.MapFrom(medicine => medicine.Medicine.Name))
+                .ForMember(d => d.Group, c => c.MapFrom(medicine => medicine.Medicine.Group))
+                .ForMember(d => d.Contraindications,
+                    c => c.MapFrom(medicine => medicine.Medicine.MedicineContraindications))
+                .ForMember(d => d.Compositions, c => c.MapFrom(medicine => medicine.Medicine.MedicineCompositions))
+                .ForMember(d => d.MedicineInteractions,
+                    c => c.MapFrom(medicine => medicine.Medicine.MedicineInteractions));
+
+            CreateMap<MedicineResponse, PatientMedicine>()
+                .ForMember(d => d.Id, c => c.MapFrom(medicine => medicine.Id));
+                // .ForMember(d => d.Medicine.Name, c => c.MapFrom(medicine => medicine.Name))
+
 
             CreateMap<User, DoctorResponse>()
                 .ForMember(d => d.FirstName, c => c.MapFrom(disease => disease.FirstName))

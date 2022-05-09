@@ -29,6 +29,11 @@ namespace MedHelper.BLL.Services
             return _mapper.Map<List<MedicineResponse>>(_unitOfWork.MedicineRepository.GetAllWithDetails(search));
         }
 
+        // public IEnumerable<DiseaseResponse> GetAllDiseases(string search = null)
+        // {
+        //     return _mapper.Map<List<>>(_unitOfWork.DiseaseRepository.FindAll());
+        // }
+
         public async Task<MedicineResponse> GetByIdAsync(int id)
         {
             var result = await _unitOfWork.MedicineRepository.GetByIdWithDetailsAsync(id);

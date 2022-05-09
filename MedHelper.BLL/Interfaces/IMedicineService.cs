@@ -11,6 +11,7 @@ namespace MedHelper.BLL.Interfaces
     public interface IMedicineService
     {
         IEnumerable<MedicineResponse> GetAll(string search = null);
+        // IEnumerable<DiseaseResponse> GetAllDiseases(string search = null);
 
         Task<MedicineResponse> GetByIdAsync(int id);
 
