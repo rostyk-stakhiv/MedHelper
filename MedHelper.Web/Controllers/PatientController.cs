@@ -86,28 +86,28 @@ namespace MedHelper.Web.Controllers
             return View();
         }
         
+        // FIXME
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> AddAsync(CreatePatientDto patient)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
-
             patient.UserId = user.Id;
-            patient.User = user;
-            preparePatient(patient);
+            
+            // preparePatient(patient);
             
             await _patientService.AddAsync(patient);
             return Redirect("https://localhost:7241/Doctor");
         }
 
-        private void preparePatient(CreatePatientDto patient)
-        { 
-            var medArr = patient.TempMedicines.Split(", ");
-            // var disArr = patient.TempDiseases.Split(", ");
-            patient.Medicines = _medicineService.GetAll().Where(obj => medArr.Contains(obj.Name)).ToList();
-            // patient.Diseases = _medicineService.GetAllDiseases().Where(obj => disArr.Contains(obj.Title)).ToList();
-        }
+        // private void preparePatient(CreatePatientDto patient)
+        // { 
+        //     var medArr = patient.TempMedicines.Split(", ");
+        //     // var disArr = patient.TempDiseases.Split(", ");
+        //     patient.Medicines = _medicineService.GetAll().Where(obj => medArr.Contains(obj.Name)).ToList();
+        //     // patient.Diseases = _medicineService.GetAllDiseases().Where(obj => disArr.Contains(obj.Title)).ToList();
+        // }
         
     }
 }

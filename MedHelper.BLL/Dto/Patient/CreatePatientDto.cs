@@ -22,19 +22,18 @@ namespace MedHelper.BLL.Dto.Patient
         [Required] 
         public DateTime Birthdate { get; set; }
 
-        [Required] 
-        public string TempMedicines { get; set; }
-        
-        [Required] 
-        public string TempDiseases { get; set; }
-        
         // [Required] 
-        public List<MedicineResponse> Medicines { get; set; }
-        
+        // public string TempMedicines { get; set; }
+        //
         // [Required] 
-        public List<DiseaseResponse> Diseases { get; set; }
+        // public string TempDiseases { get; set; }
+        //
+        // // [Required] 
+        // public List<MedicineResponse> Medicines { get; set; }
+        //
+        // // [Required] 
+        // public List<DiseaseResponse> Diseases { get; set; }
         
         public int UserId { get; set; }
-        public virtual User User { get; set; } 
     }
 }
