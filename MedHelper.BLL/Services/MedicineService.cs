@@ -25,8 +25,14 @@ namespace MedHelper.BLL.Services
         }
 
         public IEnumerable<MedicineResponse> GetAll(string search = null)
-        {            
-            return _mapper.Map<List<MedicineResponse>>(_unitOfWork.MedicineRepository.GetAllWithDetails(search));
+        {
+            //return _mapper.Map<List<MedicineResponse>>(_unitOfWork.MedicineRepository.GetAllWithDetails(search));
+            var medicines = _unitOfWork.MedicineRepository.FindAll();
+            if (!String.IsNullOrEmpty(search))
+            {
+                medicines = medicines.Where(s => s.Name.ToLower().Contains(search.ToLower()));
+            }
+            return _mapper.Map<List<MedicineResponse>>(medicines.ToList());
         }
 
         public async Task<MedicineResponse> GetByIdAsync(int id)
