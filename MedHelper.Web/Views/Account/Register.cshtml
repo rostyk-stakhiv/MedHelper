@@ -46,6 +46,7 @@
                                     @Html.TextBoxFor(m => m.LastName, "", new { @class = "form-control", @placeholder = "Last Name", @required = "required" })
 
                                     @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "badge badge-danger" })
+
                                 }
                                 else
                                 {
@@ -72,8 +73,9 @@
                                 {
                                     @Html.TextBoxFor(m => m.Email, "", new { @class = "error form-control", @placeholder = "Email", @required = "required" })
 
-                                    @Html.ValidationMessageFor(m => m.Email, "Wrong Email Format", new { @class = "badge badge-danger e" })
+                                    @Html.ValidationMessageFor(m => m.Email, "Wrong Email Format", new { @class = "e badge badge-danger" })
                                 }
+
                             </div>
 
                         </div>
@@ -82,17 +84,17 @@
                                 @Html.LabelFor(m => m.Password)
                                 @if (ViewBag.error == null)
                                 {
-                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @required = "required" })
 
-                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "badge badge-danger"  })
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password",  @required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "e badge badge-danger" })
                                 }
                                 else
                                 {
-                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control error", @placeholder = "Password", @required = "required" })
-
-                                    @Html.ValidationMessageFor(m => m.Password, "Wrong Password Format", new { @class = "e badge badge-danger" })
+                                    @Html.PasswordFor(m => m.Password, new { @class = "error form-control", @placeholder = "Password",  @required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Password, "Wrong Passvord Format", new { @class = "e badge badge-danger" })
 
                                 }
+                            
                             </div>
                         </div>
                         <div class="form-group">

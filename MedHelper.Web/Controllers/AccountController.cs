@@ -100,38 +100,54 @@ namespace MedHelper.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(User user)
         {
-            if (await _userManager.FindByEmailAsync(user.Email) != null)
+            if (ModelState.IsValid)
             {
+                try
+                {
+                    if (await _userManager.FindByEmailAsync(user.Email) != null)
+                    {
 
-                ViewBag.error = "Email already exists";
-                return View();
+                        ViewBag.error = "Email already exists";
+                        return View();
+                    }
+                
+                    await _roleManager.CreateAsync(new Role() { Name = "Doctor" });
+                    user.UserName = user.FirstName + user.LastName;
+
+                    var createdUser = await _userManager.CreateAsync(user, user.Password);
+
+                    await _userManager.AddToRoleAsync(user, "Doctor");
+                    if (!createdUser.Succeeded)
+                    {
+
+                        ViewBag.error = "error";
+                        return View();
+                    }
+                }
+                catch 
+                {
+                    ViewBag.error = "error";
+                    return View();
+                }
+                string confirmationToken = _userManager.
+                     GenerateEmailConfirmationTokenAsync(user).Result;
+
+                string confirmationLink = Url.Action("ConfirmEmail",
+                  "Account", new
+                  {
+                      userid = user.Id,
+                      token = confirmationToken
+                  },
+                   protocol: HttpContext.Request.Scheme);
+
+                SendEmail(confirmationLink, "Confirm Email", user.Email);
+
+                return View("Login");
             }
-
-            await _roleManager.CreateAsync(new Role() { Name = "Doctor" });
-            user.UserName = user.FirstName + user.LastName;
-            var createdUser = await _userManager.CreateAsync(user, user.Password);
-            await _userManager.AddToRoleAsync(user, "Doctor");
-            if (!createdUser.Succeeded)
+            else
             {
-
-                ViewBag.error = "error";
-                return View();
+                return View("Register");
             }
-
-            string confirmationToken = _userManager.
-                 GenerateEmailConfirmationTokenAsync(user).Result;
-
-            string confirmationLink = Url.Action("ConfirmEmail",
-              "Account", new
-              {
-                  userid = user.Id,
-                  token = confirmationToken
-              },
-               protocol: HttpContext.Request.Scheme);
-
-            SendEmail(confirmationLink, "Confirm Email", user.Email);
-
-            return View("Login");
 
 
         }
