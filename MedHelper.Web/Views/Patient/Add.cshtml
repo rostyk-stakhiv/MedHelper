@@ -24,124 +24,102 @@
             <input type="date" name="birthday" asp-for="Birthdate" placeholder="birthday" size="15" required/>
             <label> Cтать: </label>
             <input type="text" name="gender" asp-for="Gender" placeholder="gender" size="15" required/>
-        
+              @* <div> *@
+              @*   <label> *@
+              @*     Стать : *@
+              @*   </label> *@
+              @*   <br> *@
+              @*   <input asp-for="Gender" type="radio" value="Male" name="gender" checked> Чоловік *@
+              @*   <input asp-for="Gender" type="radio" value="Female" name="gender"> Жінка *@
+              @* *@
+              @* </div> *@
             @* <label> Список препаратів, які вживає пацієнт: </label> *@
             @* <input type="text" name="tempMedicines" asp-for="TempMedicines" placeholder="tempMedicines" size="15" required/> *@
-            @* *@
-            @* <label> Медична карта: </label> *@
-            @* <input type="text" name="tempDiseases" asp-for="TempDiseases" placeholder="tempDiseases" size="15" required/> *@
-            @* *@
-        @* <div> *@
-            @*     <label> *@
-            @*         Стать : *@
-            @*     </label> *@
-            @*     <br> *@
-            @*     @if (Gender == "Male") *@
-            @*     { *@
-            @*         <div> *@
-            @*             <input type="radio" value="Male" name="gender" checked> Чоловік *@
-            @*             <input type="radio" value="Female" name="gender"> Жінка *@
-            @*         </div> *@
-            @*     } *@
-            @*     else *@
-            @*     { *@
-            @*         <div> *@
-            @*             <input type="radio" value="Male" name="gender"> Чоловік *@
-            @*             <input type="radio" value="Female" name="gender" checked> Жінка *@
-            @*         </div> *@
-            @*     } *@
-            @* *@
-            @* </div> *@
-
-        @*     <div> *@
-        @*         <label> *@
-        @*             Список препаратів, які вживає пацієнт: *@
-        @*         </label> *@
-        @* *@
-        @*         <div> *@
-        @*             <datalist id="MedicineSuggestions"> *@
-        @*                 @foreach (var item in ViewBag.Medicines) *@
-        @*                 { *@
-        @*                     <option id=@item.Id>@item.Name</option> *@
-        @*                 } *@
-        @*             </datalist> *@
-        @*             <input id="medicine_suggestions_input" autoComplete="on" class="drop-down list" placeholder="склад" list="MedicineSuggestions"/> *@
-        @*         </div> *@
-        @*         <textarea cols="80" rows="5" id="selectedMedicineOptionsTextArea"></textarea> *@
-        @*         <button class="delete-drop-down" onclick="clearSelectedMedicineOptionsTextArea()">-</button> *@
-        @*     </div> *@
-        @* </div> *@
-        @* <div class="container-right"> *@
-        @*     <label> *@
-        @*         Медична карта: *@
-        @*     </label> *@
-        @* *@
-        @*     <div> *@
-        @*         <datalist id="ContraindicationSuggestions"> *@
-        @*             @foreach (var item in ViewBag.Diseases) *@
-        @*             { *@
-        @*                 <option id=@item.Id>@item.Title</option>  *@
-        @*             } *@
-        @*         </datalist> *@
-        @*         <input id="contraindication_suggestions_input" autoComplete="on" class="drop-down list" placeholder="противопоказання" list="ContraindicationSuggestions" /> *@
-        @*     </div> *@
-        @*     <textarea cols="80" rows="5" id="selectedContraindicationOptionsTextArea"></textarea> *@
-        @*     <button class="delete-drop-down" onclick="clearSelectedContraindicationOptionsTextArea()">-</button> *@
-        @* *@
-        
-            @* <button class="registerbtn" onclick="EditPatient(1)">Додати пацієнта</button> *@
-            <button type="submit" class="registerbtn">Додати пацієнта</button>
-
+            <div> 
+                    <label>
+                        Список препаратів, які вживає пацієнт:
+                    </label>
+            
+                    <div>
+                        <datalist id="MedicineSuggestions">
+                            @foreach (var item in ViewBag.Medicines)
+                            {
+                                <option id=@item.Id>@item.Name</option>
+                            }
+                        </datalist>
+                        <input id="medicine_suggestions_input" autoComplete="on" class="drop-down list" placeholder="склад" list="MedicineSuggestions"/>
+                    </div>
+                <textarea asp-for="TempMedicines" cols="80" rows="5" id="selectedMedicineOptionsTextArea"></textarea>
+                <button class="delete-drop-down" onclick="clearSelectedMedicineOptionsTextArea()">-</button>
+            </div>
         </div>
+            <div class="container-right">
+                <label>
+                    Медична карта:
+                </label>
+            
+                <div>
+                    <datalist id="ContraindicationSuggestions">
+                        @foreach (var item in ViewBag.Diseases)
+                        {
+                            <option id=@item.Id>@item.Title</option>
+                        }
+                    </datalist>
+                    <input id="contraindication_suggestions_input" autoComplete="on" class="drop-down list" placeholder="противопоказання" list="ContraindicationSuggestions" />
+                </div>
+                <textarea asp-for="TempDiseases" cols="80" rows="5" id="selectedContraindicationOptionsTextArea"></textarea>
+                <button class="delete-drop-down" onclick="clearSelectedContraindicationOptionsTextArea()">-</button>
+                @* <input type="text" name="tempDiseases" asp-for="TempDiseases" placeholder="tempDiseases" size="15" required/> *@
+                <button type="submit" class="registerbtn">Додати пацієнта</button>
+
+            </div>
         </form>
     </div>
 
-    @* <script>     *@
-    @*         //const storageSuggestions = document.getElementById('storageSuggestions').childNodes; *@
-    @*         const MedicineSuggestionsInput = document.getElementById("medicine_suggestions_input"); *@
-    @*         let eventSource = null; *@
-    @* *@
-    @*         MedicineSuggestionsInput.addEventListener('keydown', (event) => { *@
-    @*             if(event.key === 'Enter') { *@
-    @*                 event.preventDefault(); // не перекине на інший інпут *@
-    @*             } *@
-    @*             eventSource = event.key ? 'input' : 'list'; *@
-    @*         }); *@
-    @*         MedicineSuggestionsInput.addEventListener('input', (event) => { *@
-    @*           if (eventSource === 'list') { *@
-    @*             document.getElementById("selectedMedicineOptionsTextArea").innerHTML += event.target.value +'\n'; *@
-    @*             console.log(event.target.value); *@
-    @*           } *@
-    @*         }); *@
-    @*         function clearSelectedMedicineOptionsTextArea() { *@
-    @*           let splittedText = document.getElementById("selectedMedicineOptionsTextArea").innerHTML.split(/\r?\n/) *@
-    @*           splittedText.splice(-2) *@
-    @*           document.getElementById("selectedMedicineOptionsTextArea").innerHTML = splittedText.join('\n'); *@
-    @*           document.getElementById("selectedMedicineOptionsTextArea").innerHTML+="\n"; *@
-    @*         } *@
-    @* *@
-    @* *@
-    @*         const ContraindicationSuggestionsInput = document.getElementById("contraindication_suggestions_input"); *@
-    @*         let eventSource2 = null; *@
-    @* *@
-    @*         ContraindicationSuggestionsInput.addEventListener('keydown', (event) => { *@
-    @*             if(event.key === 'Enter') { *@
-    @*                 event.preventDefault(); // не перекине на інший інпут *@
-    @*             } *@
-    @*             eventSource2 = event.key ? 'input' : 'list'; *@
-    @*         }); *@
-    @*         ContraindicationSuggestionsInput.addEventListener('input', (event) => { *@
-    @*           if (eventSource2 === 'list') { *@
-    @*             document.getElementById("selectedContraindicationOptionsTextArea").innerHTML += event.target.value +'\n'; *@
-    @*             console.log(event.target.value); *@
-    @*           } *@
-    @*         }); *@
-    @*         function clearSelectedContraindicationOptionsTextArea() { *@
-    @* *@
-    @*           let splittedText = document.getElementById("selectedContraindicationOptionsTextArea").innerHTML.split(/\r?\n/) *@
-    @*           splittedText.splice(-2) *@
-    @*           document.getElementById("selectedContraindicationOptionsTextArea").innerHTML = splittedText.join('\n'); *@
-    @*           document.getElementById("selectedContraindicationOptionsTextArea").innerHTML+="\n"; *@
-    @*         } *@
-    @* </script> *@
+    <script>
+      //const storageSuggestions = document.getElementById('storageSuggestions').childNodes;
+      const MedicineSuggestionsInput = document.getElementById("medicine_suggestions_input");
+      let eventSource = null;
+
+      MedicineSuggestionsInput.addEventListener('keydown', (event) => {
+          if(event.key === 'Enter') {
+              event.preventDefault(); // не перекине на інший інпут
+          }
+          eventSource = event.key ? 'input' : 'list';
+      });
+      MedicineSuggestionsInput.addEventListener('input', (event) => {
+        if (eventSource === 'list') {
+          document.getElementById("selectedMedicineOptionsTextArea").innerHTML += event.target.value +'\n';
+        }
+      });
+      function clearSelectedMedicineOptionsTextArea() {
+        let splittedText = document.getElementById("selectedMedicineOptionsTextArea").innerHTML.split(/\r?\n/)
+        splittedText.splice(-2) 
+        document.getElementById("selectedMedicineOptionsTextArea").innerHTML = splittedText.join('\n');
+        document.getElementById("selectedMedicineOptionsTextArea").innerHTML+="\n";
+      }
+      
+
+      const ContraindicationSuggestionsInput = document.getElementById("contraindication_suggestions_input");
+      let eventSource2 = null;
+
+      ContraindicationSuggestionsInput.addEventListener('keydown', (event) => {
+          if(event.key === 'Enter') {
+              event.preventDefault(); // не перекине на інший інпут
+          }
+          eventSource2 = event.key ? 'input' : 'list';
+      });
+      ContraindicationSuggestionsInput.addEventListener('input', (event) => {
+        if (eventSource2 === 'list') {
+          document.getElementById("selectedContraindicationOptionsTextArea").innerHTML += event.target.value +'\n';
+        }
+      });
+      function clearSelectedContraindicationOptionsTextArea() {
+
+        let splittedText = document.getElementById("selectedContraindicationOptionsTextArea").innerHTML.split(/\r?\n/)
+        splittedText.splice(-2) 
+        document.getElementById("selectedContraindicationOptionsTextArea").innerHTML = splittedText.join('\n');
+        document.getElementById("selectedContraindicationOptionsTextArea").innerHTML+="\n";
+      }
+    </script>
     </div>

@@ -16,6 +16,7 @@ namespace MedHelper.Web.Controllers
 {
     public class PatientController : Controller
     {
+        private const string DOCTOR_PAGE = "https://localhost:7241/Doctor";
         private IPatientService _patientService;
         IMedicineService _medicineService;
         private readonly UserManager<User> _userManager;
@@ -83,10 +84,11 @@ namespace MedHelper.Web.Controllers
         [Authorize]
         public IActionResult Add()
         {
+            ViewBag.Medicines = _medicineService.GetAll();
+            ViewBag.Diseases = _medicineService.GetAllDiseases();
             return View();
         }
         
-        // FIXME
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> AddAsync(CreatePatientDto patient)
@@ -94,20 +96,13 @@ namespace MedHelper.Web.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
             patient.UserId = user.Id;
-            
-            // preparePatient(patient);
+
+            patient.Medicines = _medicineService.CreateMedicinesFromString(patient.TempMedicines).ToList();
+            patient.Diseases = _medicineService.CreateDiseasesFromString(patient.TempDiseases).ToList();
             
             await _patientService.AddAsync(patient);
-            return Redirect("https://localhost:7241/Doctor");
+            return Redirect(DOCTOR_PAGE);
         }
 
-        // private void preparePatient(CreatePatientDto patient)
-        // { 
-        //     var medArr = patient.TempMedicines.Split(", ");
-        //     // var disArr = patient.TempDiseases.Split(", ");
-        //     patient.Medicines = _medicineService.GetAll().Where(obj => medArr.Contains(obj.Name)).ToList();
-        //     // patient.Diseases = _medicineService.GetAllDiseases().Where(obj => disArr.Contains(obj.Title)).ToList();
-        // }
-        
     }
 }

@@ -34,11 +34,27 @@ namespace MedHelper.BLL.Services
             }
             return _mapper.Map<List<MedicineResponse>>(medicines.ToList());
         }
+        
+        public IEnumerable<TempMedicineResponse> CreateMedicinesFromString(string medString)
+        {
+            var medArray = medString.Split("\r\n");
+            var medicines = _unitOfWork.MedicineRepository.FindAll().Where(obj => medArray.Contains(obj.Name));
+            
+            return _mapper.Map<List<TempMedicineResponse>>(medicines.ToList());
+        }
 
-        // public IEnumerable<DiseaseResponse> GetAllDiseases(string search = null)
-        // {
-        //     return _mapper.Map<List<>>(_unitOfWork.DiseaseRepository.FindAll());
-        // }
+        public IEnumerable<DiseaseResponse> CreateDiseasesFromString(string medString)
+        {
+            var medArray = medString.Split("\r\n");
+            var medicines = _unitOfWork.DiseaseRepository.FindAll().Where(obj => medArray.Contains(obj.Title));
+            
+            return _mapper.Map<List<DiseaseResponse>>(medicines.ToList());
+        }
+
+        public IEnumerable<DiseaseResponse> GetAllDiseases()
+        {
+            return _mapper.Map<List<DiseaseResponse>>(_unitOfWork.DiseaseRepository.FindAll());
+        }
 
         public async Task<MedicineResponse> GetByIdAsync(int id)
         {
