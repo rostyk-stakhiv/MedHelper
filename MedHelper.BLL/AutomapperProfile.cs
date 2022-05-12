@@ -84,6 +84,9 @@ namespace MedHelper.BLL
             .ForMember(d => d.Compositions, c => c.MapFrom(medicine => medicine.MedicineCompositions))
             .ForMember(d => d.MedicineInteractions, c => c.MapFrom(medicine => medicine.MedicineInteractions));
 
+        CreateMap<CreateMedicineDto, Medicine>()
+            .ForMember(d => d.Name, c => c.MapFrom(medicine => medicine.Name));
+
         CreateMap<UpdateDoctorDto, User>()
             .ForMember(d => d.FirstName, c => c.MapFrom(disease => disease.FirstName))
             .ForMember(d => d.LastName, c => c.MapFrom(disease => disease.LastName))

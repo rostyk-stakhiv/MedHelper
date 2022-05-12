@@ -14,37 +14,39 @@ ViewData["Title"] = "Add patient";
     <h1> Додати препарат </h1>
     <hr>
       <div class="container">
-          <form asp-controller="Patient" asp-action="Add" method="post" class="add-patient-form">
+          <form asp-controller="Medicine" asp-action="Add" method="post" class="add-medicine-form">
               <div class="container-left">
                   <label> Назва препарату: </label>
-                  <input type="text" name="medicine" placeholder="лікарство" size="15" required />
+                  <input type="text" name="name" asp-for="Name" placeholder="лікарство" size="15" required />
                   <div>
                       <label>
                           Фармакоцептична група:
                       </label>
                       <div>
                           <datalist id="suggestions">
-                              <option>First option</option>
-                              <option>Second Option</option>
-                              <option>Ершкв Option</option>
+                              @foreach (var item in ViewBag.Groups)
+                            {
+                                <option id=@item.Id>@item.Title</option>
+                            }
                           </datalist>
-                          <input  autoComplete="on" class="drop-down list"  placeholder="Фармакоцептична група" list="suggestions"/>
+                          <input asp-for="TempPharmacotherapeuticGroup" autoComplete="on" class="drop-down list"  placeholder="Фармакоцептична група" list="suggestions"/>
                       </div>
                   </div>
+
                   <div>
                       <label>
                           Склад:
                       </label>
-    
                       <div>
                           <datalist id="CompositionSuggestions">
-                              <option>First option</option>
-                              <option>Second Option</option>
-                              <option>Ершкв Option</option>
+                              @foreach (var item in ViewBag.MedicineCompositions)
+                              {
+                                  <option id=@item.Id>@item.Description</option>
+                              }
                           </datalist>
                           <input id="composition_suggestions_input" autoComplete="on" class="drop-down list"  placeholder="склад" list="CompositionSuggestions"/>
                       </div>
-                      <textarea cols="80" rows="5" id="selectedStorageOptionsTextArea"></textarea>
+                      <textarea asp-for="TempMedicineCompositions" cols="80" rows="5" id="selectedStorageOptionsTextArea"></textarea>
                       <button class="delete-drop-down" onclick="clearSelectedStorageOptionsTextArea()">-</button>
                   </div>
               </div>
@@ -54,13 +56,14 @@ ViewData["Title"] = "Add patient";
                   </label>
                   <div>
                       <datalist id="ContraindicationSuggestions">
-                          <option>First option</option>
-                          <option>Second Option</option>
-                          <option>Ершкв Option</option>
+                          @foreach (var item in ViewBag.Contraindications)
+                          {
+                              <option id=@item.Id>@item.Title</option>
+                          }
                       </datalist>
                       <input id="contraindication_suggestions_input" autoComplete="on" class="drop-down list"  placeholder="противопоказання" list="ContraindicationSuggestions"/>
                   </div>
-                  <textarea cols="80" rows="5" id="selectedContraindicationOptionsTextArea"></textarea>
+                  <textarea asp-for="TempMedicineContraindications" cols="80" rows="5" id="selectedContraindicationOptionsTextArea"></textarea>
                   <button class="delete-drop-down" onclick="clearSelectedContraindicationOptionsTextArea()">-</button>
     
                   <button type="submit" class="registerbtn" >Додати препарат</button>
@@ -74,14 +77,23 @@ ViewData["Title"] = "Add patient";
         const CompositionSuggestionsInput = document.getElementById("composition_suggestions_input");
         let eventSource = null;
 
+        // CompositionSuggestionsInput.addEventListener('keydown', (event) => {
+        //     if(event.key === 'Enter') {
+        //         event.preventDefault(); // не перекине на інший інпут
+        //         document.getElementById("selectedStorageOptionsTextArea").innerHTML += document.getElementById("composition_suggestions_input").value +'\n'
+        //     }
+        //     eventSource = event.key ? 'input' : 'list';
+        // });
         CompositionSuggestionsInput.addEventListener('keydown', (event) => {
+            console.log(1);
             if(event.key === 'Enter') {
+                console.log(2);
                 event.preventDefault(); // не перекине на інший інпут
-                document.getElementById("selectedStorageOptionsTextArea").innerHTML += document.getElementById("composition_suggestions_input").value +'\n'
             }
             eventSource = event.key ? 'input' : 'list';
         });
         CompositionSuggestionsInput.addEventListener('input', (event) => {
+            console.log(3);
           if (eventSource === 'list') {
             document.getElementById("selectedStorageOptionsTextArea").innerHTML += event.target.value +'\n';
           }
@@ -92,7 +104,7 @@ ViewData["Title"] = "Add patient";
           splittedText.splice(-2) 
           document.getElementById("selectedStorageOptionsTextArea").innerHTML = splittedText.join('\n');
           document.getElementById("selectedStorageOptionsTextArea").innerHTML+="\n";
-        }
+        }    
         
 
         const ContraindicationSuggestionsInput = document.getElementById("contraindication_suggestions_input");

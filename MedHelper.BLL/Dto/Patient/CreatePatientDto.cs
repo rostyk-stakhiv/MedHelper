@@ -9,6 +9,7 @@ namespace MedHelper.BLL.Dto.Patient
 {
     public class CreatePatientDto
     {
+        private DateTime _Birthdate;
         [Required] 
         public string LastName { get; set; }
         
@@ -19,8 +20,9 @@ namespace MedHelper.BLL.Dto.Patient
         [EnumDataType(typeof(Gender))]
         public string Gender { get; set; }
 
-        [Required] 
-        public DateTime Birthdate { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        public string Birthdate { get; set; }
         
         public string TempMedicines { get; set; }
         public string TempDiseases { get; set; }

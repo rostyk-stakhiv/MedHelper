@@ -56,6 +56,22 @@ namespace MedHelper.BLL.Services
             return _mapper.Map<List<DiseaseResponse>>(_unitOfWork.DiseaseRepository.FindAll());
         }
 
+        public IEnumerable<PharmacotherapeuticGroup> GetAllPharmacotherapeuticGroups()
+        {
+            return _unitOfWork.PharmacotherapeuticGroupRepository.FindAll();
+        }
+
+        public IEnumerable<Composition> GetAllCompositions()
+        {
+            var res = _unitOfWork.CompositionRepository.FindAll();
+            return res;
+        }
+
+        // public IEnumerable<Contraindication> GetAllContraindications()
+        // {
+        //     throw new NotImplementedException();
+        // }
+
         public async Task<MedicineResponse> GetByIdAsync(int id)
         {
             var result = await _unitOfWork.MedicineRepository.GetByIdWithDetailsAsync(id);
@@ -65,6 +81,14 @@ namespace MedHelper.BLL.Services
         public async Task AddAsync(CreateMedicineDto model)
         {
             var medicine = _mapper.Map<Medicine>(model);
+            
+            var compositionsStrArr = model.TempMedicineCompositions.Split("\r\n");
+            var contraindicationsStrArr = model.TempMedicineContraindications.Split("\r\n");
+            // medicine.MedicineContraindications = GetAllDiseases().Where(obj => contraindicationsStrArr.Contains(obj.Title));
+            // medicine.MedicineContraindications = ;
+            
+            medicine.PharmacotherapeuticGroupId = _unitOfWork.PharmacotherapeuticGroupRepository.FindAll().FirstOrDefault(obj => obj.Title == model.TempPharmacotherapeuticGroup).Id;
+            
             await _unitOfWork.MedicineRepository.AddAsync(medicine);
             await _unitOfWork.SaveAsync();
         }

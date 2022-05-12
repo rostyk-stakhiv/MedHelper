@@ -93,6 +93,13 @@ namespace MedHelper.Web.Controllers
         [Authorize]
         public async Task<IActionResult> AddAsync(CreatePatientDto patient)
         {
+            // if (!ModelState.IsValid)
+            // {
+            //     ViewBag.Medicines = _medicineService.GetAll();
+            //     ViewBag.Diseases = _medicineService.GetAllDiseases();
+            //     return View();
+            // }
+            
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
             patient.UserId = user.Id;

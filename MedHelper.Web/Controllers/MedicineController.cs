@@ -9,19 +9,24 @@ using MedHelper.BLL.Dto.Responses;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Security.Claims;
+using MedHelper.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace MedHelper.Web.Controllers
 {
     public class MedicineController : Controller
     {
         IMedicineService _medicineService;
-        public MedicineController(IMedicineService medicineService)
+        private readonly UserManager<User> _userManager;
+        public MedicineController(IMedicineService medicineService, UserManager<User> userManager)
         {
             _medicineService = medicineService;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        [Route("Medicine/{id}")]
+        // [Route("Medicine/{id}")]
         public async Task<IActionResult> Index(int Id)
         {
             var medicine = await _medicineService.GetByIdAsync(Id);
@@ -38,25 +43,35 @@ namespace MedHelper.Web.Controllers
         }
         
         [HttpGet]
-        [Authorize(Roles ="Admin")]
+        // [Authorize(Roles ="Admin")]
         public IActionResult Add()
         {
+            ViewBag.MedicineCompositions = _medicineService.GetAllCompositions();
+            ViewBag.Groups = _medicineService.GetAllPharmacotherapeuticGroups();
+            ViewBag.Contraindications = _medicineService.GetAllDiseases();
             return View();
         }
         
         [HttpPost]
-        [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> AddAsync(CreateMedicineDto patient)
+        // [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> AddAsync(CreateMedicineDto medicine)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+            // if (!ModelState.IsValid)
+            // {
+            //     var aa = new List<Composition>()
+            //         { new Composition() { Id = 1, Description = "амоксицилін" }, new Composition() { Id = 1, Description = "ванілін" } };
+            //     ViewBag.Groups = _medicineService.GetAllPharmacotherapeuticGroups();
+            //     ViewBag.MedicineCompositions = aa; //_medicineService.GetAllCompositions();
+            //     ViewBag.Contraindications = _medicineService.GetAllDiseases();
+            //     return View();
+            // }
             
-            await _medicineService.AddAsync(patient);
-            return Ok(); // редірект на сторінку доктора треба тут
-        
-            // return RedirectToAction("Get", new { id = createdPatient.Id });
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            medicine.UserId = user.Id;
+            
+            await _medicineService.AddAsync(medicine);
+            return Ok();
         }
 
         [HttpGet]
