@@ -43,7 +43,7 @@ namespace MedHelper.Web.Controllers
         }
         
         [HttpGet]
-        // [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin")]
         public IActionResult Add()
         {
             ViewBag.MedicineCompositions = _medicineService.GetAllCompositions();
@@ -53,25 +53,23 @@ namespace MedHelper.Web.Controllers
         }
         
         [HttpPost]
-        // [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> AddAsync(CreateMedicineDto medicine)
         {
-            // if (!ModelState.IsValid)
-            // {
-            //     var aa = new List<Composition>()
-            //         { new Composition() { Id = 1, Description = "амоксицилін" }, new Composition() { Id = 1, Description = "ванілін" } };
-            //     ViewBag.Groups = _medicineService.GetAllPharmacotherapeuticGroups();
-            //     ViewBag.MedicineCompositions = aa; //_medicineService.GetAllCompositions();
-            //     ViewBag.Contraindications = _medicineService.GetAllDiseases();
-            //     return View();
-            // }
+            if (!ModelState.IsValid)
+            {
+                ViewBag.MedicineCompositions = _medicineService.GetAllCompositions();
+                ViewBag.Groups = _medicineService.GetAllPharmacotherapeuticGroups();
+                ViewBag.Contraindications = _medicineService.GetAllDiseases();
+                return View();
+            }
             
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
             medicine.UserId = user.Id;
             
             await _medicineService.AddAsync(medicine);
-            return Ok();
+            return RedirectToAction(nameof(ViewAllMedicines));
         }
 
         [HttpGet]

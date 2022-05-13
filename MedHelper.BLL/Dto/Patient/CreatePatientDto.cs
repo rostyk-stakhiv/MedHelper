@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MedHelper.BLL.Dto.Responses;
 using MedHelper.BLL.Enums;
-using MedHelper.DAL.Entities;
 
 namespace MedHelper.BLL.Dto.Patient
 {
     public class CreatePatientDto
     {
-        private DateTime _Birthdate;
+        private DateTime _birthdate;
+        
         [Required] 
         public string LastName { get; set; }
         
@@ -21,8 +21,14 @@ namespace MedHelper.BLL.Dto.Patient
         public string Gender { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        public string Birthdate { get; set; }
+        public DateTime Birthdate
+        {
+            get { return _birthdate; }
+            set
+            {
+                _birthdate = Convert.ToDateTime(value);
+            }
+        }
         
         public string TempMedicines { get; set; }
         public string TempDiseases { get; set; }

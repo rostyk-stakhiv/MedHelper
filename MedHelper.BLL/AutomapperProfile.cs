@@ -32,6 +32,14 @@ namespace MedHelper.BLL
                 .ForMember(d => d.DiseaseId, c => c.MapFrom(disease => disease.Id))
                 .ForMember(d => d.Id, c => c.MapFrom(disease => 0));
 
+            CreateMap<DiseaseResponse, MedicineContraindication>()
+                .ForMember(d => d.ContraindicationId, c => c.MapFrom(disease => disease.Id))
+                .ForMember(d => d.Id, c => c.MapFrom(disease => 0));
+            
+            CreateMap<Composition, MedicineComposition>()
+                .ForMember(d => d.CompositionId, c => c.MapFrom(disease => disease.Id))
+                .ForMember(d => d.Id, c => c.MapFrom(disease => 0));
+            
             CreateMap<Medicine, TempMedicineResponse>()
                 .ForMember(d => d.Id, c => c.MapFrom(medicine => medicine.Id));
 
