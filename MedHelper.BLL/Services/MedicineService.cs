@@ -37,6 +37,8 @@ namespace MedHelper.BLL.Services
         
         public IEnumerable<TempMedicineResponse> CreateMedicinesFromString(string medString)
         {
+            if (medString == null) return new List<TempMedicineResponse>();
+
             var medArray = medString.Split("\r\n");
             var medicines = _unitOfWork.MedicineRepository.FindAll().Where(obj => medArray.Contains(obj.Name));
             
@@ -45,10 +47,15 @@ namespace MedHelper.BLL.Services
 
         public IEnumerable<DiseaseResponse> CreateDiseasesFromString(string medString)
         {
+            if (medString == null) return new List<DiseaseResponse>();
+            
             var medArray = medString.Split("\r\n");
-            var medicines = _unitOfWork.DiseaseRepository.FindAll().Where(obj => medArray.Contains(obj.Title));
+            var medicines = _unitOfWork.DiseaseRepository
+                .FindAll()
+                .Where(obj => medArray.Contains(obj.Title));
             
             return _mapper.Map<List<DiseaseResponse>>(medicines.ToList());
+
         }
 
         public IEnumerable<DiseaseResponse> GetAllDiseases()
@@ -66,12 +73,7 @@ namespace MedHelper.BLL.Services
             var res = _unitOfWork.CompositionRepository.FindAll();
             return res;
         }
-
-        // public IEnumerable<Contraindication> GetAllContraindications()
-        // {
-        //     throw new NotImplementedException();
-        // }
-
+        
         public async Task<MedicineResponse> GetByIdAsync(int id)
         {
             var result = await _unitOfWork.MedicineRepository.GetByIdWithDetailsAsync(id);

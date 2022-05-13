@@ -12,8 +12,13 @@ namespace MedHelper.BLL.Dto.Medicine
 
         public int UserId { get; set; }
         
+        [Required] 
         public string TempPharmacotherapeuticGroup { get; set; }
+        
+        [Required] 
         public string TempMedicineContraindications { get; set; }
+        
+        [Required] 
         public string TempMedicineCompositions { get; set; }
     }
 }

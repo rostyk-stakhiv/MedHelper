@@ -28,6 +28,7 @@ namespace MedHelper.Web.Controllers
             _userManager = userManager;
         }
         
+        
         [HttpGet]
         // [Route("Patient/{id}")]
         public async Task<IActionResult> Index(int id, string search)
@@ -48,13 +49,7 @@ namespace MedHelper.Web.Controllers
             
             return View(response);
         }
-        
-        [HttpGet]
-        public IActionResult Edit()
-        {
-            return View();
-        }
-        
+
         [HttpGet]
         [Authorize]
         public IActionResult Add()
@@ -84,12 +79,18 @@ namespace MedHelper.Web.Controllers
             await _patientService.AddAsync(patient);
             return Redirect(DOCTOR_PAGE);
         }
-        
+
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _patientService.DeleteByIdAsync(id);
             return Redirect(DOCTOR_PAGE);
+        }
+        
+        public IActionResult Edit(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
