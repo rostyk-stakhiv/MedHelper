@@ -9,23 +9,28 @@ using MedHelper.BLL.Dto.Responses;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Security.Claims;
+using MedHelper.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace MedHelper.Web.Controllers
 {
     public class MedicineController : Controller
     {
         IMedicineService _medicineService;
-        public MedicineController(IMedicineService medicineService)
+        private readonly UserManager<User> _userManager;
+        public MedicineController(IMedicineService medicineService, UserManager<User> userManager)
         {
             _medicineService = medicineService;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        [Route("Medicine/{id}")]
+        // [Route("Medicine/{id}")]
         public async Task<IActionResult> Index(int Id)
         {
             var medicine = await _medicineService.GetByIdAsync(Id);
-            MedicineResponse response = new MedicineResponse() { 
+            TempMedicineResponse response = new TempMedicineResponse() { 
                 Id = medicine.Id,
                 Name = medicine.Name,
                 Group = medicine.Group,
@@ -38,26 +43,33 @@ namespace MedHelper.Web.Controllers
         }
         
         [HttpGet]
-        // [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin")]
         public IActionResult Add()
         {
+            ViewBag.MedicineCompositions = _medicineService.GetAllCompositions();
+            ViewBag.Groups = _medicineService.GetAllPharmacotherapeuticGroups();
+            ViewBag.Contraindications = _medicineService.GetAllDiseases();
             return View();
         }
         
         [HttpPost]
-        [AllowAnonymous] // add auth
-        // [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> AddAsync(CreateMedicineDto patient)
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> AddAsync(CreateMedicineDto medicine)
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.MedicineCompositions = _medicineService.GetAllCompositions();
+                ViewBag.Groups = _medicineService.GetAllPharmacotherapeuticGroups();
+                ViewBag.Contraindications = _medicineService.GetAllDiseases();
                 return View();
             }
             
-            await _medicineService.AddAsync(patient);
-            return Ok(); // редірект на сторінку доктора треба тут
-
-            // return RedirectToAction("Get", new { id = createdPatient.Id });
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            medicine.UserId = user.Id;
+            
+            await _medicineService.AddAsync(medicine);
+            return RedirectToAction(nameof(ViewAllMedicines));
         }
 
         [HttpGet]
@@ -79,23 +91,23 @@ namespace MedHelper.Web.Controllers
             return RedirectToAction(nameof(ViewAllMedicines));
         }
 
-        /*[HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            var res = _medicineService.DeleteByIdAsync(id);
-            if (res == null)
-                return NotFound();
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpGet]
-        public IActionResult Delete([FromRoute] int id)
-        {
-            var res = _medicineService.DeleteByIdAsync(id);
-            if (res == null)
-                return NotFound();
-            return RedirectToAction(nameof(Index));
-        }*/
+         // [HttpPost]
+         // public ActionResult Delete(int id, FormCollection collection)
+         // {
+         //     var res = _medicineService.DeleteByIdAsync(id);
+         //     if (res == null)
+         //         return NotFound();
+         //     return RedirectToAction(nameof(Index));
+         // }
+         //
+         // [HttpGet]
+         // public IActionResult Delete([FromRoute] int id)
+         // {
+         //     var res = _medicineService.DeleteByIdAsync(id);
+         //     if (res == null)
+         //         return NotFound();
+         //     return RedirectToAction(nameof(Index));
+         // }
 
     }
 }

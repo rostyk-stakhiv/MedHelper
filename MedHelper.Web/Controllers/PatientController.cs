@@ -7,23 +7,30 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using System.Security.Claims;
 using MedHelper.BLL.Dto.Responses;
+using MedHelper.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace MedHelper.Web.Controllers
 {
     public class PatientController : Controller
     {
+        private const string DOCTOR_PAGE = "https://localhost:7241/Doctor";
         private IPatientService _patientService;
         IMedicineService _medicineService;
+        private readonly UserManager<User> _userManager;
 
-        public PatientController(IPatientService patientService, IMedicineService medicineService)
+        public PatientController(IPatientService patientService, IMedicineService medicineService, UserManager<User> userManager)
         { 
             _patientService = patientService;
             _medicineService = medicineService;
+            _userManager = userManager;
         }
         
+        
         [HttpGet]
-        [Route("Patient/{id}")]
+        // [Route("Patient/{id}")]
         public async Task<IActionResult> Index(int id, string search)
         {
             var patient = await _patientService.GetByIdAsync(id);
@@ -42,63 +49,48 @@ namespace MedHelper.Web.Controllers
             
             return View(response);
         }
-        
-        [HttpGet]
-        public IActionResult Edit()
-        {
-            return View();
-        }
-
-        [HttpPut]
-        public IActionResult EditAsync(int id)
-        {
-            var patient = new PatientModel()
-            {
-                LastName = "Petrov",
-                FirstName = "Ivan",
-                Birthdate = DateTime.Now,
-                Gender = "Male",
-                Id = 3,
-                DiseasesId = new List<int>() { 1 },
-                Diseases = new List<DiseaseModel>() { new DiseaseModel() { Id = 1, Title = "Corona" } },
-                Medicines = new List<MedicineModel>() { new MedicineModel() { Id = 1, Name = "Phizer" } },
-                MedicinesId = new List<int>() { 1 },
-                UserID = 1
-            };
-            var Medicines = new List<MedicineModel>() { new MedicineModel() { Id=3, Name="first"},
-                new MedicineModel() { Id = 4, Name = "second" },new MedicineModel() { Id=5, Name="third"} };
-            var Diseases = new List<DiseaseModel>() { new DiseaseModel() { Id = 1, Title = "one" }, new DiseaseModel() { Id = 2, Title = "two" } };
-            ViewBag.Patient = patient;
-            ViewBag.Medicines = Medicines;
-            ViewBag.Diseases = Diseases;
-            return View();
-        }
 
         [HttpGet]
-        // [Authorize(Roles ="Doctor")]
+        [Authorize]
         public IActionResult Add()
         {
-            var Diseases = new List<DiseaseModel>() { new DiseaseModel() { Id = 1, Title = "one" }, new DiseaseModel() { Id = 2, Title = "two" } };
             ViewBag.Medicines = _medicineService.GetAll();
-            ViewBag.Diseases = Diseases;
+            ViewBag.Diseases = _medicineService.GetAllDiseases();
             return View();
         }
         
         [HttpPost]
-        [AllowAnonymous]
-        // [Authorize(Roles ="Admin")]
+        [Authorize]
         public async Task<IActionResult> AddAsync(CreatePatientDto patient)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+            // if (!ModelState.IsValid)
+            // {
+            //     ViewBag.Medicines = _medicineService.GetAll();
+            //     ViewBag.Diseases = _medicineService.GetAllDiseases();
+            //     return View();
+            // }
+            
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            patient.UserId = Convert.ToInt32(userId);
+
+            patient.Medicines = _medicineService.CreateMedicinesFromString(patient.TempMedicines).ToList();
+            patient.Diseases = _medicineService.CreateDiseasesFromString(patient.TempDiseases).ToList();
             
             await _patientService.AddAsync(patient);
-            return Ok(); // редірект на сторінку доктора треба тут
+            return Redirect(DOCTOR_PAGE);
+        }
 
-            // return RedirectToAction("Get", new { id = createdPatient.Id });
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _patientService.DeleteByIdAsync(id);
+            return Redirect(DOCTOR_PAGE);
         }
         
+        public IActionResult Edit(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

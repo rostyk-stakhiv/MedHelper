@@ -8,6 +8,8 @@ namespace MedHelper.BLL.Dto.Patient
 {
     public class CreatePatientDto
     {
+        private DateTime _birthdate;
+        
         [Required] 
         public string LastName { get; set; }
         
@@ -18,19 +20,23 @@ namespace MedHelper.BLL.Dto.Patient
         [EnumDataType(typeof(Gender))]
         public string Gender { get; set; }
 
-        [Required] 
-        public DateTime Birthdate { get; set; }
-
-        // [Required] 
-        public List<MedicineResponse> Medicines { get; set; }
+        [Required]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
+        public DateTime Birthdate
+        {
+            get { return _birthdate; }
+            set
+            {
+                _birthdate = Convert.ToDateTime(value);
+            }
+        }
         
-        // [Required] 
+        public string TempMedicines { get; set; }
+        public string TempDiseases { get; set; }
+
+        public List<TempMedicineResponse> Medicines { get; set; }
         public List<DiseaseResponse> Diseases { get; set; }
         
-        [Required] 
-        public List<string> TempMedicines { get; set; }
-        
-        [Required] 
-        public List<string> TempDiseases { get; set; }
+        public int UserId { get; set; }
     }
 }

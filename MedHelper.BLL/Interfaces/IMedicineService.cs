@@ -11,9 +11,14 @@ namespace MedHelper.BLL.Interfaces
     public interface IMedicineService
     {
         IEnumerable<MedicineResponse> GetAll(string search = null);
+        IEnumerable<DiseaseResponse> GetAllDiseases();
+        IEnumerable<PharmacotherapeuticGroup> GetAllPharmacotherapeuticGroups();
+        // IEnumerable<ContraindicationResponse> GetAllContraindications();
+        IEnumerable<Composition> GetAllCompositions();
 
         Task<MedicineResponse> GetByIdAsync(int id);
-
+        IEnumerable<TempMedicineResponse> CreateMedicinesFromString(string medString);
+        IEnumerable<DiseaseResponse> CreateDiseasesFromString(string medString);
         Task AddAsync(CreateMedicineDto model);
 
         //Task UpdateAsync(UpdateMedicineDto model);

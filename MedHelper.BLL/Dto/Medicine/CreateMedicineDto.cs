@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using MedHelper.DAL.Entities;
 
 namespace MedHelper.BLL.Dto.Medicine
 {
@@ -9,13 +10,15 @@ namespace MedHelper.BLL.Dto.Medicine
         [Required] 
         public string Name { get; set; }
 
-        // public int UserId { get; set; } має передаватись в сервіс з ауза
-
-        public int PharmacotherapeuticGroupId { get; set; }
+        public int UserId { get; set; }
         
-        [Required]
-        public List<int> MedicineContraindicationsIds { get; set; }
-        public List<int> MedicineCompositionsIds { get; set; }
-        public List<int> MedicineInteractionsIds { get; set; }
+        [Required] 
+        public string TempPharmacotherapeuticGroup { get; set; }
+        
+        [Required] 
+        public string TempMedicineContraindications { get; set; }
+        
+        [Required] 
+        public string TempMedicineCompositions { get; set; }
     }
 }
