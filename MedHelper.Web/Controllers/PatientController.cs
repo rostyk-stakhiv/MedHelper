@@ -54,32 +54,7 @@ namespace MedHelper.Web.Controllers
         {
             return View();
         }
-
-        [HttpPut]
-        public IActionResult EditAsync(int id)
-        {
-            var patient = new PatientModel()
-            {
-                LastName = "Petrov",
-                FirstName = "Ivan",
-                Birthdate = DateTime.Now,
-                Gender = "Male",
-                Id = 3,
-                DiseasesId = new List<int>() { 1 },
-                Diseases = new List<DiseaseModel>() { new DiseaseModel() { Id = 1, Title = "Corona" } },
-                Medicines = new List<MedicineModel>() { new MedicineModel() { Id = 1, Name = "Phizer" } },
-                MedicinesId = new List<int>() { 1 },
-                UserID = 1
-            };
-            var Medicines = new List<MedicineModel>() { new MedicineModel() { Id=3, Name="first"},
-                new MedicineModel() { Id = 4, Name = "second" },new MedicineModel() { Id=5, Name="third"} };
-            var Diseases = new List<DiseaseModel>() { new DiseaseModel() { Id = 1, Title = "one" }, new DiseaseModel() { Id = 2, Title = "two" } };
-            ViewBag.Patient = patient;
-            ViewBag.Medicines = Medicines;
-            ViewBag.Diseases = Diseases;
-            return View();
-        }
-
+        
         [HttpGet]
         [Authorize]
         public IActionResult Add()
@@ -101,8 +76,7 @@ namespace MedHelper.Web.Controllers
             // }
             
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(userId);
-            patient.UserId = user.Id;
+            patient.UserId = Convert.ToInt32(userId);
 
             patient.Medicines = _medicineService.CreateMedicinesFromString(patient.TempMedicines).ToList();
             patient.Diseases = _medicineService.CreateDiseasesFromString(patient.TempDiseases).ToList();
@@ -110,6 +84,12 @@ namespace MedHelper.Web.Controllers
             await _patientService.AddAsync(patient);
             return Redirect(DOCTOR_PAGE);
         }
-
+        
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _patientService.DeleteByIdAsync(id);
+            return Redirect(DOCTOR_PAGE);
+        }
     }
 }

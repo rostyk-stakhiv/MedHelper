@@ -67,6 +67,14 @@
 
             </div>
         </div>
+        
+        <form asp-action="Delete" asp-route-id="@Model.Id">
+                        <div class="btn-group btn-group-sm">
+                            <input type="submit" id="btn-delete" class="btn btn-danger"
+                                    onclick="return confirm('Ви впевнені, що хочете видалити даний препарат?')"
+                                    value="Видалити"/>
+                        </div>
+                    </form>
 
     </div>
 </form>

@@ -91,23 +91,23 @@ namespace MedHelper.Web.Controllers
             return RedirectToAction(nameof(ViewAllMedicines));
         }
 
-         [HttpPost]
-         public ActionResult Delete(int id, FormCollection collection)
-         {
-             var res = _medicineService.DeleteByIdAsync(id);
-             if (res == null)
-                 return NotFound();
-             return RedirectToAction(nameof(Index));
-         }
-
-         [HttpGet]
-         public IActionResult Delete([FromRoute] int id)
-         {
-             var res = _medicineService.DeleteByIdAsync(id);
-             if (res == null)
-                 return NotFound();
-             return RedirectToAction(nameof(Index));
-         }
+         // [HttpPost]
+         // public ActionResult Delete(int id, FormCollection collection)
+         // {
+         //     var res = _medicineService.DeleteByIdAsync(id);
+         //     if (res == null)
+         //         return NotFound();
+         //     return RedirectToAction(nameof(Index));
+         // }
+         //
+         // [HttpGet]
+         // public IActionResult Delete([FromRoute] int id)
+         // {
+         //     var res = _medicineService.DeleteByIdAsync(id);
+         //     if (res == null)
+         //         return NotFound();
+         //     return RedirectToAction(nameof(Index));
+         // }
 
     }
 }
