@@ -1,0 +1,92 @@
+﻿@model MedHelper.BLL.Dto.Doctor.UpdateDoctorDto
+@{
+    ViewData["Title"] = "Update";
+}
+
+
+<link rel="stylesheet" href=~/css/AuthorizationStyle.css type="text/css" />
+<div >
+    <div >
+        @using (Html.BeginForm("Edit", "Doctor", FormMethod.Post))
+        {
+            //@Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Update</div>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <div class="left-container">
+                        <div class="form-group">
+                            @Html.HiddenFor(x=>x.Id)
+                            <div>
+                                @Html.LabelFor(m => m.FirstName)
+                                @if (ViewBag.error != null)
+                                {
+                                    @Html.TextBoxFor(m => m.FirstName, "", new { @class = "form-control error", @placeholder = "First Name", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.FirstName, "Wrong FirstName Format", new { @class = "e badge badge-danger" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.FirstName, "", new { @class = "form-control", @placeholder = "First Name", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "badge badge-danger" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.LastName)
+                                @if (ViewBag.error == null)
+                                {
+
+                                    @Html.TextBoxFor(m => m.LastName, "", new { @class = "form-control", @placeholder = "Last Name", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "badge badge-danger" })
+
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.LastName, "", new { @class = "error form-control", @placeholder = "Last Name", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.LastName, "Wrong Last Name Format", new { @class = "e badge badge-danger" })
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-container">
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.Email)
+                                @if (ViewBag.error == null)
+                                {
+
+                                    @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "badge badge-danger" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.Email, "", new { @class = "error form-control", @placeholder = "Email", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.Email, "Wrong Email Format", new { @class = "e badge badge-danger" })
+                                }
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-danger" value="Update" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

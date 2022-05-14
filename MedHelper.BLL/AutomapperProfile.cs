@@ -95,11 +95,12 @@ namespace MedHelper.BLL
         CreateMap<CreateMedicineDto, Medicine>()
             .ForMember(d => d.Name, c => c.MapFrom(medicine => medicine.Name));
 
-        CreateMap<UpdateDoctorDto, User>()
-            .ForMember(d => d.FirstName, c => c.MapFrom(disease => disease.FirstName))
-            .ForMember(d => d.LastName, c => c.MapFrom(disease => disease.LastName))
-            .ForMember(d => d.Email, c => c.MapFrom(disease => disease.Email))
-            .ForMember(d => d.Password, c => c.MapFrom(data => data.Password));
+            CreateMap<UpdateDoctorDto, User>()
+                .ForMember(d => d.Id, c => c.MapFrom(disease => disease.Id))
+                .ForMember(d => d.FirstName, c => c.MapFrom(disease => disease.FirstName))
+                .ForMember(d => d.LastName, c => c.MapFrom(disease => disease.LastName))
+                .ForMember(d => d.Email, c => c.MapFrom(disease => disease.Email))
+                .ReverseMap();
 
         CreateMap<CreatePatientDto, Patient>()
             .ForMember(p => p.LastName, c => c.MapFrom(patient => patient.LastName))

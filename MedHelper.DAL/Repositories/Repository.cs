@@ -40,7 +40,7 @@ namespace MedHelper.DAL.Repositories
             _context.SaveChanges();
         }
 
-        public IQueryable<T> FindAll()
+        public IEnumerable<T> FindAll()
         {
             return _enteties;
         }

@@ -1,4 +1,5 @@
-﻿using MedHelper.BLL.Dto.Responses;
+﻿using MedHelper.BLL.Dto.Doctor;
+using MedHelper.BLL.Dto.Responses;
 using MedHelper.BLL.Interfaces;
 using MedHelper.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -40,6 +41,30 @@ namespace MedHelper.Web.Controllers
             }
 
             return View(response);
+        }
+
+
+        [Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> Edit()
+        {
+            int id = int.Parse(User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value);
+            var doctor = await _doctorService.GetInfoForUpdate(id);
+            return View(doctor);
+        }
+
+        [Authorize(Roles = "Doctor")]
+        [HttpPost]
+        public async Task<IActionResult> Edit(UpdateDoctorDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            else
+            {
+                await _doctorService.UpdateAsync(model);
+                return RedirectToAction("Index");
+            }
         }
     }
 }
