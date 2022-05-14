@@ -10,7 +10,7 @@ namespace MedHelper.BLL.Interfaces
 {
     public interface IDoctorService
     {
-
+        Task<UpdateDoctorDto> GetInfoForUpdate(int id);
         Task<DoctorResponse> GetByIdAsync(int id);
         Task UpdateAsync(UpdateDoctorDto model);
         List<Patient> GetPatients(int id, string search);

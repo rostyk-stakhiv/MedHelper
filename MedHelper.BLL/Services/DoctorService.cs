@@ -31,10 +31,16 @@ namespace MedHelper.BLL.Services
             return _mapper.Map<DoctorResponse>(doctor);
         }
 
+        public async Task<UpdateDoctorDto> GetInfoForUpdate(int id)
+        {
+            var doctor = await _unitOfWork.UserRepository.GetByIdAsync(id);
+            return _mapper.Map<UpdateDoctorDto>(doctor);
+        }
 
         public async Task UpdateAsync(UpdateDoctorDto model)
         {
-            var doctor = _mapper.Map<User>(model);
+            var doctor = await _unitOfWork.UserRepository.GetByIdAsync(model.Id);
+            doctor = _mapper.Map(model,doctor);
             _unitOfWork.UserRepository.Update(doctor);
             await _unitOfWork.SaveAsync();
         }
