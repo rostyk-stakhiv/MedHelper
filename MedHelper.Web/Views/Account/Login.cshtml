@@ -24,56 +24,51 @@
                         @Html.AntiForgeryToken()
                         <div class="form-group">
                             <div>
-                                @if (ViewBag.error == null)
-                                {
-                                    @Html.LabelFor(m => m.Email)
-                                    @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
-                                }
-                                else
-                                {
-                                    @Html.LabelFor(m => m.Email)
-                                    @Html.TextBoxFor(m => m.Email, "", new { @class = "error form-control", @placeholder = "Email" })
-                                    @Html.ValidationMessageFor(m => m.Password, "Wrong Email", new { @class = "e badge badge-danger" })
-                                }
+
+                                @Html.LabelFor(m => m.Email)
+                                @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
 
                             </div>
                         </div>
                         <div class="form-group">
                             <div>
-                                @if (ViewBag.error == null)
-                                {
-                                    @Html.LabelFor(m => m.Password)
 
-                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
 
-                                }
-                                else
-                                {
-                                    @Html.LabelFor(m => m.Password)
+                                @Html.LabelFor(m => m.Password)
 
-                                    @Html.PasswordFor(m => m.Password, new { @class = "error form-control", @placeholder = "Password" })
-                                    @Html.ValidationMessageFor(m => m.Password, "Wrong Password", new { @class = "e badge badge-danger" })
-                                }
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+
+
+
                             </div>
                         </div>
+                        @if (ViewBag.error == null)
+                        {
+                            <div class="e badge badge-danger"> </div>
+                        }
+                        else
+                        {
+                            <div class="e badge badge-danger"> Wrong Email or Password </div>
+                        }
                         <div class="form-group">
                             <input type="submit" name="submit" class="btn btn-primary" value="Login" />
+
                             <div class="link">
-                                <p><a href="/Account/ForgotPassword" >Forget password?</a></p>
+                                <p><a href="/Account/ForgotPassword">Forget password?</a></p>
                             </div>
                         </div>
 
-                            }
-                        </div>
-                        <div class="right-container">
-                            <div class="centered">
-                                <h1>ARE YOU NEW HERE?</h1>
-                            </div>
-                            <div class="gr">
-                                <img class="doctor-img" src="~/plus.png" alt="" />
-                                <input type="submit" name="submit" onclick="location.href='@Url.Action("Register", "Account")'" class="btn btn-primary" value="Sign up" />
-                            </div>
-                        </div>
+                    }
+                </div>
+                <div class="right-container">
+                    <div class="centered">
+                        <h1>ARE YOU NEW HERE?</h1>
+                    </div>
+                    <div class="gr">
+                        <img class="doctor-img" src="~/plus.png" alt="" />
+                        <input type="submit" name="submit" onclick="location.href='@Url.Action("Register", "Account")'" class="btn btn-primary" value="Sign up" />
+                    </div>
+                </div>
 
                     
                     </div>

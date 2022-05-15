@@ -111,7 +111,6 @@ namespace MedHelper.Web.Controllers
                         return View();
                     }
                 
-                    await _roleManager.CreateAsync(new Role() { Name = "Doctor" });
                     user.UserName = user.FirstName + user.LastName;
 
                     var createdUser = await _userManager.CreateAsync(user, user.Password);
