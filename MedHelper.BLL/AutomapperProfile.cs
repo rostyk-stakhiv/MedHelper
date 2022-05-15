@@ -114,9 +114,9 @@ namespace MedHelper.BLL
             .ForMember(p => p.LastName, c => c.MapFrom(patient => patient.LastName))
             .ForMember(p => p.FirstName, c => c.MapFrom(patient => patient.FirstName))
             .ForMember(p => p.Gender, c => c.MapFrom(patient => patient.Gender))
-            .ForMember(p => p.Birthdate, c => c.MapFrom(patient => patient.Birthdate));
-        // .ForMember(p => p.PatientDiseases, c => c.MapFrom(patient => patient.Diseases))
-        // .ForMember(p => p.PatientMedicines, c => c.MapFrom(patient => patient.Medicines));
+            .ForMember(p => p.Birthdate, c => c.MapFrom(patient => patient.Birthdate))
+            .ForMember(p => p.PatientDiseases, c => c.MapFrom(patient => patient.Diseases))
+            .ForMember(p => p.PatientMedicines, c => c.MapFrom(patient => patient.Medicines));
 
         //        CreateMap<Patient, PatientModel>()
         //            .ForMember(p => p.Id, c => c.MapFrom(patient => patient.Id))

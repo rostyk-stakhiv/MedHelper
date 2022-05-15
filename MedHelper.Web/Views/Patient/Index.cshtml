@@ -52,7 +52,7 @@
             <div class="profile-container-right">
                 <div class="medicine-list">
                     <div class="search-part-medicine">
-                        
+
                         <img class="medicine-search-img" src=~/SearchLogo.png>
                         <input class="search" type="text" placeholder="Search.." asp-for="search">
                         <input type="submit" value="Знайти" style="float:right" />
@@ -70,10 +70,12 @@
     </div>
 </form>
 
-<form asp-controller="Patient" asp-action="Delete" method="post" asp-route-id="@Model.Id">
-    <div class="btn-group btn-group-sm">
-        <input type="submit" id="btn-delete" class="btn btn-danger"
-               onclick="return confirm('Ви впевнені, що хочете видалити даний препарат?')"
-               value="Видалити"/>
-    </div>
-</form>
+<div class="patient-action">
+    <form asp-controller="Patient" asp-action="Delete" method="post" asp-route-id="@Model.Id">
+        <div class="btn-group btn-group-sm">
+            <input type="submit" id="btn-delete" class="btn btn-danger"
+                   onclick="return confirm('Ви впевнені, що хочете видалити пацієнта?')"
+                   value="Видалити" />
+        </div>
+    </form>
+</div>

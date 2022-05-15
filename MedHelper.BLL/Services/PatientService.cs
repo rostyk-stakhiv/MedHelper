@@ -66,7 +66,8 @@ namespace MedHelper.BLL.Services
         public async Task UpdateAsync(UpdatePatientDto model)
         {
             var patient = _mapper.Map<Patient>(model);
-            _unitOfWork.PatientRepository.Update(patient);
+
+            _unitOfWork.PatientRepository.UpdateWithDelete(patient);
             await _unitOfWork.SaveAsync();
         }
 
