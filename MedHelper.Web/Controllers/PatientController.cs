@@ -95,17 +95,8 @@ namespace MedHelper.Web.Controllers
         {
             var patient = await _patientService.GetByIdAsync(id);
 
-            var tempMedicines = "";
-            foreach (var i in patient.Medicines)
-            {
-                tempMedicines += i.Name + "\r\n";
-            }
-
-            var tempDiseases = "";
-            foreach (var i in patient.Diseases)
-            {
-                tempDiseases += i.Title + "\r\n";
-            }
+            var tempMedicines = patient.Medicines.Aggregate("", (current, i) => current + (i.Name + "\r\n"));
+            var tempDiseases = patient.Diseases.Aggregate("", (current, i) => current + (i.Title + "\r\n"));
 
             UpdatePatientDto update = new UpdatePatientDto()
             {

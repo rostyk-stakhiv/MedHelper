@@ -23,7 +23,6 @@ namespace MedHelper.BLL.Dto.Patient
         public string Gender { get; set; }
 
         [Required]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime Birthdate
         {
             get { return _birthdate; }

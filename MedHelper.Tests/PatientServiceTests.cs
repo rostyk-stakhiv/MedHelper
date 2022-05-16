@@ -59,6 +59,18 @@ namespace MedHelper.Tests
             Medicines = new List<TempMedicineResponse>() { new TempMedicineResponse() { Id = 1}},
             Diseases = new List<DiseaseResponse>() { new DiseaseResponse() { Id = 1 } }
         };
+        
+        Patient patientEdit = new Patient() { FirstName = "Test1", LastName = "UserUpdated", Gender = "Male", Birthdate = new DateTime(2000, 10, 11), 
+            PatientDiseases = new List<PatientDisease>() { new PatientDisease() {DiseaseId= 1 } }, 
+            PatientMedicines= new List<PatientMedicine>() { new PatientMedicine() { MedicineId= 1 }}
+        };
+        UpdatePatientDto patientToEdit = new UpdatePatientDto()
+        {
+            FirstName = "Test1", LastName = "UserUpdated", Gender = "Male", Birthdate = new DateTime(2000, 10, 11),
+            UserId = 1,
+            Medicines = new List<TempMedicineResponse>() { new TempMedicineResponse() { Id = 1}},
+            Diseases = new List<DiseaseResponse>() { new DiseaseResponse() { Id = 1 } }
+        };
 
         [Fact]
         public async Task GetByIdNull()
@@ -182,6 +194,30 @@ namespace MedHelper.Tests
             try
             {
                 _unitOfWork.Verify(x => x.PatientRepository.AddAsync(patientAdd));
+                Assert.True(true);
+            }
+            catch (MockException)
+            {
+                Assert.True(false);
+            }
+        }
+        
+        [Fact]
+        public async Task EditSuccess()
+        {
+            // arrange
+            _unitOfWork.Setup(s => s.PatientRepository.UpdateWithDelete(It.IsAny<Patient>())).Verifiable();
+
+            _mapper.Setup(m => m.Map<Patient>(It.IsAny<UpdatePatientDto>())).Returns(patientEdit);
+            _patientService = new PatientService(_unitOfWork.Object, _mapper.Object);
+
+            // act
+            await _patientService.UpdateAsync(patientToEdit);
+
+            // assert
+            try
+            {
+                _unitOfWork.Verify(x => x.PatientRepository.UpdateWithDelete(patientEdit));
                 Assert.True(true);
             }
             catch (MockException)
