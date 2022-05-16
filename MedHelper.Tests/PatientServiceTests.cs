@@ -9,6 +9,7 @@ using AutoMapper;
 using MedHelper.BLL.Dto.Responses;
 using System;
 using System.Collections.Generic;
+using MedHelper.BLL.Dto.Patient;
 
 namespace MedHelper.Tests
 {
@@ -47,6 +48,17 @@ namespace MedHelper.Tests
             Birthdate = new DateTime(2000, 2, 13)
         };
 
+        Patient patientAdd = new Patient() { FirstName = "Test", LastName = "User", Gender = "Male", Birthdate = new DateTime(2000, 10, 11), 
+            PatientDiseases = new List<PatientDisease>() { new PatientDisease() {DiseaseId= 1 } }, 
+            PatientMedicines= new List<PatientMedicine>() { new PatientMedicine() { MedicineId= 1 }}
+        };
+        CreatePatientDto patientToAdd = new CreatePatientDto()
+        {
+            FirstName = "Test", LastName = "User", Gender = "Male", Birthdate = new DateTime(2000, 10, 11),
+            UserId = 1,
+            Medicines = new List<TempMedicineResponse>() { new TempMedicineResponse() { Id = 1}},
+            Diseases = new List<DiseaseResponse>() { new DiseaseResponse() { Id = 1 } }
+        };
 
         [Fact]
         public async Task GetByIdNull()
@@ -131,5 +143,52 @@ namespace MedHelper.Tests
             Assert.NotNull(result);
             Assert.Equal(patientResponses, result);
         }
+        
+        [Fact]
+        public async Task DeleteSuccess()
+        {
+            // arrange
+            _unitOfWork.Setup(s => s.PatientRepository.DeleteByIdAsync(It.IsAny<int>())).Verifiable();
+            _patientService = new PatientService(_unitOfWork.Object, _mapper.Object);
+
+            // act
+            await _patientService.DeleteByIdAsync(1);
+
+            // assert
+            try
+            {
+                _unitOfWork.Verify(x => x.PatientRepository.DeleteByIdAsync(1));
+                Assert.True(true);
+            }
+            catch (MockException)
+            {
+                Assert.True(false);
+            }
+        }
+
+        [Fact]
+        public async Task AddSuccess()
+        {
+            // arrange
+            _unitOfWork.Setup(s => s.PatientRepository.AddAsync(It.IsAny<Patient>())).Verifiable();
+
+            _mapper.Setup(m => m.Map<Patient>(It.IsAny<CreatePatientDto>())).Returns(patientAdd);
+            _patientService = new PatientService(_unitOfWork.Object, _mapper.Object);
+
+            // act
+            await _patientService.AddAsync(patientToAdd);
+
+            // assert
+            try
+            {
+                _unitOfWork.Verify(x => x.PatientRepository.AddAsync(patientAdd));
+                Assert.True(true);
+            }
+            catch (MockException)
+            {
+                Assert.True(false);
+            }
+        }
     }
+    
 }
