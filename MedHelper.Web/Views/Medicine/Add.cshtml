@@ -69,6 +69,25 @@ ViewData["Title"] = "Add patient";
                   <button type="submit" class="registerbtn" >Додати препарат</button>
     
               </div>
+                <div class="container-right">
+                    <label>
+                        Взаємодія:
+                    </label>
+                    <div>
+                        <datalist id="MedicineInteractionSuggestions">
+                            @foreach (var item in ViewBag.Interactions)
+                            {
+                                <option id=@item.Id>@item.Description</option>
+                            }
+                        </datalist>
+                        <input id="MedicineInteraction_suggestions_input" autoComplete="on" class="drop-down list"  placeholder="взаємодія" list="MedicineInteractionSuggestions"/>
+                    </div>
+                    <textarea asp-for="TempMedicineInteraction" cols="80" rows="5" id="selectedMedicineInteractionOptionsTextArea"></textarea>
+                    <button class="delete-drop-down" onclick="clearSelectedMedicineInteractionOptionsTextArea()">-</button>
+      
+                    <button type="submit" class="registerbtn" >Додати препарат</button>
+      
+                </div>
           </form>
       </div>
   </div>
@@ -77,13 +96,13 @@ ViewData["Title"] = "Add patient";
         const CompositionSuggestionsInput = document.getElementById("composition_suggestions_input");
         let eventSource = null;
 
-        // CompositionSuggestionsInput.addEventListener('keydown', (event) => {
-        //     if(event.key === 'Enter') {
-        //         event.preventDefault(); // не перекине на інший інпут
-        //         document.getElementById("selectedStorageOptionsTextArea").innerHTML += document.getElementById("composition_suggestions_input").value +'\n'
-        //     }
-        //     eventSource = event.key ? 'input' : 'list';
-        // });
+        CompositionSuggestionsInput.addEventListener('keydown', (event) => {
+            if(event.key === 'Enter') {
+                event.preventDefault(); // не перекине на інший інпут
+                document.getElementById("selectedStorageOptionsTextArea").innerHTML += document.getElementById("composition_suggestions_input").value +'\n'
+            }
+            eventSource = event.key ? 'input' : 'list';
+        });
         CompositionSuggestionsInput.addEventListener('keydown', (event) => {
             console.log(1);
             if(event.key === 'Enter') {
@@ -129,6 +148,30 @@ ViewData["Title"] = "Add patient";
           document.getElementById("selectedContraindicationOptionsTextArea").innerHTML = splittedText.join('\n');
           document.getElementById("selectedContraindicationOptionsTextArea").innerHTML+="\n";
         }
+        
+        
+                const MedicineInteractionSuggestionsInput = document.getElementById("MedicineInteraction_suggestions_input");
+                let eventSource3 = null;
+        
+                MedicineInteractionSuggestionsInput.addEventListener('keydown', (event) => {
+                    if(event.key === 'Enter') {
+                        event.preventDefault(); // не перекине на інший інпут
+                        document.getElementById("selectedMedicineInteractionOptionsTextArea").innerHTML += document.getElementById("MedicineInteraction_suggestions_input").value +'\n'
+                    }
+                    eventSource3 = event.key ? 'input' : 'list';
+                });
+                MedicineInteractionSuggestionsInput.addEventListener('input', (event) => {
+                  if (eventSource3 === 'list') {
+                    document.getElementById("selectedMedicineInteractionOptionsTextArea").innerHTML += event.target.value +'\n';
+                  }
+                });
+                function clearSelectedMedicineInteractionOptionsTextArea() {
+                  // console.log(document.getElementById("selectedContraindicationOptionsTextArea").innerHTML)
+                  let splittedText = document.getElementById("selectedMedicineInteractionOptionsTextArea").innerHTML.split(/\r?\n/)
+                  splittedText.splice(-2) 
+                  document.getElementById("selectedMedicineInteractionOptionsTextArea").innerHTML = splittedText.join('\n');
+                  document.getElementById("selectedMedicineInteractionOptionsTextArea").innerHTML+="\n";
+                }
 
     </script>
 </body>

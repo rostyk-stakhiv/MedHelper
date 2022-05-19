@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using MedHelper.BLL.Dto.Medicine;
+using Microsoft.VisualBasic;
 
 namespace MedHelper.BLL.Interfaces
 {
@@ -13,7 +14,7 @@ namespace MedHelper.BLL.Interfaces
         IEnumerable<MedicineResponse> GetAll(string search = null);
         IEnumerable<DiseaseResponse> GetAllDiseases();
         IEnumerable<PharmacotherapeuticGroup> GetAllPharmacotherapeuticGroups();
-        // IEnumerable<ContraindicationResponse> GetAllContraindications();
+        IEnumerable<MedicineInteraction> GetAllMedicineInteractions();
         IEnumerable<Composition> GetAllCompositions();
 
         Task<MedicineResponse> GetByIdAsync(int id);

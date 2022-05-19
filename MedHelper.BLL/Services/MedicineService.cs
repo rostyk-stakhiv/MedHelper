@@ -10,6 +10,7 @@ using MedHelper.DAL;
 using MedHelper.DAL.Entities;
 using MedHelper.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace MedHelper.BLL.Services
 {
@@ -55,7 +56,6 @@ namespace MedHelper.BLL.Services
                 .Where(obj => medArray.Contains(obj.Title));
             
             return _mapper.Map<List<DiseaseResponse>>(medicines.ToList());
-
         }
 
         public IEnumerable<DiseaseResponse> GetAllDiseases()
@@ -67,11 +67,14 @@ namespace MedHelper.BLL.Services
         {
             return _unitOfWork.PharmacotherapeuticGroupRepository.FindAll();
         }
+        public IEnumerable<MedicineInteraction> GetAllMedicineInteractions()
+        {
+            return _unitOfWork.MedicineInteractionRepository.FindAll();
+        }
 
         public IEnumerable<Composition> GetAllCompositions()
         {
-            var res = _unitOfWork.CompositionRepository.FindAll();
-            return res;
+            return _unitOfWork.CompositionRepository.FindAll();
         }
         
         public async Task<MedicineResponse> GetByIdAsync(int id)
@@ -86,12 +89,17 @@ namespace MedHelper.BLL.Services
             
             var compositionsStrArr = model.TempMedicineCompositions.Split("\r\n");
             var contraindicationsStrArr = model.TempMedicineContraindications.Split("\r\n");
+            var medicineInteractionsStrArr = model.TempMedicineInteraction.Split("\r\n");
             
             var diseases = GetAllDiseases().Where(obj => contraindicationsStrArr.Contains(obj.Title)).ToList();
             var compositions = GetAllCompositions().Where(obj => compositionsStrArr.Contains(obj.Description)).ToList();
+            var medicineInteractions = GetAllMedicineInteractions().Where(obj => medicineInteractionsStrArr.Contains(obj.Description)).ToList();
             medicine.MedicineContraindications = _mapper.Map<List<MedicineContraindication>>(diseases).ToList();
             medicine.MedicineCompositions = _mapper.Map<List<MedicineComposition>>(compositions).ToList();
+            medicine.MedicineInteractions = medicineInteractions;
+            
             medicine.PharmacotherapeuticGroupId = GetAllPharmacotherapeuticGroups().FirstOrDefault(obj => obj.Title == model.TempPharmacotherapeuticGroup).Id;
+            
             
             await _unitOfWork.MedicineRepository.AddAsync(medicine);
             await _unitOfWork.SaveAsync();
