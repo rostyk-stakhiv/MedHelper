@@ -28,24 +28,22 @@ hr {
 }
 
 .medicine-list {
-    margin: auto;
-    height: 400px;
-    width: 100%;
     background: #F4716D;
 }
 
 .medicine-scroll-panel {
-    flex-direction: column;
     display: flex;
+    flex-direction: column;
     overflow-y: auto;
-    height: 450px;
+    max-height: 400px;
 }
 
 .search-part-medicine {
     background-color: #F4716D;
     height: 50px;
-    flex-direction: row;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .search {

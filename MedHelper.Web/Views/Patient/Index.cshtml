@@ -7,7 +7,7 @@
     var AllMedicines = Model.AllMedicines;
 }
 
-<link rel="stylesheet" href=~/css/PatientProfile.css type="text/css" />
+<link rel="stylesheet" href=~/css/PatientProfileblyat.css type="text/css" />
 
 <form asp-controller="Patient" asp-action="Index" method="get">
 
@@ -52,10 +52,9 @@
             <div class="profile-container-right">
                 <div class="medicine-list">
                     <div class="search-part-medicine">
-
-                        <img class="medicine-search-img" src=~/SearchLogo.png>
-                        <input class="search" type="text" placeholder="Search.." asp-for="search">
-                        <input type="submit" value="Знайти" style="float:right" />
+                        <img style="width: 1.5rem;height: 1.5rem;margin: 1rem;" src=~/SearchLogo.png>
+                        <input style="flex: 1;" class="px-1 border-0" asp-for="search" type="text" placeholder="Search..">
+                        <input type="submit" value="Знайти" class="btn btn-light py-0 px-2 m-1" style="height: 30px;" />
                     </div>
                     <div class="medicine-scroll-panel">
                         @foreach (var item in AllMedicines)
@@ -69,13 +68,10 @@
         </div>
     </div>
 </form>
-
-<div class="patient-action">
-    <form asp-controller="Patient" asp-action="Delete" method="post" asp-route-id="@Model.Id">
-        <div class="btn-group btn-group-sm">
-            <input type="submit" id="btn-delete" class="btn btn-danger"
-                   onclick="return confirm('Ви впевнені, що хочете видалити пацієнта?')"
-                   value="Видалити" />
-        </div>
-    </form>
-</div>
+<form asp-controller="Patient" asp-action="Delete" method="post" asp-route-id="@Model.Id">
+    <div class="w-100 d-flex align-items-center justify-content-center">
+        <input type="submit" id="btn-delete" class="btn btn-danger m-0"
+               onclick="return confirm('Ви впевнені, що хочете видалити пацієнта?')"
+               value="Видалити" />
+    </div>
+</form>

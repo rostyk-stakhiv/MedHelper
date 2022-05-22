@@ -5,35 +5,36 @@ ViewData["Title"] = "Add patient";
 }
 
 <head xmlns="http://www.w3.org/1999/html">
-    <link rel="stylesheet" href=~/css/Patient/Add.css />
+    <link rel="stylesheet" href=~/css/Patient/Addpp.css />
     @* <title>@ViewData["Title"]</title> *@
 </head>
 
 <body>
   <div class="add-edit-patient-content">
-    <h1> Додати препарат </h1>
+    <h1>Додати препарат</h1>
     <hr>
       <div class="container">
           <form asp-controller="Medicine" asp-action="Add" method="post" class="add-medicine-form">
               <div class="container-left">
-                  <label> Назва препарату: </label>
-                  <input type="text" name="name" asp-for="Name" placeholder="лікарство" size="15" required />
-                  <div>
+                  <div class="d-flex flex-column">
+                      <label> Назва препарату: </label>
+                      <input type="text" name="name" asp-for="Name" placeholder="лікарство" size="15" required />
+                  </div>
+                  <div class="d-flex flex-column mt-4">
                       <label>
                           Фармакоцептична група:
                       </label>
                       <div>
                           <datalist id="suggestions">
                               @foreach (var item in ViewBag.Groups)
-                            {
-                                <option id=@item.Id>@item.Title</option>
-                            }
+                              {
+                                  <option id=@item.Id>@item.Title</option>
+                              }
                           </datalist>
-                          <input asp-for="TempPharmacotherapeuticGroup" autoComplete="on" class="drop-down list"  placeholder="Фармакоцептична група" list="suggestions"/>
+                          <input type="text" onfocus="this.value=''" onchange="this.blur();" asp-for="TempPharmacotherapeuticGroup" autoComplete="on" placeholder="Фармакоцептична група" list="suggestions" />
                       </div>
                   </div>
-
-                  <div>
+                  <div class="d-flex flex-column mt-4">
                       <label>
                           Склад:
                       </label>
@@ -44,50 +45,47 @@ ViewData["Title"] = "Add patient";
                                   <option id=@item.Id>@item.Description</option>
                               }
                           </datalist>
-                          <input id="composition_suggestions_input" autoComplete="on" class="drop-down list"  placeholder="склад" list="CompositionSuggestions"/>
+                          <input type="text" onfocus="this.value=''" onchange="this.blur();" id="composition_suggestions_input" autoComplete="on" placeholder="склад" list="CompositionSuggestions" />
                       </div>
-                      <textarea asp-for="TempMedicineCompositions" cols="80" rows="5" id="selectedStorageOptionsTextArea"></textarea>
-                      <button class="delete-drop-down" onclick="clearSelectedStorageOptionsTextArea()">-</button>
+                      <textarea asp-for="TempMedicineCompositions" cols="80" rows="5" id="selectedStorageOptionsTextArea" class="mt-1"></textarea>
+                      <button type="button" class="btn btn-danger mt-1" style="width: 65%;" onclick="clearSelectedStorageOptionsTextArea()">Видалити</button>
+                  </div>
+                  <div class="d-flex flex-column mt-4">
+                      <label>
+                          Противопоказання:
+                      </label>
+                      <div>
+                          <datalist id="ContraindicationSuggestions">
+                              @foreach (var item in ViewBag.Contraindications)
+                              {
+                                  <option id=@item.Id>@item.Title</option>
+                              }
+                          </datalist>
+                          <input type="text" onfocus="this.value=''" onchange="this.blur();" id="contraindication_suggestions_input" autoComplete="on" placeholder="противопоказання" list="ContraindicationSuggestions" />
+                      </div>
+                      <textarea asp-for="TempMedicineContraindications" cols="80" rows="5" id="selectedContraindicationOptionsTextArea" class="mt-1"></textarea>
+                      <button type="button" class="btn btn-danger mt-1" style="width: 65%;" onclick="clearSelectedContraindicationOptionsTextArea()">Видалити</button>
+                  </div>
+                  <div class="d-flex flex-column mt-4">
+                      <label>
+                          Взаємодія:
+                      </label>
+                      <div>
+                          <datalist id="MedicineInteractionSuggestions">
+                              @foreach (var item in ViewBag.Interactions)
+                              {
+                                  <option id=@item.Id>@item.Description</option>
+                              }
+                          </datalist>
+                          <input type="text" onfocus="this.value=''" onchange="this.blur();" id="MedicineInteraction_suggestions_input" autoComplete="on" class="drop-down list" placeholder="взаємодія" list="MedicineInteractionSuggestions" />
+                      </div>
+                      <textarea asp-for="TempMedicineInteraction" cols="80" rows="5" id="selectedMedicineInteractionOptionsTextArea" class="mt-1"></textarea>
+                      <button type="button" class="btn btn-danger mt-1" style="width: 65%;" onclick="clearSelectedMedicineInteractionOptionsTextArea()">Видалити</button>
+
                   </div>
               </div>
-              <div class="container-right">
-                  <label>
-                      Противопоказання:
-                  </label>
-                  <div>
-                      <datalist id="ContraindicationSuggestions">
-                          @foreach (var item in ViewBag.Contraindications)
-                          {
-                              <option id=@item.Id>@item.Title</option>
-                          }
-                      </datalist>
-                      <input id="contraindication_suggestions_input" autoComplete="on" class="drop-down list"  placeholder="противопоказання" list="ContraindicationSuggestions"/>
-                  </div>
-                  <textarea asp-for="TempMedicineContraindications" cols="80" rows="5" id="selectedContraindicationOptionsTextArea"></textarea>
-                  <button class="delete-drop-down" onclick="clearSelectedContraindicationOptionsTextArea()">-</button>
-    
-                  <button type="submit" class="registerbtn" >Додати препарат</button>
-    
-              </div>
-                <div class="container-right">
-                    <label>
-                        Взаємодія:
-                    </label>
-                    <div>
-                        <datalist id="MedicineInteractionSuggestions">
-                            @foreach (var item in ViewBag.Interactions)
-                            {
-                                <option id=@item.Id>@item.Description</option>
-                            }
-                        </datalist>
-                        <input id="MedicineInteraction_suggestions_input" autoComplete="on" class="drop-down list"  placeholder="взаємодія" list="MedicineInteractionSuggestions"/>
-                    </div>
-                    <textarea asp-for="TempMedicineInteraction" cols="80" rows="5" id="selectedMedicineInteractionOptionsTextArea"></textarea>
-                    <button class="delete-drop-down" onclick="clearSelectedMedicineInteractionOptionsTextArea()">-</button>
-      
-                    <button type="submit" class="registerbtn" >Додати препарат</button>
-      
-                </div>
+              <hr />
+              <button type="submit" class="submit-button btn btn-primary mt-3" style="width: 65%;">Додати препарат</button>
           </form>
       </div>
   </div>
@@ -119,10 +117,13 @@ ViewData["Title"] = "Add patient";
         });
         function clearSelectedStorageOptionsTextArea() {
           // console.log(document.getElementById("selectedStorageOptionsTextArea").innerHTML)
-          let splittedText = document.getElementById("selectedStorageOptionsTextArea").innerHTML.split(/\r?\n/)
+            const ta = document.getElementById("selectedStorageOptionsTextArea");
+
+            let splittedText = ta.innerHTML.split(/\r?\n/)
           splittedText.splice(-2) 
-          document.getElementById("selectedStorageOptionsTextArea").innerHTML = splittedText.join('\n');
-          document.getElementById("selectedStorageOptionsTextArea").innerHTML+="\n";
+          ta.innerHTML = splittedText.join('\n');
+            ta.innerHTML += "\n";
+            return ta;
         }    
         
 
@@ -143,10 +144,13 @@ ViewData["Title"] = "Add patient";
         });
         function clearSelectedContraindicationOptionsTextArea() {
           // console.log(document.getElementById("selectedContraindicationOptionsTextArea").innerHTML)
-          let splittedText = document.getElementById("selectedContraindicationOptionsTextArea").innerHTML.split(/\r?\n/)
-          splittedText.splice(-2) 
-          document.getElementById("selectedContraindicationOptionsTextArea").innerHTML = splittedText.join('\n');
-          document.getElementById("selectedContraindicationOptionsTextArea").innerHTML+="\n";
+            const ta = document.getElementById("selectedContraindicationOptionsTextArea");
+
+            let splittedText = ta.innerHTML.split(/\r?\n/)
+            splittedText.splice(-2)
+            ta.innerHTML = splittedText.join('\n');
+            ta.innerHTML += "\n";
+            return ta;
         }
         
         
@@ -167,10 +171,13 @@ ViewData["Title"] = "Add patient";
                 });
                 function clearSelectedMedicineInteractionOptionsTextArea() {
                   // console.log(document.getElementById("selectedContraindicationOptionsTextArea").innerHTML)
-                  let splittedText = document.getElementById("selectedMedicineInteractionOptionsTextArea").innerHTML.split(/\r?\n/)
-                  splittedText.splice(-2) 
-                  document.getElementById("selectedMedicineInteractionOptionsTextArea").innerHTML = splittedText.join('\n');
-                  document.getElementById("selectedMedicineInteractionOptionsTextArea").innerHTML+="\n";
+                    const ta = document.getElementById("selectedMedicineInteractionOptionsTextArea");
+
+                    let splittedText = ta.innerHTML.split(/\r?\n/)
+                    splittedText.splice(-2)
+                    ta.innerHTML = splittedText.join('\n');
+                    ta.innerHTML += "\n";
+                    return ta;
                 }
 
     </script>

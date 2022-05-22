@@ -5,23 +5,22 @@
 
 <form asp-controller="Medicine" asp-action="ViewAllMedicines" method="get">
 
-    <link rel="stylesheet" href=~/css/AdminStyle.css type="text/css" />
+    <link rel="stylesheet" href=~/css/AdminStyleblyat.css type="text/css" />
     <body>
         <div class="add-edit-patient-content">
             <h1> ALL MEDICINES </h1>
             <hr>
-            <div class="profile-container">
+            <div class="profile-container m-0 w-75 mx-auto" style="height: inherit;">
                 <div class="medicine-list">
                     <div class="search-part-medicine">
-                        <img class="medicine-search-img" src=~/SearchLogo.png>
-                        <input class="search" asp-for="search" type="text" placeholder="Search..">
-                        <input type="submit" value="Знайти" style="float:right" />
-
+                        <img style="width: 1.5rem;height: 1.5rem;margin: 1rem;" src=~/SearchLogo.png>
+                        <input style="flex: 1;" class="px-1 border-0" asp-for="search" type="text" placeholder="Search..">
+                        <input type="submit" value="Знайти" class="btn btn-light py-0 px-2 m-1" style="height: 30px;" />
                     </div>
                     <div class="medicine-scroll-panel">
                         @foreach (var item in AllMedicines)
                         {
-                            <button class="button-medicine" type="button" onclick="location.href='@Url.Action("Index", "Medicine", new { id = item.Id })'">@item.Name</button>
+                            <button class="btn btn-light p-2 mb-1 border mx-1" type="button" onclick="location.href='@Url.Action("Index", "Medicine", new { id = item.Id })'">@item.Name</button>
                         }
                     </div>
                 </div>

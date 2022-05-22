@@ -25,11 +25,11 @@
 }
 
 <link rel="stylesheet" href=~/css/Medicine.css />
-<link rel="stylesheet" href=~/css/AdminStyle.css />
+<link rel="stylesheet" href=~/css/AdminStyleblyat.css />
 
-<div class="medicine-content">
-    <div class="medicine-container">
-        <div class="medicine-name-header">
+<div class="medicine-content border border-2 m-0" style="max-height: 500px; height: inherit;">
+    <div class="medicine-container m-0 position-relative">
+        <div class="medicine-name-header d-flex align-items-center justify-content-center position-sticky top-0">
             <p>@Model.Name</p>
         </div>
         <div class="medicine-scroll-panel">
@@ -62,14 +62,15 @@
 
         </div>
     </div>
-    @if (User.IsInRole("Admin"))
-    {
-        <form asp-action="Delete" asp-route-id="@Model.Id">
-            <div class="btn-group btn-group-sm">
-                <input type="submit" id="btn-delete" class="btn btn-danger"
-                        onclick="return confirm('Ви впевнені, що хочете видалити даний препарат?')"
-                       value="Видалити"/>
-            </div>
-        </form>
-    }
+
 </div>
+@if (User.IsInRole("Admin"))
+{
+    <form asp-action="Delete" asp-route-id="@Model.Id">
+        <div class="w-100 d-flex justify-content-center mt-2">
+            <input type="submit" id="btn-delete" class="btn btn-danger m-0"
+                   onclick="return confirm('Ви впевнені, що хочете видалити даний препарат?')"
+                   value="Видалити" />
+        </div>
+    </form>
+}

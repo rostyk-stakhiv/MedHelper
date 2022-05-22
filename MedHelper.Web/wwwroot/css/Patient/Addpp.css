@@ -4,9 +4,10 @@ body {
   }
 
   .add-edit-patient-content {
-    margin: 100px;
+    margin: 0 auto;
     padding: 50px;
     background-color: #00C4CC;
+    width: max-content;
   }
   
   .container {
@@ -29,41 +30,39 @@ body {
   textarea {
     width: 65%;
     padding: 15px;
-    margin: 5px 0 22px 0;
     border: none;
     background: #f1f1f1;
-    display: flex;
-    
   }
 
-  textarea{  
+input[type=text] {
+    height: 40px;
+}
+
+textarea {
     resize: none;
     overflow-y: auto;
     background-color: #F4716D;
     margin-bottom: 10px;
-  }
+}
   
   input[type=date] {
       width: 30%;
   }
 
-  .drop-down.list {
+/*.drop-down.list {
     margin-top: 5px;
     border: none;
     background: #f1f1f1;
     display: flex;
     width: 70%;
     height: 30px;
-  }
+  }*/
 
   input[type=text]:focus,
   input[type=password]:focus {
     outline: none;
   }
   
-  div {
-    padding: 10px 0;
-  }
   
   hr {
     border: 1px solid #FF5757;
@@ -100,3 +99,12 @@ body {
   .registerbtn:hover {
     opacity: 1;
   }
+
+.submit-button {
+    background-color: #FF5757;
+    width: 200px;
+    opacity: 0.9;
+    border: solid #f1f1f1;
+    border-radius: 40px;
+    font-size: 25px;
+}

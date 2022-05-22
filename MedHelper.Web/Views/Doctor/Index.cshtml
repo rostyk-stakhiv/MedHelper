@@ -4,7 +4,8 @@
 }
 
 
-<link rel="stylesheet" href=~/css/doctorStyle.css type="text/css" />
+<link rel="stylesheet" href=~/css/doctorStyleblyat.css type="text/css" />
+<link rel="stylesheet" href=~/css/AdminStyleblyat.css type="text/css" />
 
 
 <form asp-controller="Doctor" asp-action="Index" method="get">
@@ -28,20 +29,25 @@
     </div>
     <hr>
     <div class="bottom-part">
-        <div class="patient-list">
-            <div class="search-part">
-                <img class="search-img" src="~/SearchLogo.png">
-                <input class="search" name="search" type="text" asp-for="search" placeholder="Пошук..">
-                <input type="submit" value="Знайти" style="float:right"/>
-            </div>
-            <div class="scroll-panel">
-                @for (var i = 0; i < Model.Patients.Count; i++)
-                {
-                    <button class="button-patient" type="button" onclick="location.href='@Url.Action("Index", "Patient", new { id = Model.Patients[i].Id })'">
-                        @Model.Patients[i].FirstName @Model.Patients[i].LastName
-                    </button>
-                }
+        <div class="add-edit-patient-content">
+            <h1> ЗНАЙТИ ПАЦІЄНТА </h1>
+            <hr>
+            <div class="profile-container m-0 w-75 mx-auto" style="height: inherit;">
+                <div class="medicine-list">
+                    <div class="search-part-medicine">
+                        <img style="width: 1.5rem;height: 1.5rem;margin: 1rem;" src=~/SearchLogo.png>
+                        <input style="flex: 1;" class="px-1 border-0" asp-for="search" type="text" placeholder="Search..">
+                        <input type="submit" value="Знайти" class="btn btn-light py-0 px-2 m-1" style="height: 30px;" />
+                    </div>
+                    <div class="medicine-scroll-panel">
+                        @for (var i = 0; i < Model.Patients.Count; i++)
+                        {
+                        <button class="btn btn-light p-2 mb-1 border mx-1" type="button" onclick="location.href='@Url.Action("Index", "Patient", new { id = Model.Patients[i].Id })'">@Model.Patients[i].FirstName @Model.Patients[i].LastName</button>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
+        
     </div>
 </form>
