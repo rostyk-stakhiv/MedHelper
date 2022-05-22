@@ -16,7 +16,7 @@
                 <label> Прізвище: </label>
                 <input type="text" name="lastName" asp-for="LastName" placeholder="прізвище" size="15" required />
                 <label> Дата народження: </label>
-                <input type="date" name="birthday" asp-for="Birthdate" placeholder="дата народження" size="15" required />
+                @Html.TextBoxFor(Model => Model.Birthdate, "{0:yyyy-MM-dd}", new { type = "date" })
                 <label> Cтать: </label>
                 <input type="text" name="gender" asp-for="Gender" placeholder="стать" size="15" required />
                 @* <div> *@

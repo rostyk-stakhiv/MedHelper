@@ -25,7 +25,7 @@
                 </div>
                 <div class="d-flex flex-column mt-4">
                     <label> Дата народження: </label>
-                    <input type="date" name="birthday" asp-for="Birthdate" asp-format="{0:dd-MM-yyyy}" placeholder="дата народження" size="15" required />
+                    @Html.TextBoxFor(Model => Model.Birthdate, new { type = "date" })
                 </div>
                 <div class="d-flex flex-column mt-4">
                     <label> Cтать: </label>
