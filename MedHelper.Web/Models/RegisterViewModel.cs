@@ -25,5 +25,10 @@ namespace MedHelper.Web.Models
         [DataType(DataType.Password)]
         [Display(Name = "PASSWORD")]
         public string Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "CONFIRM PASSWORD")]
+        public string Confirm { get; set; }
     }
 }
