@@ -1,0 +1,54 @@
+﻿body {
+    font-family: Calibri, Helvetica, sans-serif;
+    font-size: large;
+}
+
+.add-edit-patient-content {
+    margin: 100px;
+    padding: 50px;
+    background-color: #00C4CC;
+    text-align: center;
+}
+
+div {
+    padding: 10px 0;
+}
+
+hr {
+    border: 1px solid #FF5757;
+    margin-bottom: 25px;
+}
+
+.delete-drop-down {
+    border-radius: 50px;
+    background-color: #FF5757;
+    font-size: 18px;
+    border: none;
+}
+
+h1 {
+    color: #FF5757;
+}
+
+h3 {
+    color: #fcfcfc;
+}
+
+.registerbtn {
+    font-family: Calibri;
+    background-color: #FF5757;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 300px;
+    opacity: 0.9;
+    align-items: center;
+    border: solid #f1f1f1;
+    font-size: large;
+    border-radius: 40px;
+    font-size: 25px;
+}
+
+.doctor-img {
+    width: 20%
+}

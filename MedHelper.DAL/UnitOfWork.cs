@@ -15,7 +15,6 @@ namespace MedHelper.DAL
         private IRepository<Composition> compositionRepository;
         private IUserRepository userRepository;
         private IRepository<MedicineInteraction> medicineInteractionRepository;
-        private IRepository<Role> roleRepository;
         private IRepository<PharmacotherapeuticGroup> pharmacotherapeuticGroupRepository;
         public UnitOfWork(MedHelperDBContext context)
 
@@ -93,17 +92,7 @@ namespace MedHelper.DAL
                 return medicineInteractionRepository;
             }
         }
-        public IRepository<Role> RoleRepository
-        {
-            get
-            {
-                if (roleRepository == null)
-                {
-                    roleRepository = new Repository<Role>(_context);
-                }
-                return roleRepository;
-            }
-        }
+        
         public IRepository<PharmacotherapeuticGroup> PharmacotherapeuticGroupRepository
         {
             get

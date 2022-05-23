@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
 namespace MedHelper.DAL.Repositories
@@ -28,17 +29,18 @@ namespace MedHelper.DAL.Repositories
 
         public void Delete(T entity)
         {
-
             _enteties.Remove(entity);
+            _context.SaveChanges();
         }
 
         public async Task DeleteByIdAsync(int id)
         {
             var entity = await _enteties.SingleOrDefaultAsync(s => s.Id == id);
             Delete(entity);
+            _context.SaveChanges();
         }
 
-        public IQueryable<T> FindAll()
+        public IEnumerable<T> FindAll()
         {
             return _enteties;
         }

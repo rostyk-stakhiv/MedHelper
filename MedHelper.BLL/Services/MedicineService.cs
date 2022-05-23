@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MedHelper.BLL.Dto.Medicine;
 using MedHelper.BLL.Dto.Responses;
 using MedHelper.BLL.Interfaces;
 using MedHelper.DAL;
 using MedHelper.DAL.Entities;
 using MedHelper.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace MedHelper.BLL.Services
 {
@@ -23,23 +25,82 @@ namespace MedHelper.BLL.Services
             _mapper = mapper;  
         }
 
-        public IEnumerable<MedicineResponse> GetAll()
-        {            
-            return _mapper.Map<List<MedicineResponse>>(_unitOfWork.MedicineRepository.GetAllWithDetails());
+        public IEnumerable<MedicineResponse> GetAll(string search = null)
+        {
+            //return _mapper.Map<List<MedicineResponse>>(_unitOfWork.MedicineRepository.GetAllWithDetails(search));
+            var medicines = _unitOfWork.MedicineRepository.FindAll();
+            if (!String.IsNullOrEmpty(search))
+            {
+                medicines = medicines.Where(s => s.Name.ToLower().Contains(search.ToLower()));
+            }
+            return _mapper.Map<List<MedicineResponse>>(medicines.ToList());
+        }
+        
+        public IEnumerable<TempMedicineResponse> CreateMedicinesFromString(string medString)
+        {
+            if (medString == null) return new List<TempMedicineResponse>();
+
+            var medArray = medString.Split("\r\n");
+            var medicines = _unitOfWork.MedicineRepository.FindAll().Where(obj => medArray.Contains(obj.Name));
+            
+            return _mapper.Map<List<TempMedicineResponse>>(medicines.ToList());
         }
 
+        public IEnumerable<DiseaseResponse> CreateDiseasesFromString(string medString)
+        {
+            if (medString == null) return new List<DiseaseResponse>();
+            
+            var medArray = medString.Split("\r\n");
+            var medicines = _unitOfWork.DiseaseRepository
+                .FindAll()
+                .Where(obj => medArray.Contains(obj.Title));
+            
+            return _mapper.Map<List<DiseaseResponse>>(medicines.ToList());
+        }
+
+        public IEnumerable<DiseaseResponse> GetAllDiseases()
+        {
+            return _mapper.Map<List<DiseaseResponse>>(_unitOfWork.DiseaseRepository.FindAll());
+        }
+
+        public IEnumerable<PharmacotherapeuticGroup> GetAllPharmacotherapeuticGroups()
+        {
+            return _unitOfWork.PharmacotherapeuticGroupRepository.FindAll();
+        }
+        public IEnumerable<MedicineInteraction> GetAllMedicineInteractions()
+        {
+            return _unitOfWork.MedicineInteractionRepository.FindAll();
+        }
+
+        public IEnumerable<Composition> GetAllCompositions()
+        {
+            return _unitOfWork.CompositionRepository.FindAll();
+        }
+        
         public async Task<MedicineResponse> GetByIdAsync(int id)
         {
             var result = await _unitOfWork.MedicineRepository.GetByIdWithDetailsAsync(id);
             return _mapper.Map<MedicineResponse>(result);
         }
 
-        //public async Task AddAsync(CreateMedicineDto model)
-        //{
-        //    var medicine = _mapper.Map<Medicine>(model);
-        //    await _unitOfWork.MedicineRepository.AddAsync(medicine);
-        //    await _unitOfWork.SaveAsync();
-        //}
+        public async Task AddAsync(CreateMedicineDto model)
+        {
+            var medicine = _mapper.Map<Medicine>(model);
+            
+            var compositionsStrArr = model.TempMedicineCompositions.Split("\r\n");
+            var contraindicationsStrArr = model.TempMedicineContraindications.Split("\r\n");
+
+            var diseases = GetAllDiseases().Where(obj => contraindicationsStrArr.Contains(obj.Title)).ToList();
+            var compositions = GetAllCompositions().Where(obj => compositionsStrArr.Contains(obj.Description)).ToList();
+            medicine.MedicineContraindications = _mapper.Map<List<MedicineContraindication>>(diseases).ToList();
+            medicine.MedicineCompositions = _mapper.Map<List<MedicineComposition>>(compositions).ToList();
+
+            medicine.PharmacotherapeuticGroupId = GetAllPharmacotherapeuticGroups().FirstOrDefault(obj => obj.Title == model.TempPharmacotherapeuticGroup).Id;
+            
+            
+            await _unitOfWork.MedicineRepository.AddAsync(medicine);
+            await _unitOfWork.SaveAsync();
+        }
 
         //public async Task UpdateAsync(UpdateMedicineDto model)
         //{

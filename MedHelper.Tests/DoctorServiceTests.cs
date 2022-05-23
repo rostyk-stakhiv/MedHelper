@@ -7,6 +7,7 @@ using MedHelper.DAL;
 using MedHelper.DAL.Entities;
 using AutoMapper;
 using MedHelper.BLL.Dto.Responses;
+using MedHelper.BLL.Dto.Doctor;
 
 namespace MedHelper.Tests
 {
@@ -24,6 +25,14 @@ namespace MedHelper.Tests
             _unitOfWork = new Mock<IUnitOfWork>();
             _mapper = new Mock<IMapper>();
         }
+
+        UpdateDoctorDto update = new UpdateDoctorDto()
+        {
+            Id = 1,
+            FirstName = "Test",
+            LastName = "Doctor",
+            Email = "testdoctor@gmail.com",
+        };
 
         User doctor = new User()
         {
@@ -45,7 +54,7 @@ namespace MedHelper.Tests
             var result = await _doctorService.GetByIdAsync(1);
 
             // assert
-            Assert.Null(null);
+            Assert.Null(result);
         }
 
         [Fact]
@@ -69,6 +78,31 @@ namespace MedHelper.Tests
             // assert
             Assert.NotNull(result);
             Assert.Equal(d, result);
+        }
+
+        [Fact]
+        public async Task UpdateSuccess()
+        {
+            // arrange
+            _unitOfWork.Setup(s => s.UserRepository.Update(It.IsAny<User>())).Verifiable();
+            _unitOfWork.Setup(s => s.UserRepository.GetByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(doctor));
+            _mapper.Setup(m => m.Map(It.IsAny<UpdateDoctorDto>(), It.IsAny<User>())).Returns(doctor);
+
+            _doctorService = new DoctorService(_unitOfWork.Object, _mapper.Object);
+
+            // act
+            await _doctorService.UpdateAsync(update);
+
+            // assert
+            try
+            {
+                _unitOfWork.Verify(x => x.UserRepository.Update(doctor));
+                Assert.True(true);
+            }
+            catch (MockException)
+            {
+                Assert.True(false);
+            }
         }
     }
 }

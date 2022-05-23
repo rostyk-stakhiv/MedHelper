@@ -1,0 +1,127 @@
+﻿@model MedHelper.Web.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<link rel="stylesheet" href=~/css/Authorization_style.css type="text/css" />
+<div >
+    <div >
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            //@Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Register</div>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <div class="left-container">
+                        <div class="form-group">
+
+                            <div>
+                                @Html.LabelFor(m => m.FirstName)
+                                @if (ViewBag.error != null)
+                                {
+                                    @Html.TextBoxFor(m => m.FirstName, "", new { @class = "form-control error", @placeholder = "First Name", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.FirstName, "Wrong FirstName Format", new { @class = "e badge badge-danger" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.FirstName, "", new { @class = "form-control", @placeholder = "First Name", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "badge badge-danger" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.LastName)
+                                @if (ViewBag.error == null)
+                                {
+
+                                    @Html.TextBoxFor(m => m.LastName, "", new { @class = "form-control", @placeholder = "Last Name", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "badge badge-danger" })
+
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.LastName, "", new { @class = "error form-control", @placeholder = "Last Name", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.LastName, "Wrong Last Name Format", new { @class = "e badge badge-danger" })
+
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.Email)
+                                @if (ViewBag.error == null)
+                                {
+
+                                    @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "badge badge-danger" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.Email, "", new { @class = "error form-control", @placeholder = "Email", @required = "required" })
+
+                                    @Html.ValidationMessageFor(m => m.Email, "Wrong Email Format", new { @class = "e badge badge-danger" })
+                                }
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="right-container">
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.Password)
+                                @if (ViewBag.error == null)
+                                {
+
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "e badge badge-danger" })
+                                }
+                                else
+                                {
+                                    @Html.PasswordFor(m => m.Password, new { @class = "error form-control", @placeholder = "Password", @required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Password, "Wrong Passvord Format", new { @class = "e badge badge-danger" })
+
+                                }
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(m => m.Confirm)
+                                @if (ViewBag.error == null)
+                                {
+
+                                    @Html.PasswordFor(m => m.Confirm, new { @class = "form-control", @placeholder = "Comfirm Password",  @required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Confirm, "", new { @class = "e badge badge-danger" })
+                                }
+                                else
+                                {
+                                    @Html.PasswordFor(m => m.Confirm, new { @class = "error form-control", @placeholder = "Comfirm Password",  @required = "required" })
+                                    @Html.ValidationMessageFor(m => m.Confirm, "Wrong Passvord Format", new { @class = "e badge badge-danger" })
+
+                                }
+                            
+                            </div>
+                        </div>
+                        <div class="brn_lower form-group">
+                            <input type="submit" name="submit" class="btn btn-danger" value="Register" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

@@ -23,5 +23,7 @@ namespace MedHelper.DAL.Entities
 
         public List<PatientDisease> PatientDiseases { get; set; }
         public List<PatientMedicine> PatientMedicines { get; set; }
+
+        public string FullName { get { return this.FirstName + " " + this.LastName; } }
     }
 }

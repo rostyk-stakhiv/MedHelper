@@ -66,20 +66,24 @@ body {
       display: block;
       margin: 2px;
   }
-  
-  .edit-header {
-      background-color: #F4716D;
-      width: 100%;
-      display : flex;
-    flex-direction : row;
+
+.edit-header {
+    background-color: #F4716D;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
     height: 50px;
     flex-direction: row;
-    display: flex
-  }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
   .edit-header img {
     display: block;
-    margin-left: auto;
+    margin-right: 1rem;
+    width: 2rem;
+    height: 2rem;
   }
 
   .medicine-list{
@@ -96,20 +100,18 @@ body {
     height:450px;
 }
 
-.search-part-medicine{
+.search-part-medicine {
     background-color: #F4716D;
     height: 50px;
-    flex-direction: row;
     display: flex;
-}
-
-.medicine-search-img{
-    margin: 5;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .search{
     margin: 10px ; 
     height: 30px;
+    width: 100%
 }
 
 .button-medicine{
@@ -124,4 +126,26 @@ body {
     font-style: normal;
     cursor: pointer;
 
+}
+
+#btn-delete {
+    margin: 0 auto;
+    margin-top: 25px;
+    font-family: Calibri;
+    background-color: #FF5757;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+    opacity: 0.9;
+    align-items: center;
+    border: solid #f1f1f1;
+    font-size: large;
+    border-radius: 40px;
+    font-size: 25px;
+    text-align: center;
+}
+
+patient-action {
+    display: flex;
 }

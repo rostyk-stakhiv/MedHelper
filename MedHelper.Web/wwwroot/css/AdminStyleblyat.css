@@ -1,0 +1,87 @@
+﻿
+body {
+    font-family: Calibri, Helvetica, sans-serif;
+    font-size: large;
+}
+
+h1 {
+    color: #FF5757;
+}
+
+hr {
+    border: 1px solid #FF5757;
+    margin-bottom: 25px;
+}
+
+.add-edit-patient-content {
+    margin: 50px;
+    padding: 50px;
+    background-color: #00C4CC;
+}
+.profile-container {
+    margin: 5px;
+    width: 50%;
+    background-color: #00C4CC;
+    height: 500px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.medicine-list {
+    background: #F4716D;
+}
+
+.medicine-scroll-panel {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.search-part-medicine {
+    background-color: #F4716D;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search {
+    margin: 10px;
+    height: 30px;
+    width: 100%;
+}
+
+.button-medicine {
+    height: 50px;
+    background-color: #4EC2CD;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    border: solid 2px #fff;
+    font-style: normal;
+    cursor: pointer;
+}
+
+input[type=button] {
+    margin: 0 auto;
+    margin-top: 25px;
+    font-family: Calibri;
+    background-color: #FF5757;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+    opacity: 0.9;
+    align-items: center;
+    border: solid #f1f1f1;
+    font-size: large;
+    border-radius: 40px;
+    font-size: 25px;
+}
+
+.button-wrapper {
+    text-align: center;
+}

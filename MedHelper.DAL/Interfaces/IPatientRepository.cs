@@ -9,6 +9,8 @@ namespace MedHelper.DAL.Interfaces
     public interface IPatientRepository:IRepository<Patient>
     {
         IEnumerable<Patient> GetAllWithDetails();
+        IEnumerable<Patient> GetPatients(int id, string search);
         Task<Patient> GetByIdWithDetailsAsync(int id);
+        void UpdateWithDelete(Patient patient);
     }
 }

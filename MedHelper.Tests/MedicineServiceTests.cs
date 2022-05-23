@@ -9,6 +9,9 @@ using AutoMapper;
 using MedHelper.BLL.Dto.Responses;
 using System;
 using System.Collections.Generic;
+using MedHelper.BLL.Dto.Medicine;
+using System.Linq;
+using MedHelper.BLL;
 
 namespace MedHelper.Tests
 {
@@ -42,6 +45,25 @@ namespace MedHelper.Tests
             Name = "Medicine2",
             UserId = 1
         };
+        static Composition composition = new Composition() { Description = "composition1", Id = 1 };
+        static Disease disease = new Disease() { Id = 1, Title = "disease1" };
+        static DiseaseResponse diseaseresponse = new DiseaseResponse() { Id = 1, Title="disease1" };
+        static PharmacotherapeuticGroup group = new PharmacotherapeuticGroup() { Id = 1, Title = "group1" };
+
+        Medicine medicineAdd = new Medicine() { PharmacotherapeuticGroupId = 1, Name = "medicine", UserId = 1, 
+            MedicineCompositions= new List<MedicineComposition>() { new MedicineComposition() {CompositionId=1 } }, 
+         MedicineContraindications= new List<MedicineContraindication>() { new MedicineContraindication() { ContraindicationId=1 }}
+        };
+        CreateMedicineDto medicineToAdd = new CreateMedicineDto()
+        {
+            Name = "medicine",
+            TempMedicineCompositions = "composition1",
+            UserId = 1,
+            TempMedicineContraindications = "disease1",
+            TempPharmacotherapeuticGroup = "group1"
+        };
+
+
 
         [Fact]
         public async Task GetByIdNull()
@@ -83,7 +105,7 @@ namespace MedHelper.Tests
         public void GetAllNull()
         {
             // arrange
-            _unitOfWork.Setup(s => s.MedicineRepository.GetAllWithDetails()).Returns((IEnumerable<Medicine>)null);
+            _unitOfWork.Setup(s => s.MedicineRepository.GetAllWithDetails(null)).Returns((IEnumerable<Medicine>)null);
             _medicineService = new MedicineService(_unitOfWork.Object, _mapper.Object);
 
             // act
@@ -108,7 +130,7 @@ namespace MedHelper.Tests
                     Name = i.Name
                 });
             }
-            _unitOfWork.Setup(s => s.MedicineRepository.GetAllWithDetails()).Returns((IEnumerable<Medicine>)medicines);
+            _unitOfWork.Setup(s => s.MedicineRepository.GetAllWithDetails(null)).Returns((IEnumerable<Medicine>)medicines);
             _mapper.Setup(m => m.Map<List<MedicineResponse>>(It.IsAny<object>())).Returns(medicineResponses);
 
             _medicineService = new MedicineService(_unitOfWork.Object, _mapper.Object);
@@ -119,6 +141,57 @@ namespace MedHelper.Tests
             // assert
             Assert.NotNull(result);
             Assert.Equal(medicineResponses, result);
+        }
+
+        [Fact]
+        public async Task DeleteSuccess()
+        {
+            // arrange
+            _unitOfWork.Setup(s => s.MedicineRepository.DeleteByIdAsync(It.IsAny<int>())).Verifiable();
+            _medicineService = new MedicineService(_unitOfWork.Object, _mapper.Object);
+
+            // act
+            await _medicineService.DeleteByIdAsync(1);
+
+            // assert
+            try
+            {
+                _unitOfWork.Verify(x => x.MedicineRepository.DeleteByIdAsync(1));
+                Assert.True(true);
+            }
+            catch (MockException)
+            {
+                Assert.True(false);
+            }
+        }
+
+        [Fact]
+        public async Task AddSuccess()
+        {
+            // arrange
+            _unitOfWork.Setup(s => s.MedicineRepository.AddAsync(It.IsAny<Medicine>())).Verifiable();
+            _unitOfWork.Setup(s=>s.CompositionRepository.FindAll()).Returns(new List<Composition>() { composition});
+            _unitOfWork.Setup(s => s.DiseaseRepository.FindAll()).Returns(new List<Disease>() { disease });
+            _unitOfWork.Setup(s => s.PharmacotherapeuticGroupRepository.FindAll()).Returns(new List<PharmacotherapeuticGroup>() { group });
+            _mapper.Setup(m => m.Map<Medicine>(It.IsAny<CreateMedicineDto>())).Returns(medicineAdd);
+            _mapper.Setup(m => m.Map<List<MedicineContraindication>>(It.IsAny<List<DiseaseResponse>>())).Returns(medicineAdd.MedicineContraindications);
+            _mapper.Setup(m => m.Map<List<MedicineComposition>>(It.IsAny<List<Composition>>())).Returns(medicineAdd.MedicineCompositions);
+            _mapper.Setup(m => m.Map<List<DiseaseResponse>>(It.IsAny<List<Disease>>())).Returns(new List<DiseaseResponse>() { diseaseresponse});
+            _medicineService = new MedicineService(_unitOfWork.Object, _mapper.Object);
+
+            // act
+            await _medicineService.AddAsync(medicineToAdd);
+
+            // assert
+            try
+            {
+                _unitOfWork.Verify(x => x.MedicineRepository.AddAsync(medicineAdd));
+                Assert.True(true);
+            }
+            catch (MockException)
+            {
+                Assert.True(false);
+            }
         }
     }
 }

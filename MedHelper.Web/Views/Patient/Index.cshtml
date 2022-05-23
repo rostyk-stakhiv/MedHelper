@@ -1,0 +1,77 @@
+﻿@model MedHelper.BLL.Dto.Responses.PatientResponse
+
+@{
+    var fullname = string.Concat(Model.FirstName, " ", Model.LastName);
+    var Medicines = Model.Medicines;
+    var Diseases = Model.Diseases;
+    var AllMedicines = Model.AllMedicines;
+}
+
+<link rel="stylesheet" href=~/css/PatientProfileblyat.css type="text/css" />
+
+<form asp-controller="Patient" asp-action="Index" method="get">
+
+    <div class="patient-profile-content">
+        <h1> @fullname </h1>
+        <div class="profile-container">
+            <div class="profile-container-left">
+                <div class="edit-header">
+                    <p>Інформація про пацієнта</p>
+                    <img class="search-img" src="~/EditLogo.png" onclick="location.href='@Url.Action("Edit", "Patient", new { id = Model.Id })'">
+                </div>
+                <div class="medicine-scroll-panel">
+                    <div class="row">
+                        <label>Стать:</label>
+                        <input type="text" value=@Model.Gender disabled>
+                    </div>
+
+                    <div class="row">
+                        <label>Вік:</label>
+                        <input type="number" value=@((DateTime.Now.Year - Model.Birthdate.Year)) disabled>
+                    </div>
+
+                    <div class="row list">
+
+                        <label> Список препаратів, які вживає пацієнт: </label>
+                        @for (var i = 0; i < Medicines.Count; i++)
+                        {
+                            <p>@(i+1) @Medicines[i].Name</p>
+                        }
+                    </div>
+
+                    <div class="row list">
+                        <label> Медична карта: </label>
+                        @for (var i = 0; i < Diseases.Count; i++)
+                        {
+                            <p>@(i+1) @Diseases[i].Title</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-container-right">
+                <div class="medicine-list">
+                    <div class="search-part-medicine">
+                        <img style="width: 1.5rem;height: 1.5rem;margin: 1rem;" src=~/SearchLogo.png>
+                        <input style="flex: 1;" class="px-1 border-0" asp-for="search" type="text" placeholder="Search..">
+                        <input type="submit" value="Знайти" class="btn btn-light py-0 px-2 m-1" style="height: 30px;" />
+                    </div>
+                    <div class="medicine-scroll-panel">
+                        @foreach (var item in AllMedicines)
+                        {
+                            <button class="button-medicine" type="button" onclick="location.href='@Url.Action("Index", "Medicine", new { id = item.Id })'">@item.Name</button>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<form asp-controller="Patient" asp-action="Delete" method="post" asp-route-id="@Model.Id">
+    <div class="w-100 d-flex align-items-center justify-content-center">
+        <input type="submit" id="btn-delete" class="btn btn-danger m-0"
+               onclick="return confirm('Ви впевнені, що хочете видалити пацієнта?')"
+               value="Видалити" />
+    </div>
+</form>

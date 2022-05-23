@@ -10,9 +10,11 @@ using MedHelper.DAL;
 using MedHelper.DAL.Entities;
 using MedHelper.DAL.Interfaces;
 using MedHelper.DAL.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +52,13 @@ namespace MedHelper.Web
             services.AddScoped<IMedicineService, MedicineService>();
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddControllersWithViews();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x => x.LoginPath = "/Authorization/Login");
+            services.AddIdentityCore<User>()
+              .AddRoles<Role>()
+              .AddEntityFrameworkStores<MedHelperDBContext>()
+              .AddSignInManager<SignInManager<User>>()
+              .AddRoleManager<RoleManager<Role>>()
+              .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,7 +95,7 @@ namespace MedHelper.Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

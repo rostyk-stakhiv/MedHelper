@@ -1,50 +1,53 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model MedHelper.BLL.Dto.Responses.DoctorResponse
 @{
-    var fullname = string.Concat(ViewBag.Doctor.FirstName," ",ViewBag.Doctor.LastName);
+    var fullname = string.Concat(Model.FirstName, " ", Model.LastName);
 }
 
-<link rel="stylesheet" href=~/css/doctor_style.css type="text/css" />
+
+<link rel="stylesheet" href=~/css/doctorStyleblyat.css type="text/css" />
+<link rel="stylesheet" href=~/css/AdminStyleblyat.css type="text/css" />
 
 
-<div class="top-part"> 
-         <div class="logo-img-wrapper">
-            <img class="logo-img" src="~/MedHelperTitle.png" alt=""/>
-         </div>
-         <div class="doctor-info-wrapper">
+<form asp-controller="Doctor" asp-action="Index" method="get">
+    <div class="top-part">
+        <div class="logo-img-wrapper">
+            <img class="logo-img" src="~/MedHelperTitle.png" alt="" />
+        </div>
+        <div class="doctor-info-wrapper">
             <div class="img-bottom-wrapper">
-                <img class="doctor-img" src="~/DoctorLogo.png" alt=""/>
-                <button class="button-add"type="button">Додати пацієнта</button>
+                <img class="doctor-img" src="~/DoctorLogo.png" alt="" />
+                <button class="button-add" type="button" onclick="location.href='@Url.Action("Add", "Patient")'" >Додати пацієнта</button>
             </div>
             <div class="info-wrapper">
                 <div class="info">
-                    <div class="user-name">@fullname</div>
-                    <div class="gmail">@ViewBag.Doctor.Email</div>
+                    <div class="user-name"> @fullname </div>
+                    <div class="gmail">@Model.Email</div>
                 </div>
-                <img class="button-edit" src="~/EditLogo.png">
+                <img class="button-edit" src="~/EditLogo.png" onclick="location.href='@Url.Action("Edit", "Doctor")'">
             </div>
-         </div>
-     </div> 
-     <hr>
-     <div class="bottom-part"> 
-        <div class="patient-list"> 
-            <div class="search-part">
-                <img class="search-img"src="~/SearchLogo.png">
-                <input class="search" type="text" placeholder="Пошук..">
+        </div>
+    </div>
+    <hr>
+    <div class="bottom-part">
+        <div class="add-edit-patient-content">
+            <h1> ЗНАЙТИ ПАЦІЄНТА </h1>
+            <hr>
+            <div class="profile-container m-0 w-75 mx-auto" style="height: inherit;">
+                <div class="medicine-list">
+                    <div class="search-part-medicine">
+                        <img style="width: 1.5rem;height: 1.5rem;margin: 1rem;" src=~/SearchLogo.png>
+                        <input style="flex: 1;" class="px-1 border-0" asp-for="search" type="text" placeholder="Search..">
+                        <input type="submit" value="Знайти" class="btn btn-light py-0 px-2 m-1" style="height: 30px;" />
+                    </div>
+                    <div class="medicine-scroll-panel">
+                        @for (var i = 0; i < Model.Patients.Count; i++)
+                        {
+                        <button class="btn btn-light p-2 mb-1 border mx-1" type="button" onclick="location.href='@Url.Action("Index", "Patient", new { id = Model.Patients[i].Id })'">@Model.Patients[i].FirstName @Model.Patients[i].LastName</button>
+                        }
+                    </div>
+                </div>
             </div>
-            <div class="scroll-panel"> 
-                @for (var i = 0; i < ViewBag.Doctor.Patients.Count; i++)
-                {
-                    <button class="button-patient"type="button" onclick="redirect(@ViewBag.Doctor.Patients[i].Id)">@ViewBag.Doctor.Patients[i].FirstName @ViewBag.Doctor.Patients[i].LastName</button>
-                }           
-            </div> 
-        </div> 
-     </div> 
-     <script>
-     redirect = function(id)
-     {
-         window.location.href = `https://localhost:7241/Patient/${id}`
-         console.log(`https://localhost:7241/Patient/${id}`)
-     }
-     </script>
+        </div>
+        
+    </div>
+</form>

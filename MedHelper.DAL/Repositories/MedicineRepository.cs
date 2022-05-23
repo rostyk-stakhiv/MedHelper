@@ -13,9 +13,15 @@ namespace MedHelper.DAL.Repositories
         public MedicineRepository(MedHelperDBContext context):base(context)
         {
         }
-        public IEnumerable<Medicine> GetAllWithDetails()
+        public IEnumerable<Medicine> GetAllWithDetails(string search = null)
         {
             var medicines = FindAll().ToList();
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                medicines = medicines.Where(s => s.Name.ToLower().Contains(search.ToLower())).ToList();
+            }
+
             foreach (var medicine in medicines)
             {
                 getDetails(medicine);

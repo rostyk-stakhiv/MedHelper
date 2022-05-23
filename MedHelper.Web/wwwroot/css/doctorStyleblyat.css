@@ -22,15 +22,16 @@
 }
 
 .doctor-info-wrapper {
-    float:right;
+    border-radius: 25px;
+    box-shadow: 10px 10px 5px lightblue;
+    float: right;
     height: 300px;
-    width: 40%;
+    width: 50%;
     padding: 20px;
     display: flex;
     flex-direction: row;
     background-color: #F4716D;
-    justify-content:space-between;
-    
+    justify-content: space-between;
 }
 
 .logo-img {
@@ -40,13 +41,11 @@
     flex-direction: row;
 }
 
-.img-bottom-wrapper{
+.img-bottom-wrapper {
     flex-direction: column;
-    max-height: 100%;
-    max-width: 100%;
-    width: 50%;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* .button-add{
@@ -54,16 +53,14 @@
 } */
 
 .doctor-img{
-    margin-left: 30px;
     height: 70%;
     width: fit-content;
-    display: flex;
 }
 
 .button-add{
     background-color: #4EC2CD;
     color: white;
-    padding: 15px 32px;
+    padding: 2px 32px;
     text-align: center;
     font-weight: bold;
     font-size: 20px;
@@ -73,6 +70,7 @@
     width: 50px;
     height: 50px;
     align-self: flex-end;
+    margin-bottom: 10px;
 
 }
 
@@ -81,29 +79,30 @@
     flex-direction: column;
     max-height: 100%;
     max-width: 100%;
-    width: 50%;
     display: flex;
-    
 }
 
 .info{
     padding: 40px;
     justify-content: center;
     flex-direction: column;
-    width: 50%;
 }
 
-.user-name{
+.user-name {
     background-color: rgb(255, 255, 255);
     font-weight: bold;
     font-size: 30px;
-    color:#4EC2CD;
+    color: #4EC2CD;
     margin-bottom: 20px;
+    padding: 5px;
+    width: max-content;
+    max-width: 250px;
 }
 
-.gmail{
+.gmail {
     font-size: 25px;
     color: white;
+    width: fit-content;
 }
 
 .bottom-part{
@@ -138,6 +137,7 @@
 .search{
     margin: 10px ; 
     height: 30px;
+    width: 100%;
 }
 
 .button-patient{

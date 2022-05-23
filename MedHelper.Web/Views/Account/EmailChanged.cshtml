@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<link rel="stylesheet" href="~/css/Error.css" type="text/css" />
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+
+    <div class="add-edit-patient-content">
+        <img class="doctor-img" src="~/Tick.jpg" alt="" />
+        <h1> Пароль успішно змінено! </h1>
+        <hr>
+        <h3>Пароль був успішно змінений. Тепер Ви можете увійти у свій особистий кабінет використовуючи новий пароль. </h3>
+        <button type="submit" class="registerbtn" onclick="location.href='@Url.Action("Login", "Account")'">Увійти</button>
+    </div>
+
+
+</body>

@@ -4,7 +4,7 @@ body {
   }
 
   .add-edit-patient-content {
-    margin: 100px;
+    margin: 50px;
     padding: 50px;
     background-color: #00C4CC;
   }
@@ -79,11 +79,10 @@ body {
   h1 {
       color: #FF5757;
   }
-  .registerbtn {
+.registerbtn {
+    font-family: Calibri;
     background-color: #FF5757;
     color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 300px;
@@ -91,11 +90,10 @@ body {
     align-items: center;
     border: solid #f1f1f1;
     font-size: large;
-    position: absolute;
-  right: 180px;
-  border-radius: 40px;
-  bottom: 65px;
-  }
+    border-radius: 40px;
+    font-size: 25px;
+    margin: 20%;
+}
   
   .registerbtn:hover {
     opacity: 1;

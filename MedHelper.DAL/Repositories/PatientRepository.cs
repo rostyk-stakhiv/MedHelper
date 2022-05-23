@@ -8,11 +8,18 @@ using System.Threading.Tasks;
 
 namespace MedHelper.DAL.Repositories
 {
-    public class PatientRepository:Repository<Patient>, IPatientRepository
+    public class PatientRepository : Repository<Patient>, IPatientRepository
     {
-        public PatientRepository(MedHelperDBContext context):base(context)
+        public PatientRepository(MedHelperDBContext context) : base(context)
         {
 
+        }
+
+        public IEnumerable<Patient> GetPatients(int id, string search)
+        {
+            var patients = _context.Patients.Where(i => i.UserId == id).Where(
+                s => s.LastName.ToLower().Contains(search.ToLower()) || s.FirstName.ToLower().Contains(search.ToLower())).ToList();
+            return patients;
         }
 
         public IEnumerable<Patient> GetAllWithDetails()
@@ -29,7 +36,7 @@ namespace MedHelper.DAL.Repositories
         {
             var patient = await GetByIdAsync(id);
             getPatientDetails(patient);
-            
+
             return patient;
         }
 
@@ -84,5 +91,43 @@ namespace MedHelper.DAL.Repositories
             }
             patient.PatientDiseases = patientDiseases;
         }
+
+        private void deleteMedicines(int patientId, List<PatientMedicine> medicines)
+        {
+            var roleToUpdate = _context.Patients.FirstOrDefault(x => x.Id == patientId);
+            _context.Entry(roleToUpdate).Collection("PatientMedicines").Load(); // load explicitly here
+            foreach (var item in medicines)
+            {
+                roleToUpdate.PatientMedicines.Remove(item);
+            }
+
+            _context.SaveChanges();
+        }
+
+        public void UpdateWithDelete(Patient patient)
+        {
+            var result = _context.PatientMedicine.Where(o => o.PatientId == patient.Id);
+            foreach(var i in result)
+            {
+                i.Medicine = null;
+                i.Patient = null;
+
+                _context.PatientMedicine.Remove(i);
+            }
+
+            var result1 = _context.PatientDisease.Where(o => o.PatientId == patient.Id);
+            foreach (var i in result1)
+            {
+                i.Disease = null;
+                i.Patient = null;
+
+                _context.PatientDisease.Remove(i);
+            }
+
+            _context.SaveChanges();
+
+            _context.Patients.Update(patient);
+        }
+
     }
 }

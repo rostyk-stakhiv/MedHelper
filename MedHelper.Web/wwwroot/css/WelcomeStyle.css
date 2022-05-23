@@ -1,0 +1,36 @@
+﻿body {
+    font-family: Calibri, Helvetica, sans-serif;
+    font-size: large;
+}
+
+.add-edit-patient-content {
+    margin: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+div {
+    padding: 10px 0;
+}
+
+hr {
+    border: 1px solid #FF5757;
+    margin-bottom: 25px;
+}
+
+.delete-drop-down {
+    border-radius: 50px;
+    background-color: #FF5757;
+    font-size: 18px;
+    border: none;
+}
+
+h1 {
+    color: #FF5757;
+    font-size: 70px;
+}
+
+.doctor-img {
+    width: 50%
+}
