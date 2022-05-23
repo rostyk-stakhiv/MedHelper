@@ -20,8 +20,5 @@ namespace MedHelper.BLL.Dto.Medicine
         
         [Required] 
         public string TempMedicineCompositions { get; set; }
-
-        [Required] 
-        public string TempMedicineInteraction { get; set; }
     }
 }

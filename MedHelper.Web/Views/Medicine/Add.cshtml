@@ -66,23 +66,6 @@ ViewData["Title"] = "Add patient";
                       <textarea asp-for="TempMedicineContraindications" cols="80" rows="5" id="selectedContraindicationOptionsTextArea" class="mt-1"></textarea>
                       <button type="button" class="btn btn-danger mt-1" style="width: 65%;" onclick="clearSelectedContraindicationOptionsTextArea()">Видалити</button>
                   </div>
-                  <div class="d-flex flex-column mt-4">
-                      <label>
-                          Взаємодія:
-                      </label>
-                      <div>
-                          <datalist id="MedicineInteractionSuggestions">
-                              @foreach (var item in ViewBag.Interactions)
-                              {
-                                  <option id=@item.Id>@item.Description</option>
-                              }
-                          </datalist>
-                          <input type="text" onfocus="this.value=''" onchange="this.blur();" id="MedicineInteraction_suggestions_input" autoComplete="on" class="drop-down list" placeholder="взаємодія" list="MedicineInteractionSuggestions" />
-                      </div>
-                      <textarea asp-for="TempMedicineInteraction" cols="80" rows="5" id="selectedMedicineInteractionOptionsTextArea" class="mt-1"></textarea>
-                      <button type="button" class="btn btn-danger mt-1" style="width: 65%;" onclick="clearSelectedMedicineInteractionOptionsTextArea()">Видалити</button>
-
-                  </div>
               </div>
               <hr />
               <button type="submit" class="submit-button btn btn-primary mt-3" style="width: 65%;">Додати препарат</button>

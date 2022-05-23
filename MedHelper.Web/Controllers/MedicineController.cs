@@ -49,7 +49,6 @@ namespace MedHelper.Web.Controllers
             ViewBag.MedicineCompositions = _medicineService.GetAllCompositions();
             ViewBag.Groups = _medicineService.GetAllPharmacotherapeuticGroups();
             ViewBag.Contraindications = _medicineService.GetAllDiseases();
-            ViewBag.Interactions = _medicineService.GetAllMedicineInteractions();
             return View();
         }
         
@@ -62,7 +61,6 @@ namespace MedHelper.Web.Controllers
                 ViewBag.MedicineCompositions = _medicineService.GetAllCompositions();
                 ViewBag.Groups = _medicineService.GetAllPharmacotherapeuticGroups();
                 ViewBag.Contraindications = _medicineService.GetAllDiseases();
-                ViewBag.Interactions = _medicineService.GetAllMedicineInteractions();
                 return View();
             }
             

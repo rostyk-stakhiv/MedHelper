@@ -89,15 +89,12 @@ namespace MedHelper.BLL.Services
             
             var compositionsStrArr = model.TempMedicineCompositions.Split("\r\n");
             var contraindicationsStrArr = model.TempMedicineContraindications.Split("\r\n");
-            var medicineInteractionsStrArr = model.TempMedicineInteraction.Split("\r\n");
-            
+
             var diseases = GetAllDiseases().Where(obj => contraindicationsStrArr.Contains(obj.Title)).ToList();
             var compositions = GetAllCompositions().Where(obj => compositionsStrArr.Contains(obj.Description)).ToList();
-            var medicineInteractions = GetAllMedicineInteractions().Where(obj => medicineInteractionsStrArr.Contains(obj.Description)).ToList();
             medicine.MedicineContraindications = _mapper.Map<List<MedicineContraindication>>(diseases).ToList();
             medicine.MedicineCompositions = _mapper.Map<List<MedicineComposition>>(compositions).ToList();
-            medicine.MedicineInteractions = medicineInteractions;
-            
+
             medicine.PharmacotherapeuticGroupId = GetAllPharmacotherapeuticGroups().FirstOrDefault(obj => obj.Title == model.TempPharmacotherapeuticGroup).Id;
             
             
