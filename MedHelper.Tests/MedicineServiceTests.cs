@@ -47,12 +47,16 @@ namespace MedHelper.Tests
         };
         static Composition composition = new Composition() { Description = "composition1", Id = 1 };
         static Disease disease = new Disease() { Id = 1, Title = "disease1" };
-        static DiseaseResponse diseaseresponse = new DiseaseResponse() { Id = 1, Title="disease1" };
+        static DiseaseResponse diseaseresponse = new DiseaseResponse() { Id = 1, Title = "disease1" };
         static PharmacotherapeuticGroup group = new PharmacotherapeuticGroup() { Id = 1, Title = "group1" };
 
-        Medicine medicineAdd = new Medicine() { PharmacotherapeuticGroupId = 1, Name = "medicine", UserId = 1, 
-            MedicineCompositions= new List<MedicineComposition>() { new MedicineComposition() {CompositionId=1 } }, 
-         MedicineContraindications= new List<MedicineContraindication>() { new MedicineContraindication() { ContraindicationId=1 }}
+        Medicine medicineAdd = new Medicine()
+        {
+            PharmacotherapeuticGroupId = 1,
+            Name = "medicine",
+            UserId = 1,
+            MedicineCompositions = new List<MedicineComposition>() { new MedicineComposition() { CompositionId = 1 } },
+            MedicineContraindications = new List<MedicineContraindication>() { new MedicineContraindication() { ContraindicationId = 1 } }
         };
         CreateMedicineDto medicineToAdd = new CreateMedicineDto()
         {
@@ -154,15 +158,7 @@ namespace MedHelper.Tests
             await _medicineService.DeleteByIdAsync(1);
 
             // assert
-            try
-            {
-                _unitOfWork.Verify(x => x.MedicineRepository.DeleteByIdAsync(1));
-                Assert.True(true);
-            }
-            catch (MockException)
-            {
-                Assert.True(false);
-            }
+            _unitOfWork.Verify(x => x.MedicineRepository.DeleteByIdAsync(1));
         }
 
         [Fact]
@@ -170,28 +166,20 @@ namespace MedHelper.Tests
         {
             // arrange
             _unitOfWork.Setup(s => s.MedicineRepository.AddAsync(It.IsAny<Medicine>())).Verifiable();
-            _unitOfWork.Setup(s=>s.CompositionRepository.FindAll()).Returns(new List<Composition>() { composition});
+            _unitOfWork.Setup(s => s.CompositionRepository.FindAll()).Returns(new List<Composition>() { composition });
             _unitOfWork.Setup(s => s.DiseaseRepository.FindAll()).Returns(new List<Disease>() { disease });
             _unitOfWork.Setup(s => s.PharmacotherapeuticGroupRepository.FindAll()).Returns(new List<PharmacotherapeuticGroup>() { group });
             _mapper.Setup(m => m.Map<Medicine>(It.IsAny<CreateMedicineDto>())).Returns(medicineAdd);
             _mapper.Setup(m => m.Map<List<MedicineContraindication>>(It.IsAny<List<DiseaseResponse>>())).Returns(medicineAdd.MedicineContraindications);
             _mapper.Setup(m => m.Map<List<MedicineComposition>>(It.IsAny<List<Composition>>())).Returns(medicineAdd.MedicineCompositions);
-            _mapper.Setup(m => m.Map<List<DiseaseResponse>>(It.IsAny<List<Disease>>())).Returns(new List<DiseaseResponse>() { diseaseresponse});
+            _mapper.Setup(m => m.Map<List<DiseaseResponse>>(It.IsAny<List<Disease>>())).Returns(new List<DiseaseResponse>() { diseaseresponse });
             _medicineService = new MedicineService(_unitOfWork.Object, _mapper.Object);
 
             // act
             await _medicineService.AddAsync(medicineToAdd);
 
             // assert
-            try
-            {
-                _unitOfWork.Verify(x => x.MedicineRepository.AddAsync(medicineAdd));
-                Assert.True(true);
-            }
-            catch (MockException)
-            {
-                Assert.True(false);
-            }
+            _unitOfWork.Verify(x => x.MedicineRepository.AddAsync(medicineAdd));
         }
     }
 }

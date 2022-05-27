@@ -94,15 +94,7 @@ namespace MedHelper.Tests
             await _doctorService.UpdateAsync(update);
 
             // assert
-            try
-            {
-                _unitOfWork.Verify(x => x.UserRepository.Update(doctor));
-                Assert.True(true);
-            }
-            catch (MockException)
-            {
-                Assert.True(false);
-            }
+            _unitOfWork.Verify(x => x.UserRepository.Update(doctor));
         }
     }
 }

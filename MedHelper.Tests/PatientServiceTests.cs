@@ -18,7 +18,7 @@ namespace MedHelper.Tests
         public static Mock<IPatientRepository> _patientRepository;
         public static Mock<IUnitOfWork> _unitOfWork;
         public static Mock<IMapper> _mapper;
-       
+
         private PatientService _patientService;
 
         public PatientServiceTests()
@@ -48,27 +48,43 @@ namespace MedHelper.Tests
             Birthdate = new DateTime(2000, 2, 13)
         };
 
-        Patient patientAdd = new Patient() { FirstName = "Test", LastName = "User", Gender = "Male", Birthdate = new DateTime(2000, 10, 11), 
-            PatientDiseases = new List<PatientDisease>() { new PatientDisease() {DiseaseId= 1 } }, 
-            PatientMedicines= new List<PatientMedicine>() { new PatientMedicine() { MedicineId= 1 }}
+        Patient patientAdd = new Patient()
+        {
+            FirstName = "Test",
+            LastName = "User",
+            Gender = "Male",
+            Birthdate = new DateTime(2000, 10, 11),
+            PatientDiseases = new List<PatientDisease>() { new PatientDisease() { DiseaseId = 1 } },
+            PatientMedicines = new List<PatientMedicine>() { new PatientMedicine() { MedicineId = 1 } }
         };
         CreatePatientDto patientToAdd = new CreatePatientDto()
         {
-            FirstName = "Test", LastName = "User", Gender = "Male", Birthdate = new DateTime(2000, 10, 11),
+            FirstName = "Test",
+            LastName = "User",
+            Gender = "Male",
+            Birthdate = new DateTime(2000, 10, 11),
             UserId = 1,
-            Medicines = new List<TempMedicineResponse>() { new TempMedicineResponse() { Id = 1}},
+            Medicines = new List<TempMedicineResponse>() { new TempMedicineResponse() { Id = 1 } },
             Diseases = new List<DiseaseResponse>() { new DiseaseResponse() { Id = 1 } }
         };
-        
-        Patient patientEdit = new Patient() { FirstName = "Test1", LastName = "UserUpdated", Gender = "Male", Birthdate = new DateTime(2000, 10, 11), 
-            PatientDiseases = new List<PatientDisease>() { new PatientDisease() {DiseaseId= 1 } }, 
-            PatientMedicines= new List<PatientMedicine>() { new PatientMedicine() { MedicineId= 1 }}
+
+        Patient patientEdit = new Patient()
+        {
+            FirstName = "Test1",
+            LastName = "UserUpdated",
+            Gender = "Male",
+            Birthdate = new DateTime(2000, 10, 11),
+            PatientDiseases = new List<PatientDisease>() { new PatientDisease() { DiseaseId = 1 } },
+            PatientMedicines = new List<PatientMedicine>() { new PatientMedicine() { MedicineId = 1 } }
         };
         UpdatePatientDto patientToEdit = new UpdatePatientDto()
         {
-            FirstName = "Test1", LastName = "UserUpdated", Gender = "Male", Birthdate = new DateTime(2000, 10, 11),
+            FirstName = "Test1",
+            LastName = "UserUpdated",
+            Gender = "Male",
+            Birthdate = new DateTime(2000, 10, 11),
             UserId = 1,
-            Medicines = new List<TempMedicineResponse>() { new TempMedicineResponse() { Id = 1}},
+            Medicines = new List<TempMedicineResponse>() { new TempMedicineResponse() { Id = 1 } },
             Diseases = new List<DiseaseResponse>() { new DiseaseResponse() { Id = 1 } }
         };
 
@@ -131,7 +147,7 @@ namespace MedHelper.Tests
             // arrange
 
             IEnumerable<Patient> patients = new List<Patient> { patient, patient2 };
-            List <PatientResponse> patientResponses = new List<PatientResponse>();
+            List<PatientResponse> patientResponses = new List<PatientResponse>();
             foreach (var i in patients)
             {
                 patientResponses.Add(new PatientResponse()
@@ -155,7 +171,7 @@ namespace MedHelper.Tests
             Assert.NotNull(result);
             Assert.Equal(patientResponses, result);
         }
-        
+
         [Fact]
         public async Task DeleteSuccess()
         {
@@ -167,15 +183,7 @@ namespace MedHelper.Tests
             await _patientService.DeleteByIdAsync(1);
 
             // assert
-            try
-            {
-                _unitOfWork.Verify(x => x.PatientRepository.DeleteByIdAsync(1));
-                Assert.True(true);
-            }
-            catch (MockException)
-            {
-                Assert.True(false);
-            }
+            _unitOfWork.Verify(x => x.PatientRepository.DeleteByIdAsync(1));
         }
 
         [Fact]
@@ -191,17 +199,9 @@ namespace MedHelper.Tests
             await _patientService.AddAsync(patientToAdd);
 
             // assert
-            try
-            {
-                _unitOfWork.Verify(x => x.PatientRepository.AddAsync(patientAdd));
-                Assert.True(true);
-            }
-            catch (MockException)
-            {
-                Assert.True(false);
-            }
+            _unitOfWork.Verify(x => x.PatientRepository.AddAsync(patientAdd));
         }
-        
+
         [Fact]
         public async Task EditSuccess()
         {
@@ -215,16 +215,8 @@ namespace MedHelper.Tests
             await _patientService.UpdateAsync(patientToEdit);
 
             // assert
-            try
-            {
-                _unitOfWork.Verify(x => x.PatientRepository.UpdateWithDelete(patientEdit));
-                Assert.True(true);
-            }
-            catch (MockException)
-            {
-                Assert.True(false);
-            }
+            _unitOfWork.Verify(x => x.PatientRepository.UpdateWithDelete(patientEdit));
         }
     }
-    
+
 }
